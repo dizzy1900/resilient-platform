@@ -62,18 +62,27 @@ const Index = () => {
         throw new Error(`API error: ${response.status}`);
       }
 
-      const data = await response.json();
+      const responseData = await response.json();
       
-      // Calculate risk reduction as percentage difference between resilient and baseline
-      const riskReduction = data.yield_baseline > 0 
-        ? Math.round(((data.yield_resilient - data.yield_baseline) / data.yield_baseline) * 100)
-        : 0;
+      // API returns an array with nested data structure
+      const result = Array.isArray(responseData) ? responseData[0] : responseData;
+      const analysis = result?.data?.analysis;
+      const predictions = result?.data?.predictions;
+      
+      if (!analysis || !predictions) {
+        throw new Error('Invalid response format from simulation API');
+      }
+      
+      const yieldBaseline = predictions.standard_seed?.predicted_yield ?? 0;
+      const yieldResilient = predictions.resilient_seed?.predicted_yield ?? 0;
+      const avoidedLoss = analysis.avoided_loss ?? 0;
+      const percentageImprovement = analysis.percentage_improvement ?? 0;
       
       setResults({
-        avoidedLoss: Math.round(data.avoided_loss),
-        riskReduction,
-        yieldBaseline: data.yield_baseline,
-        yieldResilient: data.yield_resilient,
+        avoidedLoss: Math.round(avoidedLoss * 100) / 100, // Keep 2 decimal places
+        riskReduction: Math.round(percentageImprovement * 100), // Convert to percentage
+        yieldBaseline,
+        yieldResilient,
         monthlyData: mockMonthlyData,
       });
       setShowResults(true);
