@@ -1,6 +1,7 @@
-import { TrendingUp, TrendingDown, Shield, AlertTriangle, BarChart3 } from 'lucide-react';
+import { TrendingUp, TrendingDown, Shield, AlertTriangle, BarChart3, Info } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Skeleton } from '@/components/ui/skeleton';
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 
 interface ResultsCardProps {
   visible: boolean;
@@ -96,6 +97,18 @@ export const ResultsCard = ({ visible, isLoading, avoidedLoss, riskReduction, mo
           <span className="metric-label flex items-center gap-1.5">
             <AlertTriangle className="w-3 h-3" />
             Projected Avoided Loss
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Info className="w-3 h-3 text-muted-foreground hover:text-foreground cursor-help transition-colors" />
+                </TooltipTrigger>
+                <TooltipContent side="right" className="max-w-[220px]">
+                  <p className="text-xs">
+                    Estimated financial savings per hectare when using climate-resilient practices compared to baseline farming methods.
+                  </p>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
           </span>
           <div className="flex items-baseline gap-2">
             <span className="metric-big text-safe">${avoidedLoss.toLocaleString()}</span>
