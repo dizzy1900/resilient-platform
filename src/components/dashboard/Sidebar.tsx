@@ -4,6 +4,8 @@ import { SimulateButton } from './SimulateButton';
 import { CoordinatesDisplay } from './CoordinatesDisplay';
 import { ResultsCard } from './ResultsCard';
 import { Separator } from '@/components/ui/separator';
+import { Button } from '@/components/ui/button';
+import { X } from 'lucide-react';
 
 interface SidebarProps {
   cropType: string;
@@ -18,6 +20,8 @@ interface SidebarProps {
     riskReduction: number;
     monthlyData: { month: string; value: number }[];
   };
+  onClose?: () => void;
+  isMobile?: boolean;
 }
 
 export const Sidebar = ({
@@ -29,14 +33,26 @@ export const Sidebar = ({
   isSimulating,
   showResults,
   results,
+  onClose,
+  isMobile,
 }: SidebarProps) => {
   const canSimulate = latitude !== null && longitude !== null;
 
   return (
     <aside className="sidebar-width h-screen bg-sidebar flex flex-col border-r border-sidebar-border">
       {/* Header */}
-      <div className="p-6 pb-4">
+      <div className="p-6 pb-4 flex items-center justify-between">
         <Logo />
+        {isMobile && (
+          <Button
+            variant="ghost"
+            size="icon"
+            className="md:hidden text-muted-foreground hover:text-foreground"
+            onClick={onClose}
+          >
+            <X className="h-5 w-5" />
+          </Button>
+        )}
       </div>
       
       <Separator className="bg-sidebar-border" />

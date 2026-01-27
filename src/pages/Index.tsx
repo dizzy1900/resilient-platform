@@ -2,6 +2,8 @@ import { useState, useCallback } from 'react';
 import { Sidebar } from '@/components/dashboard/Sidebar';
 import { MapView } from '@/components/dashboard/MapView';
 import { toast } from '@/hooks/use-toast';
+import { Menu } from 'lucide-react';
+import { Button } from '@/components/ui/button';
 
 const mockMonthlyData = [
   { month: 'Jan', value: 45 },
@@ -23,6 +25,7 @@ const Index = () => {
   const [markerPosition, setMarkerPosition] = useState<{ lat: number; lng: number } | null>(null);
   const [isSimulating, setIsSimulating] = useState(false);
   const [showResults, setShowResults] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [results, setResults] = useState({
     avoidedLoss: 0,
     riskReduction: 0,
@@ -88,16 +91,43 @@ const Index = () => {
 
   return (
     <div className="flex h-screen w-full overflow-hidden bg-background">
-      <Sidebar
-        cropType={cropType}
-        onCropChange={setCropType}
-        latitude={markerPosition?.lat ?? null}
-        longitude={markerPosition?.lng ?? null}
-        onSimulate={handleSimulate}
-        isSimulating={isSimulating}
-        showResults={showResults}
-        results={results}
-      />
+      {/* Mobile Menu Button */}
+      <Button
+        variant="outline"
+        size="icon"
+        className="fixed top-4 left-4 z-50 md:hidden bg-sidebar border-sidebar-border"
+        onClick={() => setIsMobileMenuOpen(true)}
+      >
+        <Menu className="h-5 w-5" />
+      </Button>
+
+      {/* Mobile Overlay */}
+      {isMobileMenuOpen && (
+        <div 
+          className="fixed inset-0 bg-black/60 z-40 md:hidden backdrop-blur-sm"
+          onClick={() => setIsMobileMenuOpen(false)}
+        />
+      )}
+
+      {/* Sidebar - transforms to drawer on mobile */}
+      <div className={`
+        fixed inset-y-0 left-0 z-50 transform transition-transform duration-300 ease-in-out
+        md:relative md:translate-x-0
+        ${isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full'}
+      `}>
+        <Sidebar
+          cropType={cropType}
+          onCropChange={setCropType}
+          latitude={markerPosition?.lat ?? null}
+          longitude={markerPosition?.lng ?? null}
+          onSimulate={handleSimulate}
+          isSimulating={isSimulating}
+          showResults={showResults}
+          results={results}
+          onClose={() => setIsMobileMenuOpen(false)}
+          isMobile={isMobileMenuOpen}
+        />
+      </div>
       
       <main className="flex-1 relative">
         <MapView
