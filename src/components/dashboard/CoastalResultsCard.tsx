@@ -1,4 +1,4 @@
-import { Shield, TrendingUp, Info, Waves } from 'lucide-react';
+import { Shield, TrendingDown, Info, Waves, Mountain, CloudRain } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Badge } from '@/components/ui/badge';
@@ -12,16 +12,18 @@ import {
 interface CoastalResultsCardProps {
   visible: boolean;
   isLoading: boolean;
-  valueProtected: number;
-  waveAttenuation: number;
+  avoidedLoss: number;
+  slope: number;
+  stormWave: number;
   mangroveWidth: number;
 }
 
 export const CoastalResultsCard = ({
   visible,
   isLoading,
-  valueProtected,
-  waveAttenuation,
+  avoidedLoss,
+  slope,
+  stormWave,
   mangroveWidth,
 }: CoastalResultsCardProps) => {
   if (!visible && !isLoading) return null;
@@ -54,10 +56,10 @@ export const CoastalResultsCard = ({
       </CardHeader>
       
       <CardContent className="space-y-4">
-        {/* Value Protected */}
+        {/* Avoided Loss */}
         <div className="space-y-1">
           <div className="flex items-center gap-1.5">
-            <span className="text-sm text-muted-foreground">Value Protected</span>
+            <span className="text-sm text-muted-foreground">Avoided Loss</span>
             <TooltipProvider>
               <Tooltip>
                 <TooltipTrigger asChild>
@@ -65,69 +67,82 @@ export const CoastalResultsCard = ({
                 </TooltipTrigger>
                 <TooltipContent side="top" className="max-w-[200px]">
                   <p className="text-xs">
-                    Estimated economic value of coastal assets protected by the mangrove buffer against storm surge and flooding.
+                    Estimated economic loss avoided due to the mangrove buffer protecting coastal assets from storm surge and flooding.
                   </p>
                 </TooltipContent>
               </Tooltip>
             </TooltipProvider>
           </div>
           {isLoading ? (
-            <Skeleton className="h-10 w-32" />
+            <div className="space-y-2">
+              <Skeleton className="h-10 w-32" />
+              <p className="text-xs text-muted-foreground animate-pulse">
+                Scanning Coastal Topography...
+              </p>
+            </div>
           ) : (
             <div className="flex items-baseline gap-2">
               <span className="metric-big text-primary">
-                {formatCurrency(valueProtected)}
+                {formatCurrency(avoidedLoss)}
               </span>
               <Shield className="w-5 h-5 text-primary" />
             </div>
           )}
         </div>
 
-        {/* Wave Attenuation */}
-        <div className="space-y-1">
-          <div className="flex items-center gap-1.5">
-            <span className="text-sm text-muted-foreground">Wave Attenuation</span>
-            <TooltipProvider>
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <Info className="w-3.5 h-3.5 text-muted-foreground cursor-help" />
-                </TooltipTrigger>
-                <TooltipContent side="top" className="max-w-[200px]">
-                  <p className="text-xs">
-                    Percentage of wave energy absorbed by the mangrove belt before reaching the shoreline.
-                  </p>
-                </TooltipContent>
-              </Tooltip>
-            </TooltipProvider>
-          </div>
-          {isLoading ? (
-            <Skeleton className="h-8 w-24" />
-          ) : (
-            <div className="flex items-center gap-2">
+        {/* Detected Data Badge */}
+        {!isLoading && (
+          <div className="pt-2">
+            <div className="flex items-center gap-1.5 mb-2">
+              <span className="text-sm text-muted-foreground">Detected Parameters</span>
+              <TooltipProvider>
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <Info className="w-3.5 h-3.5 text-muted-foreground cursor-help" />
+                  </TooltipTrigger>
+                  <TooltipContent side="top" className="max-w-[220px]">
+                    <p className="text-xs">
+                      Environmental parameters detected at this location used to calculate coastal protection value.
+                    </p>
+                  </TooltipContent>
+                </Tooltip>
+              </TooltipProvider>
+            </div>
+            
+            <div className="flex flex-wrap gap-2">
               <Badge 
                 variant="outline" 
-                className="text-lg font-bold bg-primary/10 text-primary border-primary/30 px-3 py-1"
+                className="bg-secondary/50 text-foreground border-secondary flex items-center gap-1.5 px-2.5 py-1"
               >
-                <TrendingUp className="w-4 h-4 mr-1" />
-                {waveAttenuation}%
+                <Mountain className="w-3.5 h-3.5 text-muted-foreground" />
+                <span className="text-xs">Slope: {slope}%</span>
+              </Badge>
+              <Badge 
+                variant="outline" 
+                className="bg-secondary/50 text-foreground border-secondary flex items-center gap-1.5 px-2.5 py-1"
+              >
+                <CloudRain className="w-3.5 h-3.5 text-muted-foreground" />
+                <span className="text-xs">Storm Wave: {stormWave}m</span>
               </Badge>
             </div>
-          )}
-        </div>
+          </div>
+        )}
 
         {/* Visual indicator bar */}
-        <div className="pt-2">
-          <div className="h-2 bg-secondary rounded-full overflow-hidden">
-            <div 
-              className="h-full bg-gradient-to-r from-primary to-accent transition-all duration-500 ease-out"
-              style={{ width: `${Math.min(waveAttenuation, 100)}%` }}
-            />
+        {!isLoading && (
+          <div className="pt-2">
+            <div className="h-2 bg-secondary rounded-full overflow-hidden">
+              <div 
+                className="h-full bg-gradient-to-r from-primary to-accent transition-all duration-500 ease-out"
+                style={{ width: `${Math.min((avoidedLoss / 1000000) * 100, 100)}%` }}
+              />
+            </div>
+            <div className="flex justify-between mt-1 text-xs text-muted-foreground">
+              <span>Low protection</span>
+              <span>High protection</span>
+            </div>
           </div>
-          <div className="flex justify-between mt-1 text-xs text-muted-foreground">
-            <span>Low protection</span>
-            <span>High protection</span>
-          </div>
-        </div>
+        )}
       </CardContent>
     </Card>
   );

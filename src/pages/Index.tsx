@@ -28,6 +28,7 @@ const Index = () => {
   const [mode, setMode] = useState<DashboardMode>('agriculture');
   const [cropType, setCropType] = useState('maize');
   const [mangroveWidth, setMangroveWidth] = useState(100);
+  const [propertyValue, setPropertyValue] = useState(500000);
   const [markerPosition, setMarkerPosition] = useState<{ lat: number; lng: number } | null>(null);
   const [isSimulating, setIsSimulating] = useState(false);
   const [isCoastalSimulating, setIsCoastalSimulating] = useState(false);
@@ -44,8 +45,9 @@ const Index = () => {
   });
 
   const [coastalResults, setCoastalResults] = useState({
-    valueProtected: 0,
-    waveAttenuation: 0,
+    avoidedLoss: 0,
+    slope: 0,
+    stormWave: 0,
   });
 
   // Determine map style based on mode
@@ -131,6 +133,7 @@ const Index = () => {
           lat: markerPosition.lat,
           lon: markerPosition.lng,
           mangrove_width: width,
+          property_value: propertyValue,
         }),
       });
 
@@ -145,16 +148,18 @@ const Index = () => {
       const data = result?.data || result;
       
       setCoastalResults({
-        valueProtected: data?.value_protected ?? data?.valueProtected ?? Math.round(width * 15000),
-        waveAttenuation: data?.wave_attenuation ?? data?.waveAttenuation ?? Math.min(Math.round(width / 5), 100),
+        avoidedLoss: data?.avoided_loss ?? data?.avoidedLoss ?? Math.round(propertyValue * 0.3),
+        slope: data?.slope ?? data?.detected_slope ?? 3,
+        stormWave: data?.storm_wave ?? data?.stormWave ?? 4.5,
       });
       setShowCoastalResults(true);
     } catch (error) {
       console.error('Coastal simulation failed:', error);
       // On API error, use a fallback calculation for demo purposes
       setCoastalResults({
-        valueProtected: Math.round(width * 15000),
-        waveAttenuation: Math.min(Math.round(width / 5), 100),
+        avoidedLoss: Math.round(propertyValue * (width / 500) * 0.5),
+        slope: 3,
+        stormWave: 4.5,
       });
       setShowCoastalResults(true);
       toast({
@@ -165,7 +170,7 @@ const Index = () => {
     } finally {
       setIsCoastalSimulating(false);
     }
-  }, [markerPosition]);
+  }, [markerPosition, propertyValue]);
 
   const handleMangroveWidthChange = useCallback((value: number) => {
     setMangroveWidth(value);
@@ -218,6 +223,8 @@ const Index = () => {
           mangroveWidth={mangroveWidth}
           onMangroveWidthChange={handleMangroveWidthChange}
           onMangroveWidthChangeEnd={handleMangroveWidthChangeEnd}
+          propertyValue={propertyValue}
+          onPropertyValueChange={setPropertyValue}
           latitude={markerPosition?.lat ?? null}
           longitude={markerPosition?.lng ?? null}
           onSimulate={handleSimulate}

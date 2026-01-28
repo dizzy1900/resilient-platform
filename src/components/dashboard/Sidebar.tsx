@@ -2,6 +2,7 @@ import { Logo } from './Logo';
 import { ModeSelector, DashboardMode } from './ModeSelector';
 import { CropSelector } from './CropSelector';
 import { MangroveSlider } from './MangroveSlider';
+import { PropertyValueInput } from './PropertyValueInput';
 import { SimulateButton } from './SimulateButton';
 import { CoordinatesDisplay } from './CoordinatesDisplay';
 import { ResultsCard } from './ResultsCard';
@@ -18,6 +19,8 @@ interface SidebarProps {
   mangroveWidth: number;
   onMangroveWidthChange: (value: number) => void;
   onMangroveWidthChangeEnd: (value: number) => void;
+  propertyValue: number;
+  onPropertyValueChange: (value: number) => void;
   latitude: number | null;
   longitude: number | null;
   onSimulate: () => void;
@@ -29,8 +32,9 @@ interface SidebarProps {
     monthlyData: { month: string; value: number }[];
   };
   coastalResults: {
-    valueProtected: number;
-    waveAttenuation: number;
+    avoidedLoss: number;
+    slope: number;
+    stormWave: number;
   };
   showCoastalResults: boolean;
   isCoastalSimulating: boolean;
@@ -46,6 +50,8 @@ export const Sidebar = ({
   mangroveWidth,
   onMangroveWidthChange,
   onMangroveWidthChangeEnd,
+  propertyValue,
+  onPropertyValueChange,
   latitude,
   longitude,
   onSimulate,
@@ -112,6 +118,12 @@ export const Sidebar = ({
               disabled={!canSimulate}
             />
             
+            <PropertyValueInput
+              value={propertyValue}
+              onChange={onPropertyValueChange}
+              disabled={!canSimulate}
+            />
+            
             <SimulateButton 
               onClick={() => onMangroveWidthChangeEnd(mangroveWidth)} 
               isLoading={isCoastalSimulating}
@@ -122,8 +134,9 @@ export const Sidebar = ({
             <CoastalResultsCard
               visible={showCoastalResults}
               isLoading={isCoastalSimulating}
-              valueProtected={coastalResults.valueProtected}
-              waveAttenuation={coastalResults.waveAttenuation}
+              avoidedLoss={coastalResults.avoidedLoss}
+              slope={coastalResults.slope}
+              stormWave={coastalResults.stormWave}
               mangroveWidth={mangroveWidth}
             />
           </>
