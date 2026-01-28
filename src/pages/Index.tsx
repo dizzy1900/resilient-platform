@@ -22,7 +22,7 @@ const mockMonthlyData = [
 ];
 
 // Coastal simulation endpoint (n8n webhook)
-const COASTAL_API_URL = 'https://primary-production-679e.up.railway.app/webhook/coastal-simulate';
+const COASTAL_API_URL = 'https://primary-production-679e.up.railway.app/webhook/coastal-valuation';
 
 const Index = () => {
   const [mode, setMode] = useState<DashboardMode>('agriculture');
