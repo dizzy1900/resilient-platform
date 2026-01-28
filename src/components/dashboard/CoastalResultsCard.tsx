@@ -13,8 +13,8 @@ interface CoastalResultsCardProps {
   visible: boolean;
   isLoading: boolean;
   avoidedLoss: number;
-  slope: number;
-  stormWave: number;
+  slope: number | null;
+  stormWave: number | null;
   mangroveWidth: number;
 }
 
@@ -90,8 +90,8 @@ export const CoastalResultsCard = ({
           )}
         </div>
 
-        {/* Detected Data Badge */}
-        {!isLoading && (
+        {/* Detected Data Badge - only show when not loading and we have real data */}
+        {!isLoading && (slope !== null || stormWave !== null) && (
           <div className="pt-2">
             <div className="flex items-center gap-1.5 mb-2">
               <span className="text-sm text-muted-foreground">Detected Parameters</span>
@@ -110,20 +110,24 @@ export const CoastalResultsCard = ({
             </div>
             
             <div className="flex flex-wrap gap-2">
-              <Badge 
-                variant="outline" 
-                className="bg-secondary/50 text-foreground border-secondary flex items-center gap-1.5 px-2.5 py-1"
-              >
-                <Mountain className="w-3.5 h-3.5 text-muted-foreground" />
-                <span className="text-xs">Slope: {slope}%</span>
-              </Badge>
-              <Badge 
-                variant="outline" 
-                className="bg-secondary/50 text-foreground border-secondary flex items-center gap-1.5 px-2.5 py-1"
-              >
-                <CloudRain className="w-3.5 h-3.5 text-muted-foreground" />
-                <span className="text-xs">Storm Wave: {stormWave}m</span>
-              </Badge>
+              {slope !== null && (
+                <Badge 
+                  variant="outline" 
+                  className="bg-secondary/50 text-foreground border-secondary flex items-center gap-1.5 px-2.5 py-1"
+                >
+                  <Mountain className="w-3.5 h-3.5 text-muted-foreground" />
+                  <span className="text-xs">Slope: {slope.toFixed(1)}%</span>
+                </Badge>
+              )}
+              {stormWave !== null && (
+                <Badge 
+                  variant="outline" 
+                  className="bg-secondary/50 text-foreground border-secondary flex items-center gap-1.5 px-2.5 py-1"
+                >
+                  <CloudRain className="w-3.5 h-3.5 text-muted-foreground" />
+                  <span className="text-xs">Storm Wave: {stormWave.toFixed(1)}m</span>
+                </Badge>
+              )}
             </div>
           </div>
         )}

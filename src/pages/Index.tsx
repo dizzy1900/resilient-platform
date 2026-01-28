@@ -44,10 +44,14 @@ const Index = () => {
     monthlyData: mockMonthlyData,
   });
 
-  const [coastalResults, setCoastalResults] = useState({
+  const [coastalResults, setCoastalResults] = useState<{
+    avoidedLoss: number;
+    slope: number | null;
+    stormWave: number | null;
+  }>({
     avoidedLoss: 0,
-    slope: 0,
-    stormWave: 0,
+    slope: null,
+    stormWave: null,
   });
 
   // Determine map style based on mode
@@ -147,10 +151,13 @@ const Index = () => {
       const result = Array.isArray(responseData) ? responseData[0] : responseData;
       const data = result?.data || result;
       
+      const rawSlope = data?.slope ?? data?.detected_slope ?? null;
+      const rawStormWave = data?.storm_wave ?? data?.stormWave ?? data?.wave_height ?? null;
+      
       setCoastalResults({
         avoidedLoss: data?.avoided_loss ?? data?.avoidedLoss ?? Math.round(propertyValue * 0.3),
-        slope: data?.slope ?? data?.detected_slope ?? 3,
-        stormWave: data?.storm_wave ?? data?.stormWave ?? 4.5,
+        slope: rawSlope !== null ? Math.round(rawSlope * 10) / 10 : null,
+        stormWave: rawStormWave !== null ? Math.round(rawStormWave * 10) / 10 : null,
       });
       setShowCoastalResults(true);
     } catch (error) {
@@ -158,8 +165,8 @@ const Index = () => {
       // On API error, use a fallback calculation for demo purposes
       setCoastalResults({
         avoidedLoss: Math.round(propertyValue * (width / 500) * 0.5),
-        slope: 3,
-        stormWave: 4.5,
+        slope: null,
+        stormWave: null,
       });
       setShowCoastalResults(true);
       toast({
