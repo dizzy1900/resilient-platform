@@ -3,13 +3,21 @@ import { MapPin, Map as MapIcon, AlertCircle } from 'lucide-react';
 
 const MAPBOX_TOKEN = 'pk.eyJ1IjoiZGF2aWRpemkiLCJhIjoiY21rd2dzeHN6MDFoYzNkcXYxOHZ0YXRuNCJ9.P_g5wstTHNzglNEQfHIoBg';
 
+export type MapStyle = 'dark' | 'satellite';
+
+const MAP_STYLES: Record<MapStyle, string> = {
+  dark: 'mapbox://styles/mapbox/dark-v11',
+  satellite: 'mapbox://styles/mapbox/satellite-v9',
+};
+
 interface MapViewProps {
   onLocationSelect: (lat: number, lng: number) => void;
   markerPosition: { lat: number; lng: number } | null;
+  mapStyle?: MapStyle;
 }
 
 // Lazy load the map to prevent SSR issues
-const LazyMap = ({ onLocationSelect, markerPosition }: MapViewProps) => {
+const LazyMap = ({ onLocationSelect, markerPosition, mapStyle = 'dark' }: MapViewProps) => {
   const [MapComponents, setMapComponents] = useState<any>(null);
   const [error, setError] = useState<string | null>(null);
   const [viewState, setViewState] = useState({
@@ -76,7 +84,7 @@ const LazyMap = ({ onLocationSelect, markerPosition }: MapViewProps) => {
       onMove={(evt: any) => setViewState(evt.viewState)}
       onClick={handleClick}
       mapboxAccessToken={MAPBOX_TOKEN}
-      mapStyle="mapbox://styles/mapbox/dark-v11"
+      mapStyle={MAP_STYLES[mapStyle]}
       style={{ width: '100%', height: '100%' }}
       cursor="crosshair"
     >
@@ -99,10 +107,10 @@ const LazyMap = ({ onLocationSelect, markerPosition }: MapViewProps) => {
   );
 };
 
-export const MapView = ({ onLocationSelect, markerPosition }: MapViewProps) => {
+export const MapView = ({ onLocationSelect, markerPosition, mapStyle = 'dark' }: MapViewProps) => {
   return (
     <div className="relative w-full h-full">
-      <LazyMap onLocationSelect={onLocationSelect} markerPosition={markerPosition} />
+      <LazyMap onLocationSelect={onLocationSelect} markerPosition={markerPosition} mapStyle={mapStyle} />
       
       {/* Map overlay gradient */}
       <div className="absolute inset-0 pointer-events-none">
