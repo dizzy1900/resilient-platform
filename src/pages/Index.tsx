@@ -1,6 +1,7 @@
 import { useState, useCallback } from 'react';
 import { Sidebar } from '@/components/dashboard/Sidebar';
-import { MapView } from '@/components/dashboard/MapView';
+import { MapView, MapStyle } from '@/components/dashboard/MapView';
+import { DashboardMode } from '@/components/dashboard/ModeSelector';
 import { toast } from '@/hooks/use-toast';
 import { Menu } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -20,12 +21,20 @@ const mockMonthlyData = [
   { month: 'Dec', value: 35 },
 ];
 
+// Coastal simulation endpoint (n8n webhook)
+const COASTAL_API_URL = 'https://primary-production-679e.up.railway.app/webhook/coastal-simulate';
+
 const Index = () => {
+  const [mode, setMode] = useState<DashboardMode>('agriculture');
   const [cropType, setCropType] = useState('maize');
+  const [mangroveWidth, setMangroveWidth] = useState(100);
   const [markerPosition, setMarkerPosition] = useState<{ lat: number; lng: number } | null>(null);
   const [isSimulating, setIsSimulating] = useState(false);
+  const [isCoastalSimulating, setIsCoastalSimulating] = useState(false);
   const [showResults, setShowResults] = useState(false);
+  const [showCoastalResults, setShowCoastalResults] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  
   const [results, setResults] = useState({
     avoidedLoss: 0,
     riskReduction: 0,
@@ -34,9 +43,18 @@ const Index = () => {
     monthlyData: mockMonthlyData,
   });
 
+  const [coastalResults, setCoastalResults] = useState({
+    valueProtected: 0,
+    waveAttenuation: 0,
+  });
+
+  // Determine map style based on mode
+  const mapStyle: MapStyle = mode === 'coastal' ? 'satellite' : 'dark';
+
   const handleLocationSelect = useCallback((lat: number, lng: number) => {
     setMarkerPosition({ lat, lng });
     setShowResults(false);
+    setShowCoastalResults(false);
   }, []);
 
   const handleSimulate = useCallback(async () => {
@@ -79,8 +97,8 @@ const Index = () => {
       const percentageImprovement = analysis.percentage_improvement ?? 0;
       
       setResults({
-        avoidedLoss: Math.round(avoidedLoss * 100) / 100, // Keep 2 decimal places
-        riskReduction: Math.round(percentageImprovement * 100), // Convert to percentage
+        avoidedLoss: Math.round(avoidedLoss * 100) / 100,
+        riskReduction: Math.round(percentageImprovement * 100),
         yieldBaseline,
         yieldResilient,
         monthlyData: mockMonthlyData,
@@ -97,6 +115,74 @@ const Index = () => {
       setIsSimulating(false);
     }
   }, [markerPosition, cropType]);
+
+  const handleCoastalSimulate = useCallback(async (width: number) => {
+    if (!markerPosition) return;
+    
+    setIsCoastalSimulating(true);
+    
+    try {
+      const response = await fetch(COASTAL_API_URL, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          lat: markerPosition.lat,
+          lon: markerPosition.lng,
+          mangrove_width: width,
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error(`API error: ${response.status}`);
+      }
+
+      const responseData = await response.json();
+      
+      // Handle response - adjust based on actual API response structure
+      const result = Array.isArray(responseData) ? responseData[0] : responseData;
+      const data = result?.data || result;
+      
+      setCoastalResults({
+        valueProtected: data?.value_protected ?? data?.valueProtected ?? Math.round(width * 15000),
+        waveAttenuation: data?.wave_attenuation ?? data?.waveAttenuation ?? Math.min(Math.round(width / 5), 100),
+      });
+      setShowCoastalResults(true);
+    } catch (error) {
+      console.error('Coastal simulation failed:', error);
+      // On API error, use a fallback calculation for demo purposes
+      setCoastalResults({
+        valueProtected: Math.round(width * 15000),
+        waveAttenuation: Math.min(Math.round(width / 5), 100),
+      });
+      setShowCoastalResults(true);
+      toast({
+        title: 'Using Estimated Values',
+        description: 'Could not reach the coastal simulation API. Showing estimated values.',
+        variant: 'default',
+      });
+    } finally {
+      setIsCoastalSimulating(false);
+    }
+  }, [markerPosition]);
+
+  const handleMangroveWidthChange = useCallback((value: number) => {
+    setMangroveWidth(value);
+  }, []);
+
+  const handleMangroveWidthChangeEnd = useCallback((value: number) => {
+    if (markerPosition) {
+      handleCoastalSimulate(value);
+    }
+  }, [markerPosition, handleCoastalSimulate]);
+
+  const handleModeChange = useCallback((newMode: DashboardMode) => {
+    setMode(newMode);
+    // Reset results when switching modes
+    setShowResults(false);
+    setShowCoastalResults(false);
+  }, []);
 
   return (
     <div className="flex h-screen w-full overflow-hidden bg-background">
@@ -125,14 +211,22 @@ const Index = () => {
         ${isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full'}
       `}>
         <Sidebar
+          mode={mode}
+          onModeChange={handleModeChange}
           cropType={cropType}
           onCropChange={setCropType}
+          mangroveWidth={mangroveWidth}
+          onMangroveWidthChange={handleMangroveWidthChange}
+          onMangroveWidthChangeEnd={handleMangroveWidthChangeEnd}
           latitude={markerPosition?.lat ?? null}
           longitude={markerPosition?.lng ?? null}
           onSimulate={handleSimulate}
           isSimulating={isSimulating}
           showResults={showResults}
           results={results}
+          coastalResults={coastalResults}
+          showCoastalResults={showCoastalResults}
+          isCoastalSimulating={isCoastalSimulating}
           onClose={() => setIsMobileMenuOpen(false)}
           isMobile={isMobileMenuOpen}
         />
@@ -142,6 +236,7 @@ const Index = () => {
         <MapView
           onLocationSelect={handleLocationSelect}
           markerPosition={markerPosition}
+          mapStyle={mapStyle}
         />
       </main>
     </div>

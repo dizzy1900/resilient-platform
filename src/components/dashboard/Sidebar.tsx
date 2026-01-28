@@ -1,15 +1,23 @@
 import { Logo } from './Logo';
+import { ModeSelector, DashboardMode } from './ModeSelector';
 import { CropSelector } from './CropSelector';
+import { MangroveSlider } from './MangroveSlider';
 import { SimulateButton } from './SimulateButton';
 import { CoordinatesDisplay } from './CoordinatesDisplay';
 import { ResultsCard } from './ResultsCard';
+import { CoastalResultsCard } from './CoastalResultsCard';
 import { Separator } from '@/components/ui/separator';
 import { Button } from '@/components/ui/button';
 import { X } from 'lucide-react';
 
 interface SidebarProps {
+  mode: DashboardMode;
+  onModeChange: (mode: DashboardMode) => void;
   cropType: string;
   onCropChange: (value: string) => void;
+  mangroveWidth: number;
+  onMangroveWidthChange: (value: number) => void;
+  onMangroveWidthChangeEnd: (value: number) => void;
   latitude: number | null;
   longitude: number | null;
   onSimulate: () => void;
@@ -20,19 +28,33 @@ interface SidebarProps {
     riskReduction: number;
     monthlyData: { month: string; value: number }[];
   };
+  coastalResults: {
+    valueProtected: number;
+    waveAttenuation: number;
+  };
+  showCoastalResults: boolean;
+  isCoastalSimulating: boolean;
   onClose?: () => void;
   isMobile?: boolean;
 }
 
 export const Sidebar = ({
+  mode,
+  onModeChange,
   cropType,
   onCropChange,
+  mangroveWidth,
+  onMangroveWidthChange,
+  onMangroveWidthChangeEnd,
   latitude,
   longitude,
   onSimulate,
   isSimulating,
   showResults,
   results,
+  coastalResults,
+  showCoastalResults,
+  isCoastalSimulating,
   onClose,
   isMobile,
 }: SidebarProps) => {
@@ -59,23 +81,46 @@ export const Sidebar = ({
       
       {/* Controls */}
       <div className="flex-1 overflow-y-auto p-6 space-y-6">
-        <CropSelector value={cropType} onChange={onCropChange} />
+        <ModeSelector value={mode} onChange={onModeChange} />
         
         <CoordinatesDisplay latitude={latitude} longitude={longitude} />
         
-        <SimulateButton 
-          onClick={onSimulate} 
-          isLoading={isSimulating}
-          disabled={!canSimulate}
-        />
-        
-        <ResultsCard 
-          visible={showResults}
-          isLoading={isSimulating}
-          avoidedLoss={results.avoidedLoss}
-          riskReduction={results.riskReduction}
-          monthlyData={results.monthlyData}
-        />
+        {mode === 'agriculture' ? (
+          <>
+            <CropSelector value={cropType} onChange={onCropChange} />
+            
+            <SimulateButton 
+              onClick={onSimulate} 
+              isLoading={isSimulating}
+              disabled={!canSimulate}
+            />
+            
+            <ResultsCard 
+              visible={showResults}
+              isLoading={isSimulating}
+              avoidedLoss={results.avoidedLoss}
+              riskReduction={results.riskReduction}
+              monthlyData={results.monthlyData}
+            />
+          </>
+        ) : (
+          <>
+            <MangroveSlider
+              value={mangroveWidth}
+              onChange={onMangroveWidthChange}
+              onChangeEnd={onMangroveWidthChangeEnd}
+              disabled={!canSimulate}
+            />
+            
+            <CoastalResultsCard
+              visible={showCoastalResults}
+              isLoading={isCoastalSimulating}
+              valueProtected={coastalResults.valueProtected}
+              waveAttenuation={coastalResults.waveAttenuation}
+              mangroveWidth={mangroveWidth}
+            />
+          </>
+        )}
       </div>
       
       {/* Footer */}
