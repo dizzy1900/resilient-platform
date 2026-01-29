@@ -139,7 +139,6 @@ const Index = () => {
             lat: markerPosition.lat,
             lon: markerPosition.lng,
             mangrove_width: width,
-            property_value: propertyValue,
           }),
         });
 
@@ -152,27 +151,11 @@ const Index = () => {
         // Debug log the full response to see actual structure
         console.log("Coastal API response:", JSON.stringify(responseData, null, 2));
 
-        // Handle response - adjust based on actual API response structure
-        const result = Array.isArray(responseData) ? responseData[0] : responseData;
-        const data = result?.data || result;
-        const analysis = data?.data?.analysis || data?.analysis || data;
-
-        // Try multiple possible field paths for slope and storm wave
-        const rawSlope =
-          analysis?.slope ?? data?.slope ?? data?.detected_slope ?? data?.terrain?.slope ?? result?.slope ?? null;
-        const rawStormWave =
-          analysis?.storm_wave ??
-          analysis?.stormWave ??
-          data?.storm_wave ??
-          data?.stormWave ??
-          data?.wave_height ??
-          result?.storm_wave ??
-          null;
-
-        // Extract avoided_loss (backend may return it at multiple paths)
-        const rawAvoidedLoss =
-          analysis?.avoided_loss ?? analysis?.avoidedLoss ?? data?.avoided_loss ?? data?.avoidedLoss ?? null;
-        const avoidedLossNumber = typeof rawAvoidedLoss === "string" ? Number(rawAvoidedLoss) : rawAvoidedLoss;
+        // Railway API returns clean structure with flat fields
+        const data = responseData.data;
+        const rawSlope = data.slope;
+        const rawStormWave = data.storm_wave;
+        const rawAvoidedLoss = data.avoided_loss;
 
         console.log(
           "Parsed coastal data - slope:",
