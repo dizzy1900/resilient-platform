@@ -169,9 +169,9 @@ const Index = () => {
         setCoastalResults({
           // Keep cents precision so small values don't get rounded to $0
           avoidedLoss:
-            avoidedLossNumber !== null && Number.isFinite(avoidedLossNumber)
-              ? Math.round(avoidedLossNumber * 100) / 100
-              : Math.round(propertyValue * 0.3),
+            rawAvoidedLoss !== null && Number.isFinite(rawAvoidedLoss)
+              ? Math.round(rawAvoidedLoss * 100) / 100
+              : 0,
           slope: rawSlope !== null ? Math.round(rawSlope * 10) / 10 : null,
           stormWave: rawStormWave !== null ? Math.round(rawStormWave * 10) / 10 : null,
         });
