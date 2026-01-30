@@ -205,14 +205,51 @@ const Index = () => {
   );
 
   const getInterventionType = useCallback(() => {
-    if (greenRoofsEnabled && permeablePavementEnabled) {
-      return "combined";
-    } else if (greenRoofsEnabled) {
+    // Derive a toolkit list from our current UI toggles so we can reuse
+    // the backend team's robust string-matching logic.
+    const selectedToolkits: string[] = [
+      ...(greenRoofsEnabled ? ["Install Green Roofs"] : []),
+      ...(permeablePavementEnabled ? ["Permeable Pavement"] : []),
+    ];
+
+    // Check what's actually in selectedToolkits
+    console.log("🔍 Selected toolkits:", selectedToolkits);
+
+    if (!selectedToolkits || selectedToolkits.length === 0) {
+      console.log("⚠️ No toolkit selected, using green_roof as default");
       return "green_roof";
-    } else if (permeablePavementEnabled) {
+    }
+
+    // Convert to lowercase for comparison
+    const toolkitsLower = selectedToolkits.map((t) => t.toLowerCase());
+
+    // Check for green roofs
+    if (toolkitsLower.some((t) => t.includes("green") && t.includes("roof"))) {
+      console.log("✅ Using: green_roof");
+      return "green_roof";
+    }
+
+    // Check for permeable pavement
+    if (toolkitsLower.some((t) => t.includes("permeable") || t.includes("pavement"))) {
+      console.log("✅ Using: permeable_pavement");
       return "permeable_pavement";
     }
-    return "none";
+
+    // Check for bioswales
+    if (toolkitsLower.some((t) => t.includes("bioswale"))) {
+      console.log("✅ Using: bioswales");
+      return "bioswales";
+    }
+
+    // Check for rain gardens
+    if (toolkitsLower.some((t) => t.includes("rain") && t.includes("garden"))) {
+      console.log("✅ Using: rain_gardens");
+      return "rain_gardens";
+    }
+
+    // Default to green_roof if nothing matches
+    console.log("⚠️ No match found, defaulting to green_roof");
+    return "green_roof";
   }, [greenRoofsEnabled, permeablePavementEnabled]);
 
   const handleFloodSimulate = useCallback(async () => {
@@ -221,10 +258,12 @@ const Index = () => {
     setIsFloodSimulating(true);
 
     try {
+      const intervention_type = getInterventionType();
+
       const payload = {
         rain_intensity: 100,
         current_imperviousness: 0.7,
-        intervention_type: getInterventionType(),
+        intervention_type,
         slope_pct: 2.0,
       };
 
