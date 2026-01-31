@@ -45,7 +45,7 @@ export function TimelinePlayer({
     <div
       className={`fixed bottom-8 z-40 ${
         isSplitMode
-          ? "left-[25%] -translate-x-1/2 w-[42%] max-w-[280px]"
+          ? "left-[calc(240px+25vw)] -translate-x-1/2 w-[280px]"
           : "left-1/2 -translate-x-1/2 w-[90%] max-w-lg"
       }`}
     >
