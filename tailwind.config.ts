@@ -60,8 +60,9 @@ export default {
           border: "hsl(var(--sidebar-border))",
           ring: "hsl(var(--sidebar-ring))",
         },
-        safe: "hsl(var(--primary-safe))",
-        risk: "hsl(var(--primary-risk))",
+        safe: "hsl(var(--safe))",
+        risk: "hsl(var(--risk))",
+        info: "hsl(var(--info))",
       },
       borderRadius: {
         lg: "var(--radius)",
