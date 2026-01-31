@@ -98,10 +98,6 @@ export function TimelinePlayer({
             />
             <span
               className="text-white/70 font-medium tabular-nums tracking-tight transition-all duration-200 text-sm"
-              key={selectedYear}
-              style={{
-                animation: 'fadeInScale 0.3s ease-out',
-              }}
             >
               {selectedYear}
             </span>
@@ -137,19 +133,6 @@ export function TimelinePlayer({
           />
         </div>
       </div>
-
-      <style>{`
-        @keyframes fadeInScale {
-          from {
-            opacity: 0;
-            transform: scale(0.9);
-          }
-          to {
-            opacity: 1;
-            transform: scale(1);
-          }
-        }
-      `}</style>
     </div>
   );
 }
