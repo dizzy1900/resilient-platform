@@ -1,14 +1,18 @@
-import { useState, useCallback } from 'react';
-import { MapView, MapStyle, ViewState } from '@/components/dashboard/MapView';
+import { useState, useCallback, useMemo, useEffect } from 'react';
+import { MapView, MapStyle, ViewState, ZoneData } from '@/components/dashboard/MapView';
 import { DashboardMode } from '@/components/dashboard/ModeSelector';
 import { TimelinePlayer } from '@/components/TimelinePlayer';
 import { FloatingControlPanel } from '@/components/hud/FloatingControlPanel';
 import { SimulationPanel } from '@/components/hud/SimulationPanel';
 import { ResultsPanel } from '@/components/hud/ResultsPanel';
 import { MobileMenu } from '@/components/hud/MobileMenu';
+import { ZoneLegend } from '@/components/dashboard/ZoneLegend';
 import { toast } from '@/hooks/use-toast';
 import { Columns2, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { Polygon } from '@/utils/polygonMath';
+import { generateIrregularZone, ZoneMode } from '@/utils/zoneGeneration';
+import { calculateZoneAtTemperature } from '@/utils/zoneMorphing';
 
 const mockMonthlyData = [
   { month: 'Jan', value: 45 },
@@ -55,6 +59,9 @@ const Index = () => {
   const [selectedYear, setSelectedYear] = useState(2026);
   const [isTimelinePlaying, setIsTimelinePlaying] = useState(false);
 
+  const [temperature, setTemperature] = useState(1.5);
+  const [baselineZone, setBaselineZone] = useState<Polygon | null>(null);
+
   const [results, setResults] = useState({
     avoidedLoss: 0,
     riskReduction: 0,
@@ -82,11 +89,42 @@ const Index = () => {
   const showFloodOverlay = mode === 'flood' && markerPosition !== null;
   const canSimulate = markerPosition !== null;
 
+  useEffect(() => {
+    if (markerPosition) {
+      const newZone = generateIrregularZone(
+        { lat: markerPosition.lat, lng: markerPosition.lng },
+        mode as ZoneMode
+      );
+      setBaselineZone(newZone);
+    } else {
+      setBaselineZone(null);
+    }
+  }, [markerPosition, mode]);
+
+  const currentZone = useMemo(() => {
+    if (!baselineZone) return null;
+    return calculateZoneAtTemperature(baselineZone, temperature, mode as ZoneMode);
+  }, [baselineZone, temperature, mode]);
+
+  const zoneData: ZoneData | undefined = useMemo(() => {
+    if (!baselineZone) return undefined;
+    return {
+      baselineZone,
+      currentZone,
+      temperature,
+      mode: mode as ZoneMode,
+    };
+  }, [baselineZone, currentZone, temperature, mode]);
+
   const handleLocationSelect = useCallback((lat: number, lng: number) => {
     setMarkerPosition({ lat, lng });
     setShowResults(false);
     setShowCoastalResults(false);
     setShowFloodResults(false);
+  }, []);
+
+  const handleTemperatureChange = useCallback((value: number) => {
+    setTemperature(value);
   }, []);
 
   const handleSimulate = useCallback(async () => {
@@ -380,6 +418,7 @@ const Index = () => {
           viewState={isSplitMode ? viewState : undefined}
           onViewStateChange={isSplitMode ? handleViewStateChange : undefined}
           scenarioLabel={isSplitMode ? 'Current Forecast' : undefined}
+          zoneData={zoneData}
         />
 
         {isSplitMode && (
@@ -393,6 +432,7 @@ const Index = () => {
               onViewStateChange={handleViewStateChange}
               scenarioLabel="With Adaptation"
               isAdaptationScenario={true}
+              zoneData={zoneData}
             />
 
             <div className="absolute lg:left-1/2 lg:top-0 lg:bottom-0 top-1/2 left-0 right-0 -translate-y-1/2 lg:translate-y-0 z-20 pointer-events-none">
@@ -431,6 +471,18 @@ const Index = () => {
           onSimulate={getCurrentSimulateHandler()}
           isSimulating={isCurrentlySimulating}
           canSimulate={canSimulate}
+          temperature={temperature}
+          onTemperatureChange={handleTemperatureChange}
+        />
+      </div>
+
+      <div className="hidden lg:block absolute bottom-24 left-[340px] z-30">
+        <ZoneLegend
+          baselineZone={baselineZone}
+          currentZone={currentZone}
+          mode={mode as ZoneMode}
+          temperature={temperature}
+          visible={!!baselineZone && !!currentZone}
         />
       </div>
 
@@ -455,6 +507,8 @@ const Index = () => {
         canSimulate={canSimulate}
         onSimulate={getCurrentSimulateHandler()}
         isSimulating={isCurrentlySimulating}
+        temperature={temperature}
+        onTemperatureChange={handleTemperatureChange}
       />
 
       <div className={`absolute top-4 right-16 lg:top-6 z-40 ${isSplitMode ? 'lg:right-16' : 'lg:right-20'}`}>

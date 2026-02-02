@@ -3,7 +3,6 @@ import { GlassCard } from './GlassCard';
 import { Button } from '@/components/ui/button';
 import { Slider } from '@/components/ui/slider';
 import { DashboardMode } from '@/components/dashboard/ModeSelector';
-import { useState } from 'react';
 import { cn } from '@/lib/utils';
 
 interface SimulationPanelProps {
@@ -12,6 +11,8 @@ interface SimulationPanelProps {
   isSimulating: boolean;
   canSimulate: boolean;
   label?: string;
+  temperature: number;
+  onTemperatureChange: (value: number) => void;
 }
 
 const modeConfig = {
@@ -38,8 +39,9 @@ export const SimulationPanel = ({
   isSimulating,
   canSimulate,
   label,
+  temperature,
+  onTemperatureChange,
 }: SimulationPanelProps) => {
-  const [temperature, setTemperature] = useState(1.5);
   const config = modeConfig[mode];
 
   const getResilienceScore = () => {
@@ -85,7 +87,7 @@ export const SimulationPanel = ({
           </div>
           <Slider
             value={[temperature]}
-            onValueChange={(v) => setTemperature(v[0])}
+            onValueChange={(v) => onTemperatureChange(v[0])}
             min={0}
             max={3}
             step={0.1}

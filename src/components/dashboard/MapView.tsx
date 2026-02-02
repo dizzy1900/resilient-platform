@@ -1,5 +1,8 @@
-import { useCallback, useState, useEffect } from 'react';
+import { useCallback, useState, useEffect, useRef } from 'react';
 import { MapPin, Map as MapIcon, CircleAlert as AlertCircle } from 'lucide-react';
+import { Polygon, polygonToGeoJSON, createRingDifferenceGeoJSON, calculatePolygonArea } from '@/utils/polygonMath';
+import { ZoneMode } from '@/utils/zoneGeneration';
+import { getZoneColors } from '@/utils/zoneMorphing';
 
 const MAPBOX_TOKEN = 'pk.eyJ1IjoiZGF2aWRpemkiLCJhIjoiY21rd2dzeHN6MDFoYzNkcXYxOHZ0YXRuNCJ9.P_g5wstTHNzglNEQfHIoBg';
 
@@ -19,6 +22,13 @@ const MAP_STYLES: Record<MapStyle, string> = {
   flood: 'mapbox://styles/mapbox/dark-v11',
 };
 
+export interface ZoneData {
+  baselineZone: Polygon | null;
+  currentZone: Polygon | null;
+  temperature: number;
+  mode: ZoneMode;
+}
+
 interface MapViewProps {
   onLocationSelect: (lat: number, lng: number) => void;
   markerPosition: { lat: number; lng: number } | null;
@@ -28,6 +38,7 @@ interface MapViewProps {
   onViewStateChange?: (viewState: ViewState) => void;
   scenarioLabel?: string;
   isAdaptationScenario?: boolean;
+  zoneData?: ZoneData;
 }
 
 const DEFAULT_VIEW_STATE: ViewState = {
@@ -36,6 +47,15 @@ const DEFAULT_VIEW_STATE: ViewState = {
   zoom: 5,
   pitch: 0,
   bearing: 0,
+};
+
+const ZONE_LAYERS = {
+  BASELINE_SOURCE: 'baseline-zone-source',
+  BASELINE_OUTLINE: 'baseline-zone-outline',
+  CURRENT_SOURCE: 'current-zone-source',
+  CURRENT_FILL: 'current-zone-fill',
+  LOSS_SOURCE: 'loss-zone-source',
+  LOSS_FILL: 'loss-zone-fill',
 };
 
 const LazyMap = ({
@@ -47,19 +67,20 @@ const LazyMap = ({
   onViewStateChange,
   scenarioLabel,
   isAdaptationScenario = false,
+  zoneData,
 }: MapViewProps) => {
   const [MapComponents, setMapComponents] = useState<any>(null);
   const [error, setError] = useState<string | null>(null);
   const [internalViewState, setInternalViewState] = useState<ViewState>(DEFAULT_VIEW_STATE);
+  const mapRef = useRef<any>(null);
+  const layersAdded = useRef(false);
 
   const viewState = externalViewState ?? internalViewState;
 
   useEffect(() => {
     const loadMap = async () => {
       try {
-        // Import mapbox-gl CSS
         await import('mapbox-gl/dist/mapbox-gl.css');
-        // Import react-map-gl
         const reactMapGl = await import('react-map-gl');
         setMapComponents({
           Map: reactMapGl.Map,
@@ -74,6 +95,121 @@ const LazyMap = ({
     };
     loadMap();
   }, []);
+
+  const updateZoneLayers = useCallback((map: any) => {
+    if (!map || !zoneData) return;
+
+    const { baselineZone, currentZone, temperature, mode } = zoneData;
+    const colors = getZoneColors(mode, temperature);
+
+    if (!map.getSource(ZONE_LAYERS.BASELINE_SOURCE)) {
+      map.addSource(ZONE_LAYERS.BASELINE_SOURCE, {
+        type: 'geojson',
+        data: { type: 'FeatureCollection', features: [] },
+      });
+      map.addLayer({
+        id: ZONE_LAYERS.BASELINE_OUTLINE,
+        type: 'line',
+        source: ZONE_LAYERS.BASELINE_SOURCE,
+        paint: {
+          'line-color': colors.outlineColor,
+          'line-width': 2,
+          'line-dasharray': [4, 3],
+          'line-opacity': 0.6,
+        },
+      });
+    }
+
+    if (!map.getSource(ZONE_LAYERS.LOSS_SOURCE)) {
+      map.addSource(ZONE_LAYERS.LOSS_SOURCE, {
+        type: 'geojson',
+        data: { type: 'FeatureCollection', features: [] },
+      });
+      map.addLayer({
+        id: ZONE_LAYERS.LOSS_FILL,
+        type: 'fill',
+        source: ZONE_LAYERS.LOSS_SOURCE,
+        paint: {
+          'fill-color': colors.lossColor,
+          'fill-opacity': 0.5,
+        },
+      });
+    }
+
+    if (!map.getSource(ZONE_LAYERS.CURRENT_SOURCE)) {
+      map.addSource(ZONE_LAYERS.CURRENT_SOURCE, {
+        type: 'geojson',
+        data: { type: 'FeatureCollection', features: [] },
+      });
+      map.addLayer({
+        id: ZONE_LAYERS.CURRENT_FILL,
+        type: 'fill',
+        source: ZONE_LAYERS.CURRENT_SOURCE,
+        paint: {
+          'fill-color': colors.fillColor,
+          'fill-opacity': colors.fillOpacity,
+        },
+      });
+    }
+
+    layersAdded.current = true;
+
+    if (baselineZone) {
+      const baselineGeoJSON = polygonToGeoJSON(baselineZone);
+      map.getSource(ZONE_LAYERS.BASELINE_SOURCE)?.setData(baselineGeoJSON);
+      map.setPaintProperty(ZONE_LAYERS.BASELINE_OUTLINE, 'line-color', colors.outlineColor);
+    } else {
+      map.getSource(ZONE_LAYERS.BASELINE_SOURCE)?.setData({ type: 'FeatureCollection', features: [] });
+    }
+
+    if (currentZone) {
+      const currentGeoJSON = polygonToGeoJSON(currentZone);
+      map.getSource(ZONE_LAYERS.CURRENT_SOURCE)?.setData(currentGeoJSON);
+      map.setPaintProperty(ZONE_LAYERS.CURRENT_FILL, 'fill-color', colors.fillColor);
+      map.setPaintProperty(ZONE_LAYERS.CURRENT_FILL, 'fill-opacity', colors.fillOpacity);
+    } else {
+      map.getSource(ZONE_LAYERS.CURRENT_SOURCE)?.setData({ type: 'FeatureCollection', features: [] });
+    }
+
+    if (baselineZone && currentZone && temperature > 0) {
+      const baseArea = calculatePolygonArea(baselineZone);
+      const currentArea = calculatePolygonArea(currentZone);
+
+      let lossGeoJSON: GeoJSON.Feature<GeoJSON.Polygon> | null = null;
+
+      if (mode === 'flood') {
+        lossGeoJSON = createRingDifferenceGeoJSON(currentZone, baselineZone);
+      } else {
+        if (currentArea < baseArea) {
+          lossGeoJSON = createRingDifferenceGeoJSON(baselineZone, currentZone);
+        }
+      }
+
+      if (lossGeoJSON) {
+        map.getSource(ZONE_LAYERS.LOSS_SOURCE)?.setData(lossGeoJSON);
+        map.setPaintProperty(ZONE_LAYERS.LOSS_FILL, 'fill-color', colors.lossColor);
+      } else {
+        map.getSource(ZONE_LAYERS.LOSS_SOURCE)?.setData({ type: 'FeatureCollection', features: [] });
+      }
+    } else {
+      map.getSource(ZONE_LAYERS.LOSS_SOURCE)?.setData({ type: 'FeatureCollection', features: [] });
+    }
+  }, [zoneData]);
+
+  useEffect(() => {
+    const map = mapRef.current?.getMap?.();
+    if (map && map.isStyleLoaded()) {
+      updateZoneLayers(map);
+    }
+  }, [zoneData, updateZoneLayers]);
+
+  const handleMapLoad = useCallback((event: any) => {
+    const map = event.target;
+    mapRef.current = { getMap: () => map };
+    if (zoneData) {
+      updateZoneLayers(map);
+    }
+  }, [zoneData, updateZoneLayers]);
 
   const handleClick = useCallback((event: any) => {
     const { lng, lat } = event.lngLat;
@@ -118,10 +254,12 @@ const LazyMap = ({
       {...viewState}
       onMove={handleMove}
       onClick={handleClick}
+      onLoad={handleMapLoad}
       mapboxAccessToken={MAPBOX_TOKEN}
       mapStyle={MAP_STYLES[mapStyle]}
       style={{ width: '100%', height: '100%' }}
       cursor="crosshair"
+      ref={mapRef}
     >
       <NavigationControl position="top-right" showCompass={true} />
       <ScaleControl position="bottom-right" />
@@ -133,7 +271,7 @@ const LazyMap = ({
           </div>
         </div>
       )}
-      
+
       {markerPosition && (
         <Marker
           longitude={markerPosition.lng}
@@ -158,14 +296,13 @@ const LazyMap = ({
         </Marker>
       )}
 
-      {/* Flood risk heatmap overlay */}
-      {showFloodOverlay && markerPosition && (
+      {showFloodOverlay && markerPosition && !zoneData?.baselineZone && (
         <Marker
           longitude={markerPosition.lng}
           latitude={markerPosition.lat}
           anchor="center"
         >
-          <div 
+          <div
             className="rounded-full pointer-events-none"
             style={{
               width: '300px',
@@ -188,6 +325,7 @@ export const MapView = ({
   onViewStateChange,
   scenarioLabel,
   isAdaptationScenario = false,
+  zoneData,
 }: MapViewProps) => {
   return (
     <div className="relative w-full h-full">
@@ -200,9 +338,9 @@ export const MapView = ({
         onViewStateChange={onViewStateChange}
         scenarioLabel={scenarioLabel}
         isAdaptationScenario={isAdaptationScenario}
+        zoneData={zoneData}
       />
-      
-      {/* Map overlay gradient */}
+
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute top-0 left-0 right-0 h-24 bg-gradient-to-b from-background/50 to-transparent" />
         <div className="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-background/30 to-transparent" />

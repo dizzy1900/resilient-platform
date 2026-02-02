@@ -26,6 +26,8 @@ interface MobileMenuProps {
   canSimulate: boolean;
   onSimulate: () => void;
   isSimulating: boolean;
+  temperature: number;
+  onTemperatureChange: (value: number) => void;
 }
 
 export const MobileMenu = ({
@@ -49,6 +51,8 @@ export const MobileMenu = ({
   canSimulate,
   onSimulate,
   isSimulating,
+  temperature,
+  onTemperatureChange,
 }: MobileMenuProps) => {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -126,6 +130,8 @@ export const MobileMenu = ({
                 onSimulate={handleSimulate}
                 isSimulating={isSimulating}
                 canSimulate={canSimulate}
+                temperature={temperature}
+                onTemperatureChange={onTemperatureChange}
               />
             </div>
           </div>
