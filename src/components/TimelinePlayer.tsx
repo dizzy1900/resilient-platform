@@ -1,4 +1,4 @@
-import { useEffect, useRef, useCallback, useMemo } from 'react';
+import { useEffect, useRef, useCallback } from 'react';
 import { Slider } from '@/components/ui/slider';
 import { Button } from '@/components/ui/button';
 import { Play, Pause, Calendar } from 'lucide-react';
@@ -41,11 +41,6 @@ export function TimelinePlayer({
     };
   }, [isPlaying, handleYearIncrement]);
 
-  const progress = useMemo(
-    () => ((selectedYear - MIN_YEAR) / (MAX_YEAR - MIN_YEAR)) * 100,
-    [selectedYear]
-  );
-
   const handleSliderChange = useCallback(
     (value: number[]) => {
       onYearChange(value[0]);
@@ -64,7 +59,7 @@ export function TimelinePlayer({
       className="fixed bottom-6 lg:bottom-8 z-40 transition-all duration-300 ease-out left-1/2 -translate-x-1/2 w-[95%] lg:w-[85%] max-w-lg"
     >
       <div
-        className="bg-gradient-to-br from-black/50 to-black/30 backdrop-blur-xl rounded-xl lg:rounded-2xl border border-white/15 shadow-[0_8px_32px_0_rgba(0,0,0,0.4)] transition-all duration-300 hover:shadow-[0_12px_48px_0_rgba(0,0,0,0.5)] px-3 lg:px-5 py-2 lg:py-2.5"
+        className="bg-gradient-to-br from-black/50 to-black/30 backdrop-blur-xl rounded-xl lg:rounded-2xl border border-white/15 shadow-[0_8px_32px_0_rgba(0,0,0,0.4)] transition-all duration-300 hover:shadow-[0_12px_48px_0_rgba(0,0,0,0.5)] px-3 lg:px-5 py-3 lg:py-3.5"
       >
         <div className="flex items-center gap-2 lg:gap-3">
           <Button
@@ -122,15 +117,6 @@ export function TimelinePlayer({
               <span className="transition-colors duration-200 hover:text-white/70">{MAX_YEAR}</span>
             </div>
           </div>
-        </div>
-
-        <div
-          className="bg-white/5 rounded-full overflow-hidden backdrop-blur-sm border border-white/5 mt-3 h-1"
-        >
-          <div
-            className="h-full bg-gradient-to-r from-emerald-500/70 via-teal-500/70 to-cyan-500/70 transition-all duration-500 ease-out rounded-full shadow-[0_0_12px_rgba(52,211,153,0.4)]"
-            style={{ width: `${progress}%` }}
-          />
         </div>
       </div>
     </div>
