@@ -50,7 +50,12 @@ export const SimulateButton = ({
   const insetShadow = isPressed ? 'inset 0 2px 4px 0 rgba(0,0,0,0.3)' : 'none';
   const scale = isPressed ? 0.98 : (isHovered ? 1.02 : 1);
 
-  const boxShadow = `${insetHighlight}${insetHighlight !== 'none' ? ', ' : ''}${insetShadow}${insetShadow !== 'none' ? ', ' : ''}0 0 ${glowSize} 0 rgba(${currentStyle.glowColor}, ${glowIntensity})`;
+  const shadowParts = [
+    insetHighlight !== 'none' ? insetHighlight : null,
+    insetShadow !== 'none' ? insetShadow : null,
+    `0 0 ${glowSize} 0 rgba(${currentStyle.glowColor}, ${glowIntensity})`
+  ].filter(Boolean);
+  const boxShadow = shadowParts.join(', ');
 
   return (
     <button
