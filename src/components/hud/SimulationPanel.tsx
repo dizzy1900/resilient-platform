@@ -18,18 +18,21 @@ interface SimulationPanelProps {
 const modeConfig = {
   agriculture: {
     color: 'emerald',
-    buttonClass: 'bg-emerald-500 hover:bg-emerald-600',
-    glowClass: 'shadow-emerald-500/20',
+    gradientClass: 'bg-gradient-to-r from-emerald-500 to-teal-500',
+    shadowClass: 'shadow-[inset_0_1px_0_rgba(255,255,255,0.3),0_0_20px_rgba(16,185,129,0.4)]',
+    hoverShadowClass: 'hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.4),0_0_30px_rgba(16,185,129,0.6)]',
   },
   coastal: {
     color: 'teal',
-    buttonClass: 'bg-teal-500 hover:bg-teal-600',
-    glowClass: 'shadow-teal-500/20',
+    gradientClass: 'bg-gradient-to-r from-teal-500 to-cyan-500',
+    shadowClass: 'shadow-[inset_0_1px_0_rgba(255,255,255,0.3),0_0_20px_rgba(20,184,166,0.4)]',
+    hoverShadowClass: 'hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.4),0_0_30px_rgba(20,184,166,0.6)]',
   },
   flood: {
     color: 'blue',
-    buttonClass: 'bg-blue-500 hover:bg-blue-600',
-    glowClass: 'shadow-blue-500/20',
+    gradientClass: 'bg-gradient-to-r from-blue-600 to-blue-400',
+    shadowClass: 'shadow-[inset_0_1px_0_rgba(255,255,255,0.3),0_0_20px_rgba(59,130,246,0.4)]',
+    hoverShadowClass: 'hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.4),0_0_30px_rgba(59,130,246,0.6)]',
   },
 };
 
@@ -116,13 +119,16 @@ export const SimulationPanel = ({
         </div>
 
         <Button
+          variant="ghost"
           onClick={onSimulate}
           disabled={!canSimulate || isSimulating}
           className={cn(
-            'w-full h-11 lg:h-12 text-xs lg:text-sm font-semibold text-white transition-all duration-300 rounded-xl shadow-lg active:scale-95',
-            config.buttonClass,
-            config.glowClass,
-            'disabled:opacity-50 disabled:cursor-not-allowed hover:shadow-xl'
+            'w-full h-11 lg:h-12 text-xs lg:text-sm font-semibold text-white transition-all duration-200 rounded-xl',
+            'hover:scale-[1.02] active:scale-[0.98]',
+            config.gradientClass,
+            config.shadowClass,
+            config.hoverShadowClass,
+            'disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100'
           )}
         >
           {isSimulating ? (
