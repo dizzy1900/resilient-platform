@@ -395,7 +395,7 @@ const Index = () => {
               isAdaptationScenario={true}
             />
 
-            <div className="absolute lg:left-1/2 lg:top-0 lg:bottom-0 lg:-translate-x-1/2 top-1/2 left-0 right-0 -translate-y-1/2 lg:translate-y-0 z-20 pointer-events-none">
+            <div className="absolute lg:left-1/2 lg:top-0 lg:bottom-0 top-1/2 left-0 right-0 -translate-y-1/2 lg:translate-y-0 z-20 pointer-events-none">
               <div className="lg:w-px lg:h-full h-px w-full bg-white/20 backdrop-blur-sm" />
             </div>
           </>
