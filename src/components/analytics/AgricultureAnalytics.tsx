@@ -52,8 +52,8 @@ export const AgricultureAnalytics = ({
   );
 
   const content = (
-    <div className={`space-y-6 ${embedded ? '' : 'pr-4'}`}>
-        <div className="space-y-3">
+    <div className="space-y-6">
+      <div className="space-y-3">
           <div className="flex items-center gap-2">
             <CloudRain className="w-4 h-4 text-blue-400" />
             <h3 className="text-sm font-medium text-white">Rainfall Projection</h3>
@@ -106,7 +106,7 @@ export const AgricultureAnalytics = ({
             ))}
           </div>
         </div>
-      </div>
+    </div>
   );
 
   if (embedded) {
@@ -115,7 +115,9 @@ export const AgricultureAnalytics = ({
 
   return (
     <ScrollArea className="h-[calc(100vh-180px)]">
-      {content}
+      <div className="pr-4">
+        {content}
+      </div>
     </ScrollArea>
   );
 };

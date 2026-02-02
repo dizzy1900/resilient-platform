@@ -54,8 +54,8 @@ export const CoastalAnalytics = ({
   }, [stormSurgeData]);
 
   const content = (
-    <div className={`space-y-6 ${embedded ? '' : 'pr-4'}`}>
-        <div className="space-y-3">
+    <div className="space-y-6">
+      <div className="space-y-3">
           <div className="flex items-center gap-2">
             <Waves className="w-4 h-4 text-teal-400" />
             <h3 className="text-sm font-medium text-white">Storm Surge Projection</h3>
@@ -118,7 +118,7 @@ export const CoastalAnalytics = ({
             ))}
           </div>
         </div>
-      </div>
+    </div>
   );
 
   if (embedded) {
@@ -127,7 +127,9 @@ export const CoastalAnalytics = ({
 
   return (
     <ScrollArea className="h-[calc(100vh-180px)]">
-      {content}
+      <div className="pr-4">
+        {content}
+      </div>
     </ScrollArea>
   );
 };

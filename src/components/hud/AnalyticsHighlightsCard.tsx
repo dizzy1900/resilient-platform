@@ -287,33 +287,35 @@ export const AnalyticsHighlightsCard = ({
               </div>
             </div>
 
-            <div className="flex-1 overflow-y-auto p-4">
-              {mode === 'agriculture' && latitude !== null && (
-                <AgricultureAnalytics
-                  latitude={latitude}
-                  temperatureIncrease={temperature}
-                  cropType={cropType}
-                  embedded
-                />
-              )}
-              {mode === 'coastal' && coastalResults && (
-                <CoastalAnalytics
-                  mangroveWidth={mangroveWidth}
-                  slope={coastalResults.slope}
-                  stormWave={coastalResults.stormWave}
-                  avoidedLoss={coastalResults.avoidedLoss}
-                  embedded
-                />
-              )}
-              {mode === 'flood' && floodResults && (
-                <FloodAnalytics
-                  greenRoofsEnabled={greenRoofsEnabled}
-                  permeablePavementEnabled={permeablePavementEnabled}
-                  floodDepthReduction={floodResults.floodDepthReduction}
-                  valueProtected={floodResults.valueProtected}
-                  embedded
-                />
-              )}
+            <div className="flex-1 overflow-y-auto overflow-x-hidden min-h-0">
+              <div className="p-4">
+                {mode === 'agriculture' && latitude !== null && (
+                  <AgricultureAnalytics
+                    latitude={latitude}
+                    temperatureIncrease={temperature}
+                    cropType={cropType}
+                    embedded
+                  />
+                )}
+                {mode === 'coastal' && coastalResults && (
+                  <CoastalAnalytics
+                    mangroveWidth={mangroveWidth}
+                    slope={coastalResults.slope}
+                    stormWave={coastalResults.stormWave}
+                    avoidedLoss={coastalResults.avoidedLoss}
+                    embedded
+                  />
+                )}
+                {mode === 'flood' && floodResults && (
+                  <FloodAnalytics
+                    greenRoofsEnabled={greenRoofsEnabled}
+                    permeablePavementEnabled={permeablePavementEnabled}
+                    floodDepthReduction={floodResults.floodDepthReduction}
+                    valueProtected={floodResults.valueProtected}
+                    embedded
+                  />
+                )}
+              </div>
             </div>
           </div>
         ) : (
