@@ -81,6 +81,14 @@ const modeConfig = {
     borderColor: 'border-blue-500/30',
     gradientFrom: 'from-blue-500/10',
   },
+  portfolio: {
+    icon: Sprout,
+    label: 'Portfolio',
+    color: 'text-purple-400',
+    bgColor: 'bg-purple-500/20',
+    borderColor: 'border-purple-500/30',
+    gradientFrom: 'from-purple-500/10',
+  },
 };
 
 const priorityConfig = {

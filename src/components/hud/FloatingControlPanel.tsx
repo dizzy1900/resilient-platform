@@ -1,4 +1,4 @@
-import { Activity, MapPin, Wheat, Coffee, TreePine, Building2, Droplets } from 'lucide-react';
+import { Activity, MapPin, Wheat, Coffee, TreePine, Building2, Droplets, Briefcase } from 'lucide-react';
 import { GlassCard } from './GlassCard';
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
@@ -109,40 +109,48 @@ export const FloatingControlPanel = ({
         onValueChange={(v) => onModeChange(v as DashboardMode)}
         className="w-full mb-4"
       >
-        <TabsList className="w-full grid grid-cols-3 h-10 lg:h-11 bg-white/5 border border-white/10 rounded-xl p-1">
+        <TabsList className="w-full grid grid-cols-4 h-10 lg:h-11 bg-white/5 border border-white/10 rounded-xl p-1">
           <TabsTrigger
             value="agriculture"
-            className="rounded-lg text-[10px] lg:text-xs font-medium data-[state=active]:bg-emerald-500/20 data-[state=active]:text-emerald-400 data-[state=active]:border data-[state=active]:border-emerald-500/30 text-white/60 transition-all"
+            className="rounded-lg text-[9px] lg:text-[10px] font-medium data-[state=active]:bg-emerald-500/20 data-[state=active]:text-emerald-400 data-[state=active]:border data-[state=active]:border-emerald-500/30 text-white/60 transition-all px-1"
           >
-            Agriculture
+            Agri
           </TabsTrigger>
           <TabsTrigger
             value="coastal"
-            className="rounded-lg text-[10px] lg:text-xs font-medium data-[state=active]:bg-teal-500/20 data-[state=active]:text-teal-400 data-[state=active]:border data-[state=active]:border-teal-500/30 text-white/60 transition-all"
+            className="rounded-lg text-[9px] lg:text-[10px] font-medium data-[state=active]:bg-teal-500/20 data-[state=active]:text-teal-400 data-[state=active]:border data-[state=active]:border-teal-500/30 text-white/60 transition-all px-1"
           >
             Coastal
           </TabsTrigger>
           <TabsTrigger
             value="flood"
-            className="rounded-lg text-[10px] lg:text-xs font-medium data-[state=active]:bg-blue-500/20 data-[state=active]:text-blue-400 data-[state=active]:border data-[state=active]:border-blue-500/30 text-white/60 transition-all"
+            className="rounded-lg text-[9px] lg:text-[10px] font-medium data-[state=active]:bg-blue-500/20 data-[state=active]:text-blue-400 data-[state=active]:border data-[state=active]:border-blue-500/30 text-white/60 transition-all px-1"
           >
-            Flood Risk
+            Flood
+          </TabsTrigger>
+          <TabsTrigger
+            value="portfolio"
+            className="rounded-lg text-[9px] lg:text-[10px] font-medium data-[state=active]:bg-purple-500/20 data-[state=active]:text-purple-400 data-[state=active]:border data-[state=active]:border-purple-500/30 text-white/60 transition-all px-1"
+          >
+            Portfolio
           </TabsTrigger>
         </TabsList>
       </Tabs>
 
-      <div className="flex items-center gap-2 mb-4 px-1">
-        <MapPin className={`w-4 h-4 ${hasCoordinates ? 'text-emerald-400' : 'text-white/40'}`} />
-        {hasCoordinates ? (
-          <div className="flex items-center gap-2 font-mono text-sm text-white/70">
-            <span>{latitude?.toFixed(4)}</span>
-            <span className="text-white/30">|</span>
-            <span>{longitude?.toFixed(4)}</span>
-          </div>
-        ) : (
-          <span className="text-sm text-white/40">Click map to select location</span>
-        )}
-      </div>
+      {mode !== 'portfolio' && (
+        <div className="flex items-center gap-2 mb-4 px-1">
+          <MapPin className={`w-4 h-4 ${hasCoordinates ? 'text-emerald-400' : 'text-white/40'}`} />
+          {hasCoordinates ? (
+            <div className="flex items-center gap-2 font-mono text-sm text-white/70">
+              <span>{latitude?.toFixed(4)}</span>
+              <span className="text-white/30">|</span>
+              <span>{longitude?.toFixed(4)}</span>
+            </div>
+          ) : (
+            <span className="text-sm text-white/40">Click map to select location</span>
+          )}
+        </div>
+      )}
 
       <div className="space-y-3">
         {mode === 'agriculture' && (

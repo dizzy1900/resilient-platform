@@ -30,6 +30,11 @@ const modeStyles: Record<DashboardMode, {
     hoverGradient: 'linear-gradient(to right, #2563eb, #3b82f6)',
     glowColor: '59, 130, 246',
   },
+  portfolio: {
+    gradient: 'linear-gradient(to right, #9333ea, #a855f7)',
+    hoverGradient: 'linear-gradient(to right, #7c3aed, #9333ea)',
+    glowColor: '147, 51, 234',
+  },
 };
 
 export const SimulateButton = ({

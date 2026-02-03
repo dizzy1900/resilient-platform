@@ -14,7 +14,80 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      batch_jobs: {
+        Row: {
+          created_at: string
+          error_message: string | null
+          id: string
+          processed_assets: number | null
+          report_url: string | null
+          status: string
+          total_assets: number | null
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          error_message?: string | null
+          id?: string
+          processed_assets?: number | null
+          report_url?: string | null
+          status?: string
+          total_assets?: number | null
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          error_message?: string | null
+          id?: string
+          processed_assets?: number | null
+          report_url?: string | null
+          status?: string
+          total_assets?: number | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      portfolio_assets: {
+        Row: {
+          created_at: string
+          id: string
+          job_id: string
+          lat: number
+          lon: number
+          name: string
+          result: Json | null
+          value: number
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          job_id: string
+          lat: number
+          lon: number
+          name: string
+          result?: Json | null
+          value: number
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          job_id?: string
+          lat?: number
+          lon?: number
+          name?: string
+          result?: Json | null
+          value?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "portfolio_assets_job_id_fkey"
+            columns: ["job_id"]
+            isOneToOne: false
+            referencedRelation: "batch_jobs"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never
