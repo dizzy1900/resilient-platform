@@ -5,6 +5,8 @@ import { TimelinePlayer } from '@/components/TimelinePlayer';
 import { FloatingControlPanel } from '@/components/hud/FloatingControlPanel';
 import { SimulationPanel } from '@/components/hud/SimulationPanel';
 import { ResultsPanel } from '@/components/hud/ResultsPanel';
+import { PortfolioPanel } from '@/components/portfolio/PortfolioPanel';
+import { PortfolioHeader } from '@/components/portfolio/PortfolioHeader';
 import { MobileMenu } from '@/components/hud/MobileMenu';
 import { ZoneLegend } from '@/components/dashboard/ZoneLegend';
 import { AnalyticsHighlightsCard } from '@/components/hud/AnalyticsHighlightsCard';
@@ -443,49 +445,60 @@ const Index = () => {
         )}
       </div>
 
-      <div className="hidden lg:block absolute top-16 left-6 z-30">
-        <FloatingControlPanel
-          mode={mode}
-          onModeChange={handleModeChange}
-          latitude={markerPosition?.lat ?? null}
-          longitude={markerPosition?.lng ?? null}
-          cropType={cropType}
-          onCropChange={setCropType}
-          mangroveWidth={mangroveWidth}
-          onMangroveWidthChange={handleMangroveWidthChange}
-          onMangroveWidthChangeEnd={handleMangroveWidthChangeEnd}
-          propertyValue={propertyValue}
-          onPropertyValueChange={setPropertyValue}
-          buildingValue={buildingValue}
-          onBuildingValueChange={setBuildingValue}
-          greenRoofsEnabled={greenRoofsEnabled}
-          onGreenRoofsChange={handleGreenRoofsChange}
-          permeablePavementEnabled={permeablePavementEnabled}
-          onPermeablePavementChange={handlePermeablePavementChange}
-          canSimulate={canSimulate}
-        />
-      </div>
+      {mode !== 'portfolio' && (
+        <div className="hidden lg:block absolute top-16 left-6 z-30">
+          <FloatingControlPanel
+            mode={mode}
+            onModeChange={handleModeChange}
+            latitude={markerPosition?.lat ?? null}
+            longitude={markerPosition?.lng ?? null}
+            cropType={cropType}
+            onCropChange={setCropType}
+            mangroveWidth={mangroveWidth}
+            onMangroveWidthChange={handleMangroveWidthChange}
+            onMangroveWidthChangeEnd={handleMangroveWidthChangeEnd}
+            propertyValue={propertyValue}
+            onPropertyValueChange={setPropertyValue}
+            buildingValue={buildingValue}
+            onBuildingValueChange={setBuildingValue}
+            greenRoofsEnabled={greenRoofsEnabled}
+            onGreenRoofsChange={handleGreenRoofsChange}
+            permeablePavementEnabled={permeablePavementEnabled}
+            onPermeablePavementChange={handlePermeablePavementChange}
+            canSimulate={canSimulate}
+          />
+        </div>
+      )}
 
-      <div className="hidden lg:block absolute bottom-32 left-6 z-30">
-        <SimulationPanel
-          mode={mode}
-          onSimulate={getCurrentSimulateHandler()}
-          isSimulating={isCurrentlySimulating}
-          canSimulate={canSimulate}
-          temperature={temperature}
-          onTemperatureChange={handleTemperatureChange}
-        />
-      </div>
+      {mode === 'portfolio' ? (
+        <div className="hidden lg:block absolute top-16 left-6 bottom-20 z-30 w-80 overflow-y-auto">
+          <PortfolioHeader onModeChange={handleModeChange} />
+          <PortfolioPanel />
+        </div>
+      ) : (
+        <div className="hidden lg:block absolute bottom-32 left-6 z-30">
+          <SimulationPanel
+            mode={mode}
+            onSimulate={getCurrentSimulateHandler()}
+            isSimulating={isCurrentlySimulating}
+            canSimulate={canSimulate}
+            temperature={temperature}
+            onTemperatureChange={handleTemperatureChange}
+          />
+        </div>
+      )}
 
-      <div className="hidden lg:block absolute bottom-32 left-[360px] z-30">
-        <ZoneLegend
-          baselineZone={baselineZone}
-          currentZone={currentZone}
-          mode={mode as ZoneMode}
-          temperature={temperature}
-          visible={!!baselineZone && !!currentZone}
-        />
-      </div>
+      {mode !== 'portfolio' && (
+        <div className="hidden lg:block absolute bottom-32 left-[360px] z-30">
+          <ZoneLegend
+            baselineZone={baselineZone}
+            currentZone={currentZone}
+            mode={mode as ZoneMode}
+            temperature={temperature}
+            visible={!!baselineZone && !!currentZone}
+          />
+        </div>
+      )}
 
       <MobileMenu
         mode={mode}
@@ -533,46 +546,48 @@ const Index = () => {
         </Button>
       </div>
 
-      <div className="absolute bottom-24 lg:bottom-32 right-4 lg:right-20 left-4 lg:left-auto z-30 flex flex-col gap-3">
-        <ResultsPanel
-          mode={mode}
-          visible={showCurrentResults}
-          isLoading={isCurrentlySimulating}
-          agricultureResults={
-            mode === 'agriculture'
-              ? {
-                  avoidedLoss: results.avoidedLoss,
-                  riskReduction: results.riskReduction,
-                  monthlyData: results.monthlyData,
-                }
-              : undefined
-          }
-          coastalResults={mode === 'coastal' ? coastalResults : undefined}
-          floodResults={mode === 'flood' ? floodResults : undefined}
-          mangroveWidth={mangroveWidth}
-          greenRoofsEnabled={greenRoofsEnabled}
-          permeablePavementEnabled={permeablePavementEnabled}
-        />
+      {mode !== 'portfolio' && (
+        <div className="absolute bottom-24 lg:bottom-32 right-4 lg:right-20 left-4 lg:left-auto z-30 flex flex-col gap-3">
+          <ResultsPanel
+            mode={mode}
+            visible={showCurrentResults}
+            isLoading={isCurrentlySimulating}
+            agricultureResults={
+              mode === 'agriculture'
+                ? {
+                    avoidedLoss: results.avoidedLoss,
+                    riskReduction: results.riskReduction,
+                    monthlyData: results.monthlyData,
+                  }
+                : undefined
+            }
+            coastalResults={mode === 'coastal' ? coastalResults : undefined}
+            floodResults={mode === 'flood' ? floodResults : undefined}
+            mangroveWidth={mangroveWidth}
+            greenRoofsEnabled={greenRoofsEnabled}
+            permeablePavementEnabled={permeablePavementEnabled}
+          />
 
-        <AnalyticsHighlightsCard
-          visible={showCurrentResults && !isCurrentlySimulating}
-          mode={mode}
-          latitude={markerPosition?.lat ?? null}
-          longitude={markerPosition?.lng ?? null}
-          temperature={temperature}
-          cropType={cropType}
-          mangroveWidth={mangroveWidth}
-          greenRoofsEnabled={greenRoofsEnabled}
-          permeablePavementEnabled={permeablePavementEnabled}
-          agricultureResults={
-            mode === 'agriculture'
-              ? { avoidedLoss: results.avoidedLoss, riskReduction: results.riskReduction }
-              : undefined
-          }
-          coastalResults={mode === 'coastal' ? coastalResults : undefined}
-          floodResults={mode === 'flood' ? floodResults : undefined}
-        />
-      </div>
+          <AnalyticsHighlightsCard
+            visible={showCurrentResults && !isCurrentlySimulating}
+            mode={mode}
+            latitude={markerPosition?.lat ?? null}
+            longitude={markerPosition?.lng ?? null}
+            temperature={temperature}
+            cropType={cropType}
+            mangroveWidth={mangroveWidth}
+            greenRoofsEnabled={greenRoofsEnabled}
+            permeablePavementEnabled={permeablePavementEnabled}
+            agricultureResults={
+              mode === 'agriculture'
+                ? { avoidedLoss: results.avoidedLoss, riskReduction: results.riskReduction }
+                : undefined
+            }
+            coastalResults={mode === 'coastal' ? coastalResults : undefined}
+            floodResults={mode === 'flood' ? floodResults : undefined}
+          />
+        </div>
+      )}
 
       <TimelinePlayer
         selectedYear={selectedYear}

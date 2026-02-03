@@ -34,6 +34,12 @@ const modeConfig = {
     shadowClass: 'shadow-[inset_0_1px_0_rgba(255,255,255,0.3),0_0_20px_rgba(59,130,246,0.4)]',
     hoverShadowClass: 'hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.4),0_0_30px_rgba(59,130,246,0.6)]',
   },
+  portfolio: {
+    color: 'purple',
+    gradientClass: 'bg-gradient-to-r from-purple-600 to-purple-400',
+    shadowClass: 'shadow-[inset_0_1px_0_rgba(255,255,255,0.3),0_0_20px_rgba(147,51,234,0.4)]',
+    hoverShadowClass: 'hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.4),0_0_30px_rgba(147,51,234,0.6)]',
+  },
 };
 
 export const SimulationPanel = ({
