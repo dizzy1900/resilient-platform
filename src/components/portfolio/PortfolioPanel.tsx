@@ -3,7 +3,7 @@ import { Briefcase, Play, Loader2, Download, CheckCircle2, AlertCircle, RefreshC
 import { GlassCard } from '@/components/hud/GlassCard';
 import { Button } from '@/components/ui/button';
 import { PortfolioCSVUpload, PortfolioAsset } from './PortfolioCSVUpload';
-import { supabase } from '@/integrations/supabase/client';
+import { supabase } from '@/integrations/supabase/clientSafe';
 import { toast } from '@/hooks/use-toast';
 import confetti from 'canvas-confetti';
 
