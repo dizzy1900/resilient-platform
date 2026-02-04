@@ -489,7 +489,7 @@ const Index = () => {
       )}
 
       {mode !== 'portfolio' && (
-        <div className="hidden lg:block absolute bottom-32 left-[360px] z-30">
+        <div className="hidden lg:block absolute bottom-32 left-[344px] z-30">
           <ZoneLegend
             baselineZone={baselineZone}
             currentZone={currentZone}
