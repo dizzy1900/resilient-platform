@@ -233,7 +233,7 @@ export const AnalyticsHighlightsCard = ({
     <div
       className={`transition-all duration-400 ease-out ${
         isExpanded
-          ? 'fixed inset-4 lg:top-16 lg:right-20 lg:bottom-32 lg:left-auto lg:w-80 z-50'
+          ? 'fixed inset-3 sm:inset-4 lg:top-16 lg:right-20 lg:bottom-32 lg:left-auto lg:w-80 z-50'
           : 'w-full lg:w-80'
       }`}
     >
@@ -241,7 +241,7 @@ export const AnalyticsHighlightsCard = ({
         className={`relative overflow-hidden transition-all duration-400 ease-out ${
           isExpanded
             ? 'h-full'
-            : 'p-4'
+            : 'p-3 sm:p-4'
         } ${config.borderColor}`}
       >
         <div className={`absolute inset-0 bg-gradient-to-br ${config.gradientFrom} to-transparent pointer-events-none rounded-2xl`} />

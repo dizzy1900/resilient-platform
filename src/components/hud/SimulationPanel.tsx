@@ -82,10 +82,10 @@ export const SimulationPanel = ({
         : 'Simulate Flood Risk');
 
   return (
-    <GlassCard className="w-full lg:w-80 p-3 lg:p-4">
-      <div className="space-y-3 lg:space-y-4">
-        <div className="flex items-center gap-2 text-xs lg:text-sm font-medium text-white/70">
-          <Thermometer className="w-3.5 h-3.5 lg:w-4 lg:h-4 text-amber-400" />
+    <GlassCard className="w-full lg:w-80 p-2.5 sm:p-3 lg:p-4">
+      <div className="space-y-2.5 sm:space-y-3 lg:space-y-4">
+        <div className="flex items-center gap-1.5 sm:gap-2 text-[11px] sm:text-xs lg:text-sm font-medium text-white/70">
+          <Thermometer className="w-3 h-3 sm:w-3.5 sm:h-3.5 lg:w-4 lg:h-4 text-amber-400" />
           <span>Simulation Parameters</span>
         </div>
 

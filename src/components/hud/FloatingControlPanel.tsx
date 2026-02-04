@@ -88,17 +88,17 @@ export const FloatingControlPanel = ({
   const CropIcon = selectedCrop?.icon || Wheat;
 
   return (
-    <GlassCard className="w-full lg:w-80 p-3 lg:p-4">
-      <div className="flex items-center gap-3 mb-4">
+    <GlassCard className="w-full lg:w-80 p-2.5 sm:p-3 lg:p-4">
+      <div className="flex items-center gap-2 sm:gap-3 mb-3 sm:mb-4">
         <div className="relative">
-          <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-500 to-emerald-500 flex items-center justify-center">
-            <Activity className="w-5 h-5 text-white" />
+          <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-xl bg-gradient-to-br from-blue-500 to-emerald-500 flex items-center justify-center">
+            <Activity className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
           </div>
           <div className="absolute inset-0 rounded-xl bg-gradient-to-br from-blue-500 to-emerald-500 blur-lg opacity-40" />
         </div>
         <div className="flex flex-col">
-          <span className="text-xl font-bold tracking-tight text-blue-400">ADAPTMetric</span>
-          <span className="text-xs font-medium text-white/50 tracking-wide uppercase">
+          <span className="text-lg sm:text-xl font-bold tracking-tight text-blue-400">ADAPTMetric</span>
+          <span className="text-[10px] sm:text-xs font-medium text-white/50 tracking-wide uppercase">
             Resilience Engine
           </span>
         </div>
@@ -107,9 +107,9 @@ export const FloatingControlPanel = ({
       <Tabs
         value={mode}
         onValueChange={(v) => onModeChange(v as DashboardMode)}
-        className="w-full mb-4"
+        className="w-full mb-3 sm:mb-4"
       >
-        <TabsList className="w-full grid grid-cols-4 h-10 lg:h-11 bg-white/5 border border-white/10 rounded-xl p-1">
+        <TabsList className="w-full grid grid-cols-4 h-9 sm:h-10 lg:h-11 bg-white/5 border border-white/10 rounded-xl p-0.5 sm:p-1">
           <TabsTrigger
             value="agriculture"
             className="rounded-lg text-[9px] lg:text-[10px] font-medium data-[state=active]:bg-emerald-500/20 data-[state=active]:text-emerald-400 data-[state=active]:border data-[state=active]:border-emerald-500/30 text-white/60 transition-all px-1"
@@ -138,16 +138,16 @@ export const FloatingControlPanel = ({
       </Tabs>
 
       {mode !== 'portfolio' && (
-        <div className="flex items-center gap-2 mb-4 px-1">
-          <MapPin className={`w-4 h-4 ${hasCoordinates ? 'text-emerald-400' : 'text-white/40'}`} />
+        <div className="flex items-center gap-2 mb-3 sm:mb-4 px-1">
+          <MapPin className={`w-3.5 h-3.5 sm:w-4 sm:h-4 ${hasCoordinates ? 'text-emerald-400' : 'text-white/40'}`} />
           {hasCoordinates ? (
-            <div className="flex items-center gap-2 font-mono text-sm text-white/70">
+            <div className="flex items-center gap-1.5 sm:gap-2 font-mono text-xs sm:text-sm text-white/70">
               <span>{latitude?.toFixed(4)}</span>
               <span className="text-white/30">|</span>
               <span>{longitude?.toFixed(4)}</span>
             </div>
           ) : (
-            <span className="text-sm text-white/40">Click map to select location</span>
+            <span className="text-xs sm:text-sm text-white/40">Click map to select location</span>
           )}
         </div>
       )}

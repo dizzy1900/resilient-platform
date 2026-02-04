@@ -70,14 +70,14 @@ export const ResultsPanel = ({
 
   if (isLoading) {
     return (
-      <GlassCard className="w-full lg:w-80 p-4 lg:p-5 animate-in slide-in-from-bottom lg:slide-in-from-right duration-300">
-        <div className="space-y-3 lg:space-y-4">
+      <GlassCard className="w-full lg:w-80 p-3 sm:p-4 lg:p-5 animate-in slide-in-from-bottom lg:slide-in-from-right duration-300">
+        <div className="space-y-2 sm:space-y-3 lg:space-y-4">
           <div className="flex items-center gap-2">
             <Shield className="w-4 h-4 lg:w-5 lg:h-5 text-emerald-400 animate-pulse" />
             <Skeleton className="h-4 lg:h-5 w-32 bg-white/10" />
           </div>
-          <Skeleton className="h-8 lg:h-10 w-40 bg-white/10" />
-          <Skeleton className="h-20 lg:h-24 w-full bg-white/10" />
+          <Skeleton className="h-7 sm:h-8 lg:h-10 w-40 bg-white/10" />
+          <Skeleton className="h-16 sm:h-20 lg:h-24 w-full bg-white/10" />
         </div>
       </GlassCard>
     );
@@ -89,7 +89,7 @@ export const ResultsPanel = ({
     const isPositive = riskReduction > 0;
 
     return (
-      <GlassCard className="w-full lg:w-80 p-4 lg:p-5 border-emerald-500/20 animate-in slide-in-from-bottom lg:slide-in-from-right duration-300">
+      <GlassCard className="w-full lg:w-80 p-3 sm:p-4 lg:p-5 border-emerald-500/20 animate-in slide-in-from-bottom lg:slide-in-from-right duration-300">
         <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/5 to-transparent pointer-events-none rounded-2xl" />
 
         <div className="relative space-y-4 lg:space-y-5">
@@ -174,7 +174,7 @@ export const ResultsPanel = ({
     const { avoidedLoss, slope, stormWave } = coastalResults;
 
     return (
-      <GlassCard className="w-full lg:w-80 p-4 lg:p-5 border-teal-500/20 animate-in slide-in-from-bottom lg:slide-in-from-right duration-300">
+      <GlassCard className="w-full lg:w-80 p-3 sm:p-4 lg:p-5 border-teal-500/20 animate-in slide-in-from-bottom lg:slide-in-from-right duration-300">
         <div className="absolute inset-0 bg-gradient-to-br from-teal-500/5 to-transparent pointer-events-none rounded-2xl" />
 
         <div className="relative space-y-4 lg:space-y-5">
@@ -257,7 +257,7 @@ export const ResultsPanel = ({
     ].filter(Boolean);
 
     return (
-      <GlassCard className="w-full lg:w-80 p-4 lg:p-5 border-blue-500/20 animate-in slide-in-from-bottom lg:slide-in-from-right duration-300">
+      <GlassCard className="w-full lg:w-80 p-3 sm:p-4 lg:p-5 border-blue-500/20 animate-in slide-in-from-bottom lg:slide-in-from-right duration-300">
         <div className="absolute inset-0 bg-gradient-to-br from-blue-500/5 to-transparent pointer-events-none rounded-2xl" />
 
         <div className="relative space-y-3 lg:space-y-4">

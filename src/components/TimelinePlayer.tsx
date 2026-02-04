@@ -56,10 +56,10 @@ export function TimelinePlayer({
 
   return (
     <div
-      className="fixed bottom-6 lg:bottom-8 z-40 transition-all duration-300 ease-out left-1/2 -translate-x-1/2 w-[95%] lg:w-[85%] max-w-lg"
+      className="fixed bottom-4 sm:bottom-6 lg:bottom-8 z-40 transition-all duration-300 ease-out left-1/2 -translate-x-1/2 w-[92%] sm:w-[85%] lg:w-[85%] max-w-lg"
     >
       <div
-        className="bg-gradient-to-br from-black/50 to-black/30 backdrop-blur-xl rounded-xl lg:rounded-2xl border border-white/15 shadow-[0_8px_32px_0_rgba(0,0,0,0.4)] transition-all duration-300 hover:shadow-[0_12px_48px_0_rgba(0,0,0,0.5)] px-3 lg:px-5 py-3 lg:py-3.5"
+        className="bg-gradient-to-br from-black/50 to-black/30 backdrop-blur-xl rounded-xl lg:rounded-2xl border border-white/15 shadow-[0_8px_32px_0_rgba(0,0,0,0.4)] transition-all duration-300 hover:shadow-[0_12px_48px_0_rgba(0,0,0,0.5)] px-2.5 sm:px-3 lg:px-5 py-2.5 sm:py-3 lg:py-3.5"
       >
         <div className="flex items-center gap-2 lg:gap-3">
           <Button
