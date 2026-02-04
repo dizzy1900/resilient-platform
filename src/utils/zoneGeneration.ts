@@ -43,13 +43,16 @@ function simplex2D(x: number, y: number, random: () => number): number {
   const x2 = x0 - 1 + 2 * G2;
   const y2 = y0 - 1 + 2 * G2;
 
-  const ii = i & 255;
-  const jj = j & 255;
+  const ii = ((i % 256) + 256) % 256;
+  const jj = ((j % 256) + 256) % 256;
   const gi0 = perm[ii + perm[jj]] % 8;
   const gi1 = perm[ii + i1 + perm[jj + j1]] % 8;
   const gi2 = perm[ii + 1 + perm[jj + 1]] % 8;
 
-  const dot = (g: number[], x: number, y: number) => g[0] * x + g[1] * y;
+  const dot = (g: number[] | undefined, x: number, y: number) => {
+    if (!g) return 0;
+    return g[0] * x + g[1] * y;
+  };
 
   let n0 = 0, n1 = 0, n2 = 0;
 
