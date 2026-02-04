@@ -489,7 +489,7 @@ const Index = () => {
       )}
 
       {mode !== 'portfolio' && (
-        <div className="hidden lg:block absolute bottom-32 left-[344px] z-30">
+        <div className="hidden lg:block absolute bottom-32 left-[344px] xl:left-[360px] z-30 max-w-[180px]">
           <ZoneLegend
             baselineZone={baselineZone}
             currentZone={currentZone}
@@ -525,29 +525,33 @@ const Index = () => {
         onTemperatureChange={handleTemperatureChange}
       />
 
-      <div className={`absolute top-4 right-16 lg:top-6 z-40 flex items-center gap-2 ${isSplitMode ? 'lg:right-16' : 'lg:right-20'}`}>
+      <div className={`absolute top-4 z-40 flex items-center gap-2 ${
+        isSplitMode 
+          ? 'right-4 sm:right-16 lg:right-16' 
+          : 'right-16 lg:right-20'
+      }`}>
         <Button
-          className="bg-black/30 backdrop-blur-xl border border-white/10 hover:bg-white/10 text-white gap-2 rounded-xl px-3 py-2 lg:px-4 h-auto shadow-lg text-xs lg:text-sm"
+          className="bg-black/30 backdrop-blur-xl border border-white/10 hover:bg-white/10 text-white gap-1.5 sm:gap-2 rounded-xl px-2.5 sm:px-3 py-2 lg:px-4 h-auto shadow-lg text-[11px] sm:text-xs lg:text-sm"
           onClick={() => setIsSplitMode(!isSplitMode)}
         >
           {isSplitMode ? (
             <>
-              <X className="h-4 w-4" />
-              <span className="hidden sm:inline">Exit Comparison</span>
-              <span className="sm:hidden">Exit</span>
+              <X className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
+              <span className="hidden md:inline">Exit Comparison</span>
+              <span className="md:hidden">Exit</span>
             </>
           ) : (
             <>
-              <Columns2 className="h-4 w-4" />
-              <span className="hidden sm:inline">Compare Scenarios</span>
-              <span className="sm:hidden">Compare</span>
+              <Columns2 className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
+              <span className="hidden md:inline">Compare Scenarios</span>
+              <span className="md:hidden">Compare</span>
             </>
           )}
         </Button>
       </div>
 
       {mode !== 'portfolio' && (
-        <div className="absolute bottom-24 lg:bottom-32 right-4 lg:right-20 left-4 lg:left-auto z-30 flex flex-col gap-3">
+        <div className="absolute bottom-28 sm:bottom-24 lg:bottom-32 right-4 sm:right-6 lg:right-20 left-4 sm:left-auto z-30 flex flex-col gap-2 sm:gap-3 max-w-full sm:max-w-none sm:w-80 lg:w-80">
           <ResultsPanel
             mode={mode}
             visible={showCurrentResults}
