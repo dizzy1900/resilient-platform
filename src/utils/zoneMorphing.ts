@@ -21,7 +21,12 @@ export function calculateZoneAtTemperature(
   temperature: number,
   mode: ZoneMode
 ): Polygon {
-  const config = MODE_SCALING[mode];
+  const config = MODE_SCALING[mode as keyof typeof MODE_SCALING];
+  
+  // Portfolio mode doesn't use zone morphing - return baseline unchanged
+  if (!config) {
+    return baselineZone;
+  }
   const clampedTemp = Math.max(0, Math.min(3, temperature));
   const tempRatio = clampedTemp / 3;
 
