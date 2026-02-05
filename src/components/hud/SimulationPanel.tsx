@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
-import { Zap, Loader2, Thermometer, Calendar, CloudRain, Info } from 'lucide-react';
+import { Zap, Loader2, Thermometer, Calendar, CloudRain, Info, Leaf, AlertTriangle } from 'lucide-react';
 import { GlassCard } from './GlassCard';
 import { Button } from '@/components/ui/button';
 import { Slider } from '@/components/ui/slider';
@@ -14,22 +14,22 @@ interface SimulationPanelProps {
   isSimulating: boolean;
   canSimulate: boolean;
   label?: string;
-  tempIncrease: number;
-  onTempIncreaseChange: (value: number) => void;
+  globalTempTarget: number;
+  onGlobalTempTargetChange: (value: number) => void;
   rainChange: number;
   onRainChangeChange: (value: number) => void;
   selectedYear: number;
   onSelectedYearChange: (value: number) => void;
 }
 
-// Scientific anchor points from research
+// Scientific anchor points from research (Absolute GWL values)
 const CLIMATE_ANCHORS = [
-  { year: 2026, temp: 0.0 },
+  { year: 2026, temp: 1.4 },
   { year: 2030, temp: 1.5 },
   { year: 2050, temp: 2.1 },
 ];
 
-// Calculate temperature from year using linear interpolation
+// Calculate absolute GWL from year using linear interpolation
 const calculateTempFromYear = (year: number): number => {
   // Find the two anchor points to interpolate between
   for (let i = 0; i < CLIMATE_ANCHORS.length - 1; i++) {
@@ -82,8 +82,8 @@ export const SimulationPanel = ({
   isSimulating,
   canSimulate,
   label,
-  tempIncrease,
-  onTempIncreaseChange,
+  globalTempTarget,
+  onGlobalTempTargetChange,
   rainChange,
   onRainChangeChange,
   selectedYear,
@@ -97,8 +97,8 @@ export const SimulationPanel = ({
   const handleYearChange = useCallback((year: number) => {
     onSelectedYearChange(year);
     const interpolatedTemp = calculateTempFromYear(year);
-    onTempIncreaseChange(Math.round(interpolatedTemp * 10) / 10);
-  }, [onSelectedYearChange, onTempIncreaseChange]);
+    onGlobalTempTargetChange(Math.round(interpolatedTemp * 10) / 10);
+  }, [onSelectedYearChange, onGlobalTempTargetChange]);
 
   // Debounced simulation trigger
   const triggerDebouncedSimulation = useCallback(() => {
@@ -127,8 +127,9 @@ export const SimulationPanel = ({
 
   const getResilienceScore = () => {
     const base = 85;
-    // Temperature impact: each degree reduces score
-    const tempReduction = tempIncrease * 15;
+    // Temperature impact: each degree above baseline (1.4) reduces score
+    const tempDelta = globalTempTarget - 1.4;
+    const tempReduction = tempDelta * 15;
     // Rain impact: negative rain change reduces score, positive slightly improves
     const rainImpact = rainChange < 0 ? Math.abs(rainChange) * 0.5 : rainChange * -0.2;
     return Math.max(0, Math.min(100, base - tempReduction + rainImpact));
@@ -148,11 +149,29 @@ export const SimulationPanel = ({
     return 'text-red-400';
   };
 
-  const getTempBadgeColor = () => {
-    if (tempIncrease > 2.0) return 'bg-red-500/20 text-red-400 border-red-500/30';
-    if (tempIncrease > 1.5) return 'bg-amber-500/20 text-amber-400 border-amber-500/30';
-    return 'bg-emerald-500/20 text-emerald-400 border-emerald-500/30';
+  const getGWLBadgeStyle = () => {
+    if (globalTempTarget <= 1.5) {
+      return {
+        colorClass: 'bg-emerald-500/20 text-emerald-400 border-emerald-500/30',
+        label: 'Paris Agreement Goal',
+        icon: <Leaf className="w-3 h-3" />,
+      };
+    }
+    if (globalTempTarget > 2.0) {
+      return {
+        colorClass: 'bg-red-500/20 text-red-400 border-red-500/30',
+        label: 'Critical Threshold',
+        icon: <AlertTriangle className="w-3 h-3" />,
+      };
+    }
+    return {
+      colorClass: 'bg-amber-500/20 text-amber-400 border-amber-500/30',
+      label: null,
+      icon: null,
+    };
   };
+
+  const gwlBadgeStyle = getGWLBadgeStyle();
 
   const getRainBadgeColor = () => {
     const projectedRain = BASELINE_RAINFALL_MM * (1 + rainChange / 100);
@@ -193,7 +212,7 @@ export const SimulationPanel = ({
               <Calendar className="w-3 h-3 text-white/50" />
               <span className="text-[10px] lg:text-xs text-white/50">Projection Year</span>
             </div>
-            <Badge className={cn('text-[10px] px-2 py-0.5 border', getTempBadgeColor())}>
+            <Badge className="text-[10px] px-2 py-0.5 border bg-white/10 text-white/80 border-white/20">
               {selectedYear}
             </Badge>
           </div>
@@ -213,29 +232,37 @@ export const SimulationPanel = ({
           </div>
         </div>
 
-        {/* Temperature Slider */}
+        {/* Global Warming Level Slider */}
         <div className="space-y-1.5">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-1.5">
               <Thermometer className="w-3 h-3 text-amber-400" />
-              <span className="text-[10px] lg:text-xs text-white/50">Temperature Δ</span>
+              <span className="text-[10px] lg:text-xs text-white/50">Global Warming</span>
             </div>
-            <Badge className={cn('text-[10px] px-2 py-0.5 font-bold tabular-nums border', getTempBadgeColor())}>
-              +{tempIncrease.toFixed(1)}°C
-            </Badge>
+            <div className="flex items-center gap-1.5">
+              {gwlBadgeStyle.label && (
+                <Badge className={cn('text-[9px] px-1.5 py-0.5 border flex items-center gap-1', gwlBadgeStyle.colorClass)}>
+                  {gwlBadgeStyle.icon}
+                  <span className="hidden sm:inline">{gwlBadgeStyle.label}</span>
+                </Badge>
+              )}
+              <Badge className={cn('text-[10px] px-2 py-0.5 font-bold tabular-nums border', gwlBadgeStyle.colorClass)}>
+                +{globalTempTarget.toFixed(1)}°C
+              </Badge>
+            </div>
           </div>
           <Slider
-            value={[tempIncrease]}
-            onValueChange={(v) => onTempIncreaseChange(v[0])}
-            min={0}
-            max={5}
+            value={[globalTempTarget]}
+            onValueChange={(v) => onGlobalTempTargetChange(v[0])}
+            min={1.4}
+            max={4.0}
             step={0.1}
             className="w-full [&_[data-radix-slider-track]]:bg-white/10 [&_[data-radix-slider-range]]:bg-gradient-to-r [&_[data-radix-slider-range]]:from-emerald-500 [&_[data-radix-slider-range]]:via-amber-500 [&_[data-radix-slider-range]]:to-red-500 [&_[data-radix-slider-thumb]]:border-white/50 [&_[data-radix-slider-thumb]]:bg-white"
           />
           <div className="flex justify-between text-[9px] lg:text-[10px] text-white/40">
-            <span>0°C</span>
-            <span>+2.5°C</span>
-            <span>+5°C</span>
+            <span>1.4°C</span>
+            <span>2.0°C</span>
+            <span>4.0°C</span>
           </div>
         </div>
 

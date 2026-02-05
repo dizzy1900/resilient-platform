@@ -28,8 +28,8 @@ interface MobileMenuProps {
   canSimulate: boolean;
   onSimulate: () => void;
   isSimulating: boolean;
-  tempIncrease: number;
-  onTempIncreaseChange: (value: number) => void;
+  globalTempTarget: number;
+  onGlobalTempTargetChange: (value: number) => void;
   rainChange: number;
   onRainChangeChange: (value: number) => void;
   selectedYear: number;
@@ -57,8 +57,8 @@ export const MobileMenu = ({
   canSimulate,
   onSimulate,
   isSimulating,
-  tempIncrease,
-  onTempIncreaseChange,
+  globalTempTarget,
+  onGlobalTempTargetChange,
   rainChange,
   onRainChangeChange,
   selectedYear,
@@ -149,8 +149,8 @@ export const MobileMenu = ({
                     onSimulate={handleSimulate}
                     isSimulating={isSimulating}
                     canSimulate={canSimulate}
-                    tempIncrease={tempIncrease}
-                    onTempIncreaseChange={onTempIncreaseChange}
+                    globalTempTarget={globalTempTarget}
+                    onGlobalTempTargetChange={onGlobalTempTargetChange}
                     rainChange={rainChange}
                     onRainChangeChange={onRainChangeChange}
                     selectedYear={selectedYear}

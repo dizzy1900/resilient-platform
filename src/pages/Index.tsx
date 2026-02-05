@@ -61,7 +61,7 @@ const Index = () => {
   const [selectedYear, setSelectedYear] = useState(2026);
   const [isTimelinePlaying, setIsTimelinePlaying] = useState(false);
 
-  const [tempIncrease, setTempIncrease] = useState(0);
+  const [globalTempTarget, setGlobalTempTarget] = useState(1.4);
   const [rainChange, setRainChange] = useState(0);
   const [baselineZone, setBaselineZone] = useState<Polygon | null>(null);
 
@@ -106,18 +106,20 @@ const Index = () => {
 
   const currentZone = useMemo(() => {
     if (!baselineZone) return null;
-    return calculateZoneAtTemperature(baselineZone, tempIncrease, mode as ZoneMode);
-  }, [baselineZone, tempIncrease, mode]);
+    // Pass temperature delta (relative to 1.4°C baseline) for zone morphing
+    const tempDelta = globalTempTarget - 1.4;
+    return calculateZoneAtTemperature(baselineZone, tempDelta, mode as ZoneMode);
+  }, [baselineZone, globalTempTarget, mode]);
 
   const zoneData: ZoneData | undefined = useMemo(() => {
     if (!baselineZone) return undefined;
     return {
       baselineZone,
       currentZone,
-      temperature: tempIncrease,
+      temperature: globalTempTarget - 1.4,
       mode: mode as ZoneMode,
     };
-  }, [baselineZone, currentZone, tempIncrease, mode]);
+  }, [baselineZone, currentZone, globalTempTarget, mode]);
 
   const handleLocationSelect = useCallback((lat: number, lng: number) => {
     setMarkerPosition({ lat, lng });
@@ -126,8 +128,8 @@ const Index = () => {
     setShowFloodResults(false);
   }, []);
 
-  const handleTempIncreaseChange = useCallback((value: number) => {
-    setTempIncrease(value);
+  const handleGlobalTempTargetChange = useCallback((value: number) => {
+    setGlobalTempTarget(value);
   }, []);
 
   const handleRainChangeChange = useCallback((value: number) => {
@@ -145,12 +147,15 @@ const Index = () => {
     setShowResults(false);
 
     try {
+      // Calculate delta for API (backend expects relative increase)
+      const tempDelta = globalTempTarget - 1.4;
+
       const { data: responseData, error } = await supabase.functions.invoke('simulate-agriculture', {
         body: {
           lat: markerPosition.lat,
           lon: markerPosition.lng,
           crop: cropType,
-          temp_increase: tempIncrease,
+          temp_increase: Math.round(tempDelta * 10) / 10,
           rain_change: rainChange,
         },
       });
@@ -193,7 +198,7 @@ const Index = () => {
     } finally {
       setIsSimulating(false);
     }
-  }, [markerPosition, cropType, tempIncrease, rainChange]);
+  }, [markerPosition, cropType, globalTempTarget, rainChange]);
 
   const handleCoastalSimulate = useCallback(
     async (width: number) => {
@@ -377,7 +382,7 @@ const Index = () => {
     setShowFloodResults(false);
     setSelectedYear(2026);
     setIsTimelinePlaying(false);
-    setTempIncrease(0);
+    setGlobalTempTarget(1.4);
     setRainChange(0);
   }, []);
 
@@ -480,8 +485,8 @@ const Index = () => {
             onSimulate={getCurrentSimulateHandler()}
             isSimulating={isCurrentlySimulating}
             canSimulate={canSimulate}
-            tempIncrease={tempIncrease}
-            onTempIncreaseChange={handleTempIncreaseChange}
+            globalTempTarget={globalTempTarget}
+            onGlobalTempTargetChange={handleGlobalTempTargetChange}
             rainChange={rainChange}
             onRainChangeChange={handleRainChangeChange}
             selectedYear={selectedYear}
@@ -496,7 +501,7 @@ const Index = () => {
             baselineZone={baselineZone}
             currentZone={currentZone}
             mode={mode as ZoneMode}
-            temperature={tempIncrease}
+            temperature={globalTempTarget - 1.4}
             visible={!!baselineZone && !!currentZone}
           />
         </div>
@@ -523,8 +528,8 @@ const Index = () => {
         canSimulate={canSimulate}
         onSimulate={getCurrentSimulateHandler()}
         isSimulating={isCurrentlySimulating}
-        tempIncrease={tempIncrease}
-        onTempIncreaseChange={handleTempIncreaseChange}
+        globalTempTarget={globalTempTarget}
+        onGlobalTempTargetChange={handleGlobalTempTargetChange}
         rainChange={rainChange}
         onRainChangeChange={handleRainChangeChange}
         selectedYear={selectedYear}
@@ -580,7 +585,7 @@ const Index = () => {
             mangroveWidth={mangroveWidth}
             greenRoofsEnabled={greenRoofsEnabled}
             permeablePavementEnabled={permeablePavementEnabled}
-            tempIncrease={tempIncrease}
+            tempIncrease={globalTempTarget - 1.4}
             rainChange={rainChange}
           />
 
@@ -589,7 +594,7 @@ const Index = () => {
             mode={mode}
             latitude={markerPosition?.lat ?? null}
             longitude={markerPosition?.lng ?? null}
-            temperature={tempIncrease}
+            temperature={globalTempTarget - 1.4}
             cropType={cropType}
             mangroveWidth={mangroveWidth}
             greenRoofsEnabled={greenRoofsEnabled}
