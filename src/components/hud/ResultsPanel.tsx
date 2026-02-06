@@ -19,6 +19,7 @@ import { DashboardMode } from '@/components/dashboard/ModeSelector';
 interface AgricultureResults {
   avoidedLoss: number;
   riskReduction: number;
+  yieldPotential?: number | null; // Unified yield metric
   monthlyData: { month: string; value: number }[];
   simulationDebug?: {
     final_simulated_temp?: number;
@@ -139,10 +140,26 @@ export const ResultsPanel = ({
   }
 
   if (mode === 'agriculture' && agricultureResults) {
-    const { avoidedLoss, riskReduction, monthlyData, simulationDebug } = agricultureResults;
+    const { avoidedLoss, riskReduction, yieldPotential, monthlyData, simulationDebug } = agricultureResults;
     const maxValue = Math.max(...monthlyData.map((d) => d.value));
     const isPositive = riskReduction > 0;
     const yieldExplanation = getYieldExplanation(simulationDebug, tempIncrease, rainChange);
+    
+    // Use yieldPotential for display, fallback to riskReduction for color logic
+    const displayYield = yieldPotential ?? 0;
+    
+    // Consistent color logic with SimulationPanel
+    const getYieldColor = () => {
+      if (displayYield >= 70) return 'text-emerald-400';
+      if (displayYield >= 40) return 'text-amber-400';
+      return 'text-red-400';
+    };
+    
+    const getYieldBgColor = () => {
+      if (displayYield >= 70) return 'bg-emerald-500/20 text-emerald-400 border-emerald-500/30';
+      if (displayYield >= 40) return 'bg-amber-500/20 text-amber-400 border-amber-500/30';
+      return 'bg-red-500/20 text-red-400 border-red-500/30';
+    };
 
     return (
       <GlassCard className="w-full lg:w-80 p-3 sm:p-4 lg:p-5 border-emerald-500/20 animate-in slide-in-from-bottom lg:slide-in-from-right duration-300">
@@ -155,15 +172,10 @@ export const ResultsPanel = ({
               <span className="text-sm lg:text-base font-semibold text-white">Projected Yield Potential</span>
             </div>
             <div
-              className={`flex items-center gap-1 px-2 py-1 rounded-full text-xs font-medium ${
-                isPositive
-                  ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/30'
-                  : 'bg-red-500/20 text-red-400 border border-red-500/30'
-              }`}
+              className={`flex items-center gap-1 px-2 py-1 rounded-full text-xs font-medium border ${getYieldBgColor()}`}
             >
-              {isPositive ? <TrendingUp className="w-3 h-3" /> : <TrendingDown className="w-3 h-3" />}
-              {isPositive ? '+' : ''}
-              {riskReduction}%
+              {displayYield >= 50 ? <TrendingUp className="w-3 h-3" /> : <TrendingDown className="w-3 h-3" />}
+              {Math.round(displayYield)}%
             </div>
           </div>
 

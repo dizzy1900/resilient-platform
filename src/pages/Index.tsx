@@ -70,6 +70,7 @@ const Index = () => {
     riskReduction: 0,
     yieldBaseline: 0,
     yieldResilient: 0,
+    yieldPotential: null as number | null, // Unified yield metric from API
     monthlyData: mockMonthlyData,
   });
 
@@ -176,12 +177,17 @@ const Index = () => {
       const yieldResilient = predictions.resilient_seed?.predicted_yield ?? 0;
       const avoidedLoss = analysis.avoided_loss ?? 0;
       const percentageImprovement = analysis.percentage_improvement ?? 0;
+      
+      // Calculate yield potential as a percentage (normalized 0-100)
+      // Using resilient seed yield as the primary metric
+      const yieldPotential = Math.min(100, Math.max(0, yieldResilient));
 
       setResults({
         avoidedLoss: Math.round(avoidedLoss * 100) / 100,
         riskReduction: Math.round(percentageImprovement * 100),
         yieldBaseline,
         yieldResilient,
+        yieldPotential,
         monthlyData: mockMonthlyData,
       });
       setShowResults(true);
@@ -491,6 +497,7 @@ const Index = () => {
             onRainChangeChange={handleRainChangeChange}
             selectedYear={selectedYear}
             onSelectedYearChange={handleSelectedYearChange}
+            yieldPotential={showResults ? results.yieldPotential : null}
           />
         </div>
       )}
@@ -534,6 +541,7 @@ const Index = () => {
         onRainChangeChange={handleRainChangeChange}
         selectedYear={selectedYear}
         onSelectedYearChange={handleSelectedYearChange}
+        yieldPotential={showResults ? results.yieldPotential : null}
       />
 
       <div className={`absolute top-4 z-40 flex items-center gap-2 ${
