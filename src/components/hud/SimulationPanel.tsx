@@ -20,6 +20,7 @@ interface SimulationPanelProps {
   onRainChangeChange: (value: number) => void;
   selectedYear: number;
   onSelectedYearChange: (value: number) => void;
+  yieldPotential?: number | null; // API result: actual yield potential from simulation
 }
 
 // Scientific anchor points from research (Absolute GWL values)
@@ -88,6 +89,7 @@ export const SimulationPanel = ({
   onRainChangeChange,
   selectedYear,
   onSelectedYearChange,
+  yieldPotential,
 }: SimulationPanelProps) => {
   const config = modeConfig[mode];
   const debounceRef = useRef<NodeJS.Timeout | null>(null);
@@ -125,7 +127,8 @@ export const SimulationPanel = ({
     };
   }, []);
 
-  const getResilienceScore = () => {
+  // Calculate estimated score (used as fallback before API call)
+  const getEstimatedScore = () => {
     const base = 85;
     // Temperature impact: each degree above baseline (1.4) reduces score
     const tempDelta = globalTempTarget - 1.4;
@@ -135,17 +138,20 @@ export const SimulationPanel = ({
     return Math.max(0, Math.min(100, base - tempReduction + rainImpact));
   };
 
-  const resilienceScore = getResilienceScore();
+  // Use API result when available, otherwise show estimate
+  const displayScore = yieldPotential !== null && yieldPotential !== undefined 
+    ? yieldPotential 
+    : getEstimatedScore();
 
   const getScoreColor = () => {
-    if (resilienceScore >= 70) return 'bg-emerald-500';
-    if (resilienceScore >= 40) return 'bg-amber-500';
+    if (displayScore >= 70) return 'bg-emerald-500';
+    if (displayScore >= 40) return 'bg-amber-500';
     return 'bg-red-500';
   };
 
   const getScoreTextColor = () => {
-    if (resilienceScore >= 70) return 'text-emerald-400';
-    if (resilienceScore >= 40) return 'text-amber-400';
+    if (displayScore >= 70) return 'text-emerald-400';
+    if (displayScore >= 40) return 'text-amber-400';
     return 'text-red-400';
   };
 
@@ -285,18 +291,23 @@ export const SimulationPanel = ({
           </div>
         </div>
 
-        {/* Resilience Score */}
+        {/* Projected Yield Potential */}
         <div className="space-y-1.5 pt-1">
           <div className="flex items-center justify-between">
-            <span className="text-[10px] lg:text-xs text-white/50">Projected Yield Potential</span>
+            <div className="flex items-center gap-1">
+              <span className="text-[10px] lg:text-xs text-white/50">Projected Yield Potential</span>
+              {yieldPotential === null || yieldPotential === undefined ? (
+                <span className="text-[8px] text-white/30">(est.)</span>
+              ) : null}
+            </div>
             <span className={cn('text-xs lg:text-sm font-semibold tabular-nums', getScoreTextColor())}>
-              {Math.round(resilienceScore)}%
+              {Math.round(displayScore)}%
             </span>
           </div>
           <div className="h-2 bg-white/10 rounded-full overflow-hidden">
             <div
               className={cn('h-full transition-all duration-500 rounded-full', getScoreColor())}
-              style={{ width: `${resilienceScore}%` }}
+              style={{ width: `${displayScore}%` }}
             />
           </div>
         </div>

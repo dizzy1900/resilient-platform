@@ -34,6 +34,7 @@ interface MobileMenuProps {
   onRainChangeChange: (value: number) => void;
   selectedYear: number;
   onSelectedYearChange: (value: number) => void;
+  yieldPotential?: number | null;
 }
 
 export const MobileMenu = ({
@@ -63,6 +64,7 @@ export const MobileMenu = ({
   onRainChangeChange,
   selectedYear,
   onSelectedYearChange,
+  yieldPotential,
 }: MobileMenuProps) => {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -155,6 +157,7 @@ export const MobileMenu = ({
                     onRainChangeChange={onRainChangeChange}
                     selectedYear={selectedYear}
                     onSelectedYearChange={onSelectedYearChange}
+                    yieldPotential={yieldPotential}
                   />
                 </>
               )}
