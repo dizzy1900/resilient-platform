@@ -4,6 +4,7 @@ import { DashboardMode } from '@/components/dashboard/ModeSelector';
 import { TimelinePlayer } from '@/components/TimelinePlayer';
 import { FloatingControlPanel } from '@/components/hud/FloatingControlPanel';
 import { SimulationPanel } from '@/components/hud/SimulationPanel';
+import { CoastalSimulationPanel } from '@/components/hud/CoastalSimulationPanel';
 import { ResultsPanel } from '@/components/hud/ResultsPanel';
 import { PortfolioPanel } from '@/components/portfolio/PortfolioPanel';
 import { PortfolioHeader } from '@/components/portfolio/PortfolioHeader';
@@ -84,11 +85,22 @@ const Index = () => {
     avoidedLoss: number;
     slope: number | null;
     stormWave: number | null;
+    isUnderwater?: boolean;
+    floodDepth?: number | null;
+    seaLevelRise?: number;
+    includeStormSurge?: boolean;
   }>({
     avoidedLoss: 0,
     slope: null,
     stormWave: null,
+    isUnderwater: undefined,
+    floodDepth: null,
   });
+
+  // Coastal-specific state
+  const [seaLevelRise, setSeaLevelRise] = useState(0.05);
+  const [includeStormSurge, setIncludeStormSurge] = useState(false);
+  const [coastalSelectedYear, setCoastalSelectedYear] = useState(2030);
 
   const [floodResults, setFloodResults] = useState({
     floodDepthReduction: 0,
@@ -266,17 +278,23 @@ const Index = () => {
   }, [markerPosition, cropType, globalTempTarget, rainChange]);
 
   const handleCoastalSimulate = useCallback(
-    async (width: number) => {
+    async () => {
       if (!markerPosition) return;
 
       setIsCoastalSimulating(true);
 
       try {
+        // Calculate total water level for the API
+        const stormSurgeHeight = includeStormSurge ? 2.5 : 0;
+        const totalWaterLevel = seaLevelRise + stormSurgeHeight;
+
         const { data: responseData, error } = await supabase.functions.invoke('simulate-coastal', {
           body: {
             lat: markerPosition.lat,
             lon: markerPosition.lng,
-            mangrove_width: width,
+            mangrove_width: mangroveWidth,
+            sea_level_rise: seaLevelRise,
+            include_storm_surge: includeStormSurge,
           },
         });
 
@@ -288,6 +306,8 @@ const Index = () => {
         const rawSlope = data.slope;
         const rawStormWave = data.storm_wave;
         const rawAvoidedLoss = data.avoided_loss;
+        const rawIsUnderwater = data.is_underwater;
+        const rawFloodDepth = data.flood_depth;
 
         setCoastalResults({
           avoidedLoss:
@@ -296,14 +316,27 @@ const Index = () => {
               : 0,
           slope: rawSlope !== null ? Math.round(rawSlope * 10) / 10 : null,
           stormWave: rawStormWave !== null ? Math.round(rawStormWave * 10) / 10 : null,
+          isUnderwater: rawIsUnderwater ?? (totalWaterLevel > 1.5),
+          floodDepth: rawFloodDepth ?? (totalWaterLevel > 1.5 ? totalWaterLevel - 1.5 : null),
+          seaLevelRise,
+          includeStormSurge,
         });
         setShowCoastalResults(true);
       } catch (error) {
         console.error('Coastal simulation failed:', error);
+        // Fallback calculation
+        const stormSurgeHeight = includeStormSurge ? 2.5 : 0;
+        const totalWaterLevel = seaLevelRise + stormSurgeHeight;
+        const isUnderwater = totalWaterLevel > 1.5;
+        
         setCoastalResults({
-          avoidedLoss: Math.round(propertyValue * (width / 500) * 0.5),
+          avoidedLoss: Math.round(propertyValue * (mangroveWidth / 500) * 0.5),
           slope: null,
           stormWave: null,
+          isUnderwater,
+          floodDepth: isUnderwater ? totalWaterLevel - 1.5 : null,
+          seaLevelRise,
+          includeStormSurge,
         });
         setShowCoastalResults(true);
         toast({
@@ -315,7 +348,7 @@ const Index = () => {
         setIsCoastalSimulating(false);
       }
     },
-    [markerPosition, propertyValue]
+    [markerPosition, propertyValue, mangroveWidth, seaLevelRise, includeStormSurge]
   );
 
   const getInterventionType = useCallback(() => {
@@ -432,9 +465,9 @@ const Index = () => {
   }, []);
 
   const handleMangroveWidthChangeEnd = useCallback(
-    (value: number) => {
+    (_value: number) => {
       if (markerPosition) {
-        handleCoastalSimulate(value);
+        handleCoastalSimulate();
       }
     },
     [markerPosition, handleCoastalSimulate]
@@ -457,9 +490,9 @@ const Index = () => {
 
   const getCurrentSimulateHandler = useCallback(() => {
     if (mode === 'agriculture') return handleSimulate;
-    if (mode === 'coastal') return () => handleCoastalSimulate(mangroveWidth);
+    if (mode === 'coastal') return handleCoastalSimulate;
     return handleFloodSimulate;
-  }, [mode, handleSimulate, handleCoastalSimulate, handleFloodSimulate, mangroveWidth]);
+  }, [mode, handleSimulate, handleCoastalSimulate, handleFloodSimulate]);
 
   const isCurrentlySimulating =
     mode === 'agriculture'
@@ -542,6 +575,20 @@ const Index = () => {
         <div className="hidden lg:block absolute top-16 left-6 bottom-20 z-30 w-80 overflow-y-auto">
           <PortfolioHeader onModeChange={handleModeChange} />
           <PortfolioPanel />
+        </div>
+      ) : mode === 'coastal' ? (
+        <div className="hidden lg:block absolute bottom-32 left-6 z-30">
+          <CoastalSimulationPanel
+            onSimulate={handleCoastalSimulate}
+            isSimulating={isCoastalSimulating}
+            canSimulate={canSimulate}
+            seaLevelRise={seaLevelRise}
+            onSeaLevelRiseChange={setSeaLevelRise}
+            includeStormSurge={includeStormSurge}
+            onIncludeStormSurgeChange={setIncludeStormSurge}
+            selectedYear={coastalSelectedYear}
+            onSelectedYearChange={setCoastalSelectedYear}
+          />
         </div>
       ) : (
         <div className="hidden lg:block absolute bottom-32 left-6 z-30">
