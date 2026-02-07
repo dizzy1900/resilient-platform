@@ -12,6 +12,8 @@ const requestSchema = z.object({
   lat: z.number().min(-90, "Latitude must be >= -90").max(90, "Latitude must be <= 90"),
   lon: z.number().min(-180, "Longitude must be >= -180").max(180, "Longitude must be <= 180"),
   mangrove_width: z.number().min(0, "Mangrove width must be >= 0").max(1000, "Mangrove width must be <= 1000"),
+  sea_level_rise: z.number().min(0, "Sea level rise must be >= 0").max(5, "Sea level rise must be <= 5").optional(),
+  include_storm_surge: z.boolean().optional(),
 });
 
 const RAILWAY_API_URL = "https://web-production-8ff9e.up.railway.app/predict-coastal";
@@ -53,8 +55,8 @@ serve(async (req) => {
       );
     }
 
-    const { lat, lon, mangrove_width } = validationResult.data;
-    console.log("simulate-coastal: Validated request", { lat, lon, mangrove_width });
+    const { lat, lon, mangrove_width, sea_level_rise, include_storm_surge } = validationResult.data;
+    console.log("simulate-coastal: Validated request", { lat, lon, mangrove_width, sea_level_rise, include_storm_surge });
 
     // Call Railway API
     const response = await fetch(RAILWAY_API_URL, {
@@ -62,7 +64,13 @@ serve(async (req) => {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ lat, lon, mangrove_width }),
+      body: JSON.stringify({ 
+        lat, 
+        lon, 
+        mangrove_width,
+        sea_level_rise: sea_level_rise ?? 0,
+        include_storm_surge: include_storm_surge ?? false,
+      }),
     });
 
     if (!response.ok) {

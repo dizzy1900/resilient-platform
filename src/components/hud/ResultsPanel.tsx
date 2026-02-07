@@ -15,6 +15,7 @@ import { Skeleton } from '@/components/ui/skeleton';
 import { Badge } from '@/components/ui/badge';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 import { DashboardMode } from '@/components/dashboard/ModeSelector';
+import { cn } from '@/lib/utils';
 
 interface AgricultureResults {
   avoidedLoss: number;
@@ -31,6 +32,10 @@ interface CoastalResults {
   avoidedLoss: number;
   slope: number | null;
   stormWave: number | null;
+  isUnderwater?: boolean;
+  floodDepth?: number | null;
+  seaLevelRise?: number;
+  includeStormSurge?: boolean;
 }
 
 interface FloodResults {
@@ -262,7 +267,7 @@ export const ResultsPanel = ({
   }
 
   if (mode === 'coastal' && coastalResults) {
-    const { avoidedLoss, slope, stormWave } = coastalResults;
+    const { avoidedLoss, slope, stormWave, isUnderwater, floodDepth, seaLevelRise, includeStormSurge } = coastalResults;
 
     return (
       <GlassCard className="w-full lg:w-80 p-3 sm:p-4 lg:p-5 border-teal-500/20 animate-in slide-in-from-bottom lg:slide-in-from-right duration-300">
@@ -272,12 +277,51 @@ export const ResultsPanel = ({
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
               <Waves className="w-4 h-4 lg:w-5 lg:h-5 text-teal-400" />
-              <span className="text-sm lg:text-base font-semibold text-white">Coastal Protection</span>
+              <span className="text-sm lg:text-base font-semibold text-white">Flood Risk Status</span>
             </div>
-            <Badge className="bg-teal-500/20 text-teal-400 border border-teal-500/30 text-[10px] lg:text-xs">
-              {mangroveWidth}m mangrove
-            </Badge>
+            {seaLevelRise !== undefined && (
+              <Badge className="bg-teal-500/20 text-teal-400 border border-teal-500/30 text-[10px] lg:text-xs">
+                SLR +{seaLevelRise.toFixed(2)}m
+              </Badge>
+            )}
           </div>
+
+          {/* Inundation Status Card */}
+          {isUnderwater !== undefined && (
+            <div className={cn(
+              'p-3 rounded-xl border',
+              isUnderwater 
+                ? 'bg-red-500/10 border-red-500/30' 
+                : 'bg-emerald-500/10 border-emerald-500/30'
+            )}>
+              <div className="flex items-center gap-2">
+                {isUnderwater ? (
+                  <>
+                    <AlertTriangle className="w-5 h-5 text-red-400 animate-pulse" />
+                    <span className="text-lg font-bold text-red-400">⚠️ INUNDATED</span>
+                  </>
+                ) : (
+                  <>
+                    <Shield className="w-5 h-5 text-emerald-400" />
+                    <span className="text-lg font-bold text-emerald-400">Protected</span>
+                  </>
+                )}
+              </div>
+              {floodDepth !== null && floodDepth !== undefined && isUnderwater && (
+                <p className="text-sm text-white/70 mt-1.5">
+                  Flood Depth: <span className="font-semibold text-red-400">{floodDepth.toFixed(2)} meters</span>
+                </p>
+              )}
+            </div>
+          )}
+
+          {/* Storm Surge Indicator */}
+          {includeStormSurge && (
+            <div className="flex items-center gap-2 p-2 rounded-lg bg-cyan-500/10 border border-cyan-500/20">
+              <CloudRain className="w-4 h-4 text-cyan-400" />
+              <span className="text-xs text-cyan-400">1-in-100 Year Storm Surge (+2.5m)</span>
+            </div>
+          )}
 
           <div className="space-y-1">
             <div className="flex items-center gap-1.5">
