@@ -1,6 +1,6 @@
 import { useMemo, useState, useEffect } from 'react';
 import { DashboardMode } from '@/components/dashboard/ModeSelector';
-import { AgricultureAnalytics } from '@/components/analytics/AgricultureAnalytics';
+import { AgricultureAnalytics, ApiChartData } from '@/components/analytics/AgricultureAnalytics';
 import { CoastalAnalytics } from '@/components/analytics/CoastalAnalytics';
 import { FloodAnalytics } from '@/components/analytics/FloodAnalytics';
 import { MiniSoilMoistureChart } from '@/components/analytics/MiniSoilMoistureChart';
@@ -54,6 +54,8 @@ interface AnalyticsHighlightsCardProps {
   agricultureResults?: AgricultureResults;
   coastalResults?: CoastalResults;
   floodResults?: FloodResults;
+  chartData?: ApiChartData | null;
+  rainChange?: number;
 }
 
 const modeConfig = {
@@ -110,6 +112,8 @@ export const AnalyticsHighlightsCard = ({
   agricultureResults,
   coastalResults,
   floodResults,
+  chartData = null,
+  rainChange = 0,
 }: AnalyticsHighlightsCardProps) => {
   const [isExpanded, setIsExpanded] = useState(false);
   const [isAnimating, setIsAnimating] = useState(false);
@@ -303,6 +307,8 @@ export const AnalyticsHighlightsCard = ({
                     temperatureIncrease={temperature}
                     cropType={cropType}
                     embedded
+                    chartData={chartData}
+                    rainChange={rainChange}
                   />
                 )}
                 {mode === 'coastal' && coastalResults && (
