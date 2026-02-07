@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 import { CloudRain, Droplets, AlertTriangle, Lightbulb } from 'lucide-react';
-import { RainfallComparisonChart } from './RainfallComparisonChart';
-import { SoilMoistureChart } from './SoilMoistureChart';
+import { RainfallComparisonChart, RainfallChartData } from './RainfallComparisonChart';
+import { SoilMoistureChart, SoilMoistureChartData } from './SoilMoistureChart';
 import { RiskBreakdownChart } from './RiskBreakdownChart';
 import { RecommendationCard } from './RecommendationCard';
 import {
@@ -12,11 +12,18 @@ import {
 import { generateAgricultureRecommendations } from '@/utils/generateRecommendations';
 import { ScrollArea } from '@/components/ui/scroll-area';
 
+export interface ApiChartData {
+  rainfall: RainfallChartData[];
+  soilMoisture: SoilMoistureChartData[];
+}
+
 interface AgricultureAnalyticsProps {
   latitude: number;
   temperatureIncrease: number;
   cropType: string;
   embedded?: boolean;
+  chartData?: ApiChartData | null;
+  rainChange?: number;
 }
 
 export const AgricultureAnalytics = ({
@@ -24,16 +31,27 @@ export const AgricultureAnalytics = ({
   temperatureIncrease,
   cropType,
   embedded = false,
+  chartData = null,
+  rainChange = 0,
 }: AgricultureAnalyticsProps) => {
-  const rainfallData = useMemo(
-    () => generateRainfallData(latitude, temperatureIncrease),
-    [latitude, temperatureIncrease]
-  );
+  // Use API data if available, otherwise generate mock data
+  const rainfallData = useMemo(() => {
+    if (chartData?.rainfall && chartData.rainfall.length > 0) {
+      return chartData.rainfall;
+    }
+    return generateRainfallData(latitude, temperatureIncrease);
+  }, [chartData, latitude, temperatureIncrease]);
 
-  const soilMoistureData = useMemo(
-    () => generateSoilMoistureData(latitude, temperatureIncrease),
-    [latitude, temperatureIncrease]
-  );
+  const soilMoistureData = useMemo(() => {
+    if (chartData?.soilMoisture && chartData.soilMoisture.length > 0) {
+      // Convert to the format expected by generateAgricultureRiskFactors
+      return chartData.soilMoisture.map(d => ({
+        ...d,
+        stressThreshold: 30, // Default stress threshold for mock compatibility
+      }));
+    }
+    return generateSoilMoistureData(latitude, temperatureIncrease);
+  }, [chartData, latitude, temperatureIncrease]);
 
   const riskFactors = useMemo(
     () => generateAgricultureRiskFactors(temperatureIncrease, soilMoistureData),
@@ -59,10 +77,13 @@ export const AgricultureAnalytics = ({
             <h3 className="text-sm font-medium text-white">Rainfall Projection</h3>
           </div>
           <p className="text-xs text-white/50">
-            Historical vs projected monthly rainfall at +{temperatureIncrease}°C warming
+            Historical vs projected monthly rainfall at +{temperatureIncrease.toFixed(1)}°C warming
           </p>
           <div className="bg-white/5 rounded-xl p-3 border border-white/10">
-            <RainfallComparisonChart data={rainfallData} />
+            <RainfallComparisonChart 
+              data={rainfallData} 
+              animateProjected={rainChange !== 0}
+            />
           </div>
         </div>
 
@@ -75,7 +96,10 @@ export const AgricultureAnalytics = ({
             Projected soil moisture levels throughout the year
           </p>
           <div className="bg-white/5 rounded-xl p-3 border border-white/10">
-            <SoilMoistureChart data={soilMoistureData} />
+            <SoilMoistureChart 
+              data={soilMoistureData.map(d => ({ month: d.month, moisture: d.moisture }))} 
+              wiltingPoint={0.20}
+            />
           </div>
         </div>
 

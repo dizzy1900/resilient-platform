@@ -65,6 +65,12 @@ const Index = () => {
   const [rainChange, setRainChange] = useState(0);
   const [baselineZone, setBaselineZone] = useState<Polygon | null>(null);
 
+  // Chart data from API
+  const [chartData, setChartData] = useState<{
+    rainfall: Array<{ month: string; historical: number; projected: number }>;
+    soilMoisture: Array<{ month: string; moisture: number }>;
+  } | null>(null);
+
   const [results, setResults] = useState({
     avoidedLoss: 0,
     riskReduction: 0,
@@ -168,6 +174,7 @@ const Index = () => {
       const result = Array.isArray(responseData) ? responseData[0] : responseData;
       const analysis = result?.data?.analysis;
       const predictions = result?.data?.predictions;
+      const apiChartData = result?.data?.chart_data;
 
       if (!analysis || !predictions) {
         throw new Error('Invalid response format from simulation API');
@@ -181,6 +188,26 @@ const Index = () => {
       // Calculate yield potential as a percentage (normalized 0-100)
       // Using resilient seed yield as the primary metric
       const yieldPotential = Math.min(100, Math.max(0, yieldResilient));
+
+      // Parse chart_data from API if available
+      if (apiChartData) {
+        const months = apiChartData.months || ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+        const rainfallBaseline = apiChartData.rainfall_baseline || [];
+        const rainfallProjected = apiChartData.rainfall_projected || [];
+        const soilMoistureBaseline = apiChartData.soil_moisture_baseline || [];
+
+        setChartData({
+          rainfall: months.map((month: string, i: number) => ({
+            month,
+            historical: rainfallBaseline[i] ?? 0,
+            projected: rainfallProjected[i] ?? 0,
+          })),
+          soilMoisture: months.map((month: string, i: number) => ({
+            month,
+            moisture: soilMoistureBaseline[i] ?? 0,
+          })),
+        });
+      }
 
       setResults({
         avoidedLoss: Math.round(avoidedLoss * 100) / 100,
@@ -584,6 +611,7 @@ const Index = () => {
                 ? {
                     avoidedLoss: results.avoidedLoss,
                     riskReduction: results.riskReduction,
+                    yieldPotential: results.yieldPotential,
                     monthlyData: results.monthlyData,
                   }
                 : undefined
@@ -614,6 +642,8 @@ const Index = () => {
             }
             coastalResults={mode === 'coastal' ? coastalResults : undefined}
             floodResults={mode === 'flood' ? floodResults : undefined}
+            chartData={mode === 'agriculture' ? chartData : null}
+            rainChange={rainChange}
           />
         </div>
       )}
