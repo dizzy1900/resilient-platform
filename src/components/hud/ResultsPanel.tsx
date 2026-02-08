@@ -272,10 +272,10 @@ export const ResultsPanel = ({
     const { avoidedLoss, slope, stormWave, isUnderwater, floodDepth, seaLevelRise, includeStormSurge, stormChartData } = coastalResults;
 
     return (
-      <GlassCard className="w-full lg:w-80 p-3 sm:p-4 lg:p-5 border-teal-500/20 animate-in slide-in-from-bottom lg:slide-in-from-right duration-300">
+      <GlassCard className="w-full lg:w-80 p-3 sm:p-4 lg:p-4 border-teal-500/20 animate-in slide-in-from-bottom lg:slide-in-from-right duration-300 max-h-[70vh] overflow-y-auto">
         <div className="absolute inset-0 bg-gradient-to-br from-teal-500/5 to-transparent pointer-events-none rounded-2xl" />
 
-        <div className="relative space-y-4 lg:space-y-5">
+        <div className="relative space-y-3 lg:space-y-3.5">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
               <Waves className="w-4 h-4 lg:w-5 lg:h-5 text-teal-400" />
@@ -291,7 +291,7 @@ export const ResultsPanel = ({
           {/* Inundation Status Card */}
           {isUnderwater !== undefined && (
             <div className={cn(
-              'p-3 rounded-xl border',
+              'p-2.5 rounded-xl border',
               isUnderwater 
                 ? 'bg-red-500/10 border-red-500/30' 
                 : 'bg-emerald-500/10 border-emerald-500/30'
@@ -299,18 +299,18 @@ export const ResultsPanel = ({
               <div className="flex items-center gap-2">
                 {isUnderwater ? (
                   <>
-                    <AlertTriangle className="w-5 h-5 text-red-400 animate-pulse" />
-                    <span className="text-lg font-bold text-red-400">⚠️ INUNDATED</span>
+                    <AlertTriangle className="w-4 h-4 text-red-400 animate-pulse" />
+                    <span className="text-base font-bold text-red-400">⚠️ INUNDATED</span>
                   </>
                 ) : (
                   <>
-                    <Shield className="w-5 h-5 text-emerald-400" />
-                    <span className="text-lg font-bold text-emerald-400">Protected</span>
+                    <Shield className="w-4 h-4 text-emerald-400" />
+                    <span className="text-base font-bold text-emerald-400">Protected</span>
                   </>
                 )}
               </div>
               {floodDepth !== null && floodDepth !== undefined && isUnderwater && (
-                <p className="text-sm text-white/70 mt-1.5">
+                <p className="text-xs text-white/70 mt-1">
                   Flood Depth: <span className="font-semibold text-red-400">{floodDepth.toFixed(2)} meters</span>
                 </p>
               )}
@@ -325,12 +325,11 @@ export const ResultsPanel = ({
             </div>
           )}
 
-          {/* Flood Frequency Chart */}
           {stormChartData && stormChartData.length > 0 && (
-            <div className="space-y-2">
+            <div className="space-y-1.5">
               <div className="flex items-center gap-1.5">
-                <BarChart3 className="w-3.5 h-3.5 text-white/60" />
-                <span className="text-[10px] lg:text-xs text-white/50">Flood Frequency</span>
+                <BarChart3 className="w-3 h-3 text-white/60" />
+                <span className="text-[10px] text-white/50">Flood Frequency</span>
                 <TooltipProvider>
                   <Tooltip>
                     <TooltipTrigger asChild>
@@ -347,7 +346,7 @@ export const ResultsPanel = ({
                   </Tooltip>
                 </TooltipProvider>
               </div>
-              <div className="bg-white/5 rounded-xl p-2 border border-white/10">
+              <div className="bg-white/5 rounded-lg p-1.5 border border-white/10">
                 <FloodFrequencyChart data={stormChartData} />
               </div>
             </div>
@@ -355,7 +354,7 @@ export const ResultsPanel = ({
 
           <div className="space-y-1">
             <div className="flex items-center gap-1.5">
-              <span className="text-[10px] lg:text-xs text-white/50">Avoided Loss</span>
+              <span className="text-[10px] text-white/50">Avoided Loss</span>
               <TooltipProvider>
                 <Tooltip>
                   <TooltipTrigger asChild>
@@ -374,37 +373,37 @@ export const ResultsPanel = ({
               </TooltipProvider>
             </div>
             <div className="flex items-baseline gap-2">
-              <span className="text-2xl lg:text-3xl font-bold text-teal-400">{formatCurrency(avoidedLoss)}</span>
-              <Shield className="w-4 h-4 lg:w-5 lg:h-5 text-teal-400" />
+              <span className="text-xl lg:text-2xl font-bold text-teal-400">{formatCurrency(avoidedLoss)}</span>
+              <Shield className="w-4 h-4 text-teal-400" />
             </div>
           </div>
 
-          <div className="space-y-2">
+          <div className="space-y-1.5">
             <div className="flex items-center gap-1.5">
-              <span className="text-[10px] lg:text-xs text-white/50">Detected Parameters</span>
+              <span className="text-[10px] text-white/50">Detected Parameters</span>
             </div>
-            <div className="flex flex-wrap gap-1.5 lg:gap-2">
-              <Badge className="bg-white/5 text-white/80 border-white/10 flex items-center gap-1 lg:gap-1.5 px-2 lg:px-2.5 py-1">
-                <Mountain className="w-3 h-3 lg:w-3.5 lg:h-3.5 text-white/50" />
-                <span className="text-[10px] lg:text-xs">Slope: {slope !== null ? `${slope.toFixed(1)}%` : 'N/A'}</span>
+            <div className="flex flex-wrap gap-1.5">
+              <Badge className="bg-white/5 text-white/80 border-white/10 flex items-center gap-1 px-2 py-0.5">
+                <Mountain className="w-3 h-3 text-white/50" />
+                <span className="text-[10px]">Slope: {slope !== null ? `${slope.toFixed(1)}%` : 'N/A'}</span>
               </Badge>
-              <Badge className="bg-white/5 text-white/80 border-white/10 flex items-center gap-1 lg:gap-1.5 px-2 lg:px-2.5 py-1">
-                <CloudRain className="w-3 h-3 lg:w-3.5 lg:h-3.5 text-white/50" />
-                <span className="text-[10px] lg:text-xs">
+              <Badge className="bg-white/5 text-white/80 border-white/10 flex items-center gap-1 px-2 py-0.5">
+                <CloudRain className="w-3 h-3 text-white/50" />
+                <span className="text-[10px]">
                   Storm Wave: {stormWave !== null ? `${stormWave.toFixed(1)}m` : 'N/A'}
                 </span>
               </Badge>
             </div>
           </div>
 
-          <div className="space-y-2">
-            <div className="h-2 bg-white/10 rounded-full overflow-hidden">
+          <div className="space-y-1.5">
+            <div className="h-1.5 bg-white/10 rounded-full overflow-hidden">
               <div
                 className="h-full bg-gradient-to-r from-teal-500 to-blue-500 transition-all duration-500"
                 style={{ width: `${Math.min((avoidedLoss / 1000000) * 100, 100)}%` }}
               />
             </div>
-            <div className="flex justify-between text-xs text-white/40">
+            <div className="flex justify-between text-[10px] text-white/40">
               <span>Low protection</span>
               <span>High protection</span>
             </div>
