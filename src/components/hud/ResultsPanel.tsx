@@ -43,6 +43,8 @@ interface CoastalResults {
 interface FloodResults {
   floodDepthReduction: number;
   valueProtected: number;
+  riskIncreasePct?: number | null;
+  futureFloodAreaKm2?: number | null;
 }
 
 interface ResultsPanelProps {
@@ -414,21 +416,74 @@ export const ResultsPanel = ({
   }
 
   if (mode === 'flood' && floodResults) {
-    const { floodDepthReduction, valueProtected } = floodResults;
+    const { floodDepthReduction, valueProtected, riskIncreasePct, futureFloodAreaKm2 } = floodResults;
     const activeInterventions = [
       greenRoofsEnabled && 'Green Roofs',
       permeablePavementEnabled && 'Permeable Pavement',
     ].filter(Boolean);
+
+    // Determine risk level for visual feedback
+    const isHighRisk = riskIncreasePct !== null && riskIncreasePct !== undefined && riskIncreasePct > 20;
+    const isExtremeRisk = riskIncreasePct !== null && riskIncreasePct !== undefined && riskIncreasePct > 40;
 
     return (
       <GlassCard className="w-full lg:w-80 p-3 sm:p-4 lg:p-5 border-blue-500/20 animate-in slide-in-from-bottom lg:slide-in-from-right duration-300">
         <div className="absolute inset-0 bg-gradient-to-br from-blue-500/5 to-transparent pointer-events-none rounded-2xl" />
 
         <div className="relative space-y-3 lg:space-y-4">
-          <div className="flex items-center gap-2">
-            <Droplets className="w-4 h-4 lg:w-5 lg:h-5 text-blue-400" />
-            <span className="text-sm lg:text-base font-semibold text-white">Flood Mitigation Results</span>
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-2">
+              <Droplets className="w-4 h-4 lg:w-5 lg:h-5 text-blue-400" />
+              <span className="text-sm lg:text-base font-semibold text-white">Flood Risk Analysis</span>
+            </div>
+            {riskIncreasePct !== null && riskIncreasePct !== undefined && (
+              <Badge className={cn(
+                'text-[10px] lg:text-xs border',
+                isExtremeRisk 
+                  ? 'bg-red-500/20 text-red-400 border-red-500/30'
+                  : isHighRisk
+                    ? 'bg-orange-500/20 text-orange-400 border-orange-500/30'
+                    : 'bg-blue-500/20 text-blue-400 border-blue-500/30'
+              )}>
+                +{riskIncreasePct.toFixed(0)}% Risk
+              </Badge>
+            )}
           </div>
+
+          {/* Risk Increase Card */}
+          {riskIncreasePct !== null && riskIncreasePct !== undefined && (
+            <div className={cn(
+              'p-2.5 rounded-xl border',
+              isExtremeRisk 
+                ? 'bg-red-500/10 border-red-500/30'
+                : isHighRisk
+                  ? 'bg-orange-500/10 border-orange-500/30'
+                  : 'bg-blue-500/10 border-blue-500/30'
+            )}>
+              <div className="flex items-center justify-between">
+                <span className="text-[10px] lg:text-xs text-white/60">Climate Risk Increase</span>
+                <span className={cn(
+                  'text-sm lg:text-lg font-bold',
+                  isExtremeRisk ? 'text-red-400' : isHighRisk ? 'text-orange-400' : 'text-blue-400'
+                )}>
+                  +{riskIncreasePct.toFixed(1)}%
+                </span>
+              </div>
+            </div>
+          )}
+
+          {/* Future Flood Area */}
+          {futureFloodAreaKm2 !== null && futureFloodAreaKm2 !== undefined && (
+            <div className="flex items-center justify-between p-2.5 lg:p-3 rounded-xl bg-white/5 border border-white/10">
+              <div className="flex items-center gap-2">
+                <CloudRain className="w-3.5 h-3.5 lg:w-4 lg:h-4 text-cyan-400" />
+                <span className="text-[10px] lg:text-xs text-white/60">Future Flood Area</span>
+              </div>
+              <span className="text-sm lg:text-lg font-bold text-cyan-400">
+                {futureFloodAreaKm2.toFixed(2)} km²
+              </span>
+            </div>
+          )}
 
           <div className="flex items-center justify-between p-2.5 lg:p-3 rounded-xl bg-white/5 border border-white/10">
             <div className="flex items-center gap-2">

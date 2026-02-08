@@ -4,6 +4,7 @@ import { DashboardMode } from '@/components/dashboard/ModeSelector';
 import { TimelinePlayer } from '@/components/TimelinePlayer';
 import { FloatingControlPanel } from '@/components/hud/FloatingControlPanel';
 import { SimulationPanel } from '@/components/hud/SimulationPanel';
+import { FloodSimulationPanel } from '@/components/hud/FloodSimulationPanel';
 import { CoastalSimulationPanel } from '@/components/hud/CoastalSimulationPanel';
 import { ResultsPanel } from '@/components/hud/ResultsPanel';
 import { PortfolioPanel } from '@/components/portfolio/PortfolioPanel';
@@ -125,9 +126,16 @@ const Index = () => {
   const [includeStormSurge, setIncludeStormSurge] = useState(false);
   const [coastalSelectedYear, setCoastalSelectedYear] = useState(2026);
 
+  // Flood-specific state
+  const [totalRainIntensity, setTotalRainIntensity] = useState(9); // Default: 9% (2026 baseline)
+  const [floodSelectedYear, setFloodSelectedYear] = useState(2026);
+  const [isFloodUserOverride, setIsFloodUserOverride] = useState(false);
+
   const [floodResults, setFloodResults] = useState({
     floodDepthReduction: 0,
     valueProtected: 0,
+    riskIncreasePct: null as number | null,
+    futureFloodAreaKm2: null as number | null,
   });
 
   // Spatial analysis data from API (for Viable Growing Area card)
@@ -433,11 +441,16 @@ const Index = () => {
     try {
       const intervention_type = getInterventionType();
 
+      // New payload with lat, lon, and rain_intensity_pct from timeline
       const payload = {
-        rain_intensity: 100,
+        rain_intensity: 100 + totalRainIntensity, // Base 100mm + % increase
         current_imperviousness: 0.7,
         intervention_type,
         slope_pct: 2.0,
+        // Additional context for API
+        lat: markerPosition.lat,
+        lon: markerPosition.lng,
+        rain_intensity_pct: totalRainIntensity,
       };
 
       const { data: responseData, error } = await supabase.functions.invoke('simulate-flood', {
@@ -451,10 +464,14 @@ const Index = () => {
       const analysis = responseData.data?.analysis || responseData.analysis || responseData;
       const avoidedLoss = analysis.avoided_loss ?? 0;
       const floodDepthReduction = analysis.avoided_depth_cm ?? 0;
+      const riskIncreasePct = analysis.risk_increase_pct ?? null;
+      const futureFloodAreaKm2 = analysis.future_flood_area_km2 ?? null;
 
       setFloodResults({
         floodDepthReduction: Math.round(floodDepthReduction * 10) / 10,
         valueProtected: Math.round(avoidedLoss * 100) / 100,
+        riskIncreasePct: riskIncreasePct !== null ? Math.round(riskIncreasePct * 10) / 10 : null,
+        futureFloodAreaKm2: futureFloodAreaKm2 !== null ? Math.round(futureFloodAreaKm2 * 100) / 100 : null,
       });
       setShowFloodResults(true);
     } catch (error) {
@@ -464,9 +481,15 @@ const Index = () => {
       const totalReduction = baseReduction + pavementReduction;
       const protectedValue = buildingValue * (totalReduction / 100);
 
+      // Fallback calculations based on rain intensity
+      const riskIncreasePct = totalRainIntensity > 10 ? (totalRainIntensity - 10) * 3 : 0;
+      const futureFloodAreaKm2 = 2.5 + (totalRainIntensity / 100) * 5;
+
       setFloodResults({
         floodDepthReduction: totalReduction,
         valueProtected: Math.round(protectedValue),
+        riskIncreasePct,
+        futureFloodAreaKm2,
       });
       setShowFloodResults(true);
       toast({
@@ -477,7 +500,7 @@ const Index = () => {
     } finally {
       setIsFloodSimulating(false);
     }
-  }, [markerPosition, buildingValue, greenRoofsEnabled, permeablePavementEnabled, getInterventionType]);
+  }, [markerPosition, buildingValue, greenRoofsEnabled, permeablePavementEnabled, getInterventionType, totalRainIntensity]);
 
   const handleGreenRoofsChange = useCallback(
     (enabled: boolean) => {
@@ -525,6 +548,10 @@ const Index = () => {
     setIsTimelinePlaying(false);
     setGlobalTempTarget(1.4);
     setRainChange(0);
+    // Reset flood-specific state
+    setFloodSelectedYear(2026);
+    setTotalRainIntensity(9);
+    setIsFloodUserOverride(false);
   }, []);
 
   const handleViewStateChange = useCallback((newViewState: ViewState) => {
@@ -631,6 +658,20 @@ const Index = () => {
             onIncludeStormSurgeChange={setIncludeStormSurge}
             selectedYear={coastalSelectedYear}
             onSelectedYearChange={setCoastalSelectedYear}
+          />
+        </div>
+      ) : mode === 'flood' ? (
+        <div className="hidden lg:block absolute bottom-32 left-6 z-30">
+          <FloodSimulationPanel
+            onSimulate={handleFloodSimulate}
+            isSimulating={isFloodSimulating}
+            canSimulate={canSimulate}
+            totalRainIntensity={totalRainIntensity}
+            onTotalRainIntensityChange={setTotalRainIntensity}
+            selectedYear={floodSelectedYear}
+            onSelectedYearChange={setFloodSelectedYear}
+            isUserOverride={isFloodUserOverride}
+            onUserOverrideChange={setIsFloodUserOverride}
           />
         </div>
       ) : (
