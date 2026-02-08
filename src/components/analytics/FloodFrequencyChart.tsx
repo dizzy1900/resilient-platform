@@ -31,22 +31,22 @@ export const FloodFrequencyChart = ({ data }: FloodFrequencyChartProps) => {
   });
 
   return (
-    <div className="w-full h-56">
+    <div className="w-full h-36 lg:h-40">
       <ResponsiveContainer width="100%" height="100%">
         <BarChart
           data={sortedData}
-          margin={{ top: 10, right: 10, left: -10, bottom: 0 }}
+          margin={{ top: 5, right: 5, left: -15, bottom: 0 }}
           barCategoryGap="20%"
         >
           <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.1)" />
           <XAxis
             dataKey="period"
-            tick={{ fill: 'rgba(255,255,255,0.6)', fontSize: 11 }}
+            tick={{ fill: 'rgba(255,255,255,0.6)', fontSize: 10 }}
             axisLine={{ stroke: 'rgba(255,255,255,0.2)' }}
             tickLine={false}
           />
           <YAxis
-            tick={{ fill: 'rgba(255,255,255,0.6)', fontSize: 11 }}
+            tick={{ fill: 'rgba(255,255,255,0.6)', fontSize: 10 }}
             axisLine={{ stroke: 'rgba(255,255,255,0.2)' }}
             tickLine={false}
             tickFormatter={(value) => `${value}m`}
@@ -66,7 +66,8 @@ export const FloodFrequencyChart = ({ data }: FloodFrequencyChartProps) => {
             ]}
           />
           <Legend
-            wrapperStyle={{ paddingTop: '10px' }}
+            wrapperStyle={{ paddingTop: '4px', fontSize: '10px' }}
+            iconSize={8}
             formatter={(value) =>
               value === 'current_depth' ? 'Current Surge Risk' : 'Future Surge (+SLR)'
             }
