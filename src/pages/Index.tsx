@@ -10,6 +10,7 @@ import { PortfolioPanel } from '@/components/portfolio/PortfolioPanel';
 import { PortfolioHeader } from '@/components/portfolio/PortfolioHeader';
 import { MobileMenu } from '@/components/hud/MobileMenu';
 import { ZoneLegend } from '@/components/dashboard/ZoneLegend';
+import { UrbanInundationCard } from '@/components/dashboard/UrbanInundationCard';
 import { AnalyticsHighlightsCard } from '@/components/hud/AnalyticsHighlightsCard';
 import { UserMenu } from '@/components/auth/UserMenu';
 import { toast } from '@/hooks/use-toast';
@@ -107,12 +108,16 @@ const Index = () => {
     seaLevelRise?: number;
     includeStormSurge?: boolean;
     stormChartData?: Array<{ period: string; current_depth: number; future_depth: number }>;
+    floodedUrbanKm2?: number | null;
+    urbanImpactPct?: number | null;
   }>({
     avoidedLoss: 0,
     slope: null,
     stormWave: null,
     isUnderwater: undefined,
     floodDepth: null,
+    floodedUrbanKm2: null,
+    urbanImpactPct: null,
   });
 
   // Coastal-specific state (calibrated to Year 2000 baseline)
@@ -327,9 +332,15 @@ const Index = () => {
         const rawIsUnderwater = data.is_underwater;
         const rawFloodDepth = data.flood_depth;
         const rawStormChartData = data.storm_chart_data;
+        const rawFloodedUrbanKm2 = data.flooded_urban_km2;
+        const rawUrbanImpactPct = data.urban_impact_pct;
 
         // Generate fallback storm chart data if API doesn't provide it
         const stormChartData = rawStormChartData ?? generateFallbackStormChartData(totalSLR);
+
+        // Generate fallback urban inundation data based on SLR if API doesn't provide it
+        const floodedUrbanKm2 = rawFloodedUrbanKm2 ?? (totalSLR > 0 ? totalSLR * 12.5 : 0);
+        const urbanImpactPct = rawUrbanImpactPct ?? (totalSLR > 0 ? Math.min(totalSLR * 15, 100) : 0);
 
         setCoastalResults({
           avoidedLoss:
@@ -343,6 +354,8 @@ const Index = () => {
           seaLevelRise: totalSLR,
           includeStormSurge,
           stormChartData,
+          floodedUrbanKm2,
+          urbanImpactPct,
         });
         setShowCoastalResults(true);
       } catch (error) {
@@ -351,6 +364,10 @@ const Index = () => {
         const stormSurgeHeight = includeStormSurge ? 2.5 : 0;
         const totalWaterLevel = totalSLR + stormSurgeHeight;
         const isUnderwater = totalWaterLevel > 1.5;
+        
+        // Fallback urban inundation data
+        const floodedUrbanKm2 = totalSLR > 0 ? totalSLR * 12.5 : 0;
+        const urbanImpactPct = totalSLR > 0 ? Math.min(totalSLR * 15, 100) : 0;
         
         setCoastalResults({
           avoidedLoss: Math.round(propertyValue * (mangroveWidth / 500) * 0.5),
@@ -361,6 +378,8 @@ const Index = () => {
           seaLevelRise: totalSLR,
           includeStormSurge,
           stormChartData: generateFallbackStormChartData(totalSLR),
+          floodedUrbanKm2,
+          urbanImpactPct,
         });
         setShowCoastalResults(true);
         toast({
@@ -634,15 +653,24 @@ const Index = () => {
 
       {mode !== 'portfolio' && (
         <div className="hidden lg:block absolute bottom-32 left-[344px] xl:left-[360px] z-30 max-w-[200px]">
-          <ZoneLegend
-            baselineZone={baselineZone}
-            currentZone={currentZone}
-            mode={mode as ZoneMode}
-            temperature={globalTempTarget - 1.4}
-            visible={!!baselineZone && !!currentZone}
-            spatialAnalysis={mode === 'agriculture' ? spatialAnalysis : null}
-            isSpatialLoading={mode === 'agriculture' && isSpatialLoading}
-          />
+          {mode === 'coastal' ? (
+            <UrbanInundationCard
+              visible={showCoastalResults}
+              isLoading={isCoastalSimulating}
+              floodedUrbanKm2={coastalResults.floodedUrbanKm2 ?? null}
+              urbanImpactPct={coastalResults.urbanImpactPct ?? null}
+            />
+          ) : (
+            <ZoneLegend
+              baselineZone={baselineZone}
+              currentZone={currentZone}
+              mode={mode as ZoneMode}
+              temperature={globalTempTarget - 1.4}
+              visible={!!baselineZone && !!currentZone}
+              spatialAnalysis={mode === 'agriculture' ? spatialAnalysis : null}
+              isSpatialLoading={mode === 'agriculture' && isSpatialLoading}
+            />
+          )}
         </div>
       )}
 
