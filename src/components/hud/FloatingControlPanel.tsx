@@ -154,7 +154,7 @@ export const FloatingControlPanel = ({
         </div>
       )}
 
-      <div className="space-y-3">
+      <div className="space-y-3 max-h-[calc(100vh-380px)] overflow-y-auto pr-1 scrollbar-thin scrollbar-thumb-white/10 scrollbar-track-transparent">
         {mode === 'agriculture' && (
           <div className="space-y-3">
             <label className="text-sm font-medium text-white/70">Crop Type</label>
