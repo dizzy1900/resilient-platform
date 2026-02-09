@@ -3,6 +3,8 @@ import { DashboardMode } from '@/components/dashboard/ModeSelector';
 import { AgricultureAnalytics, ApiChartData } from '@/components/analytics/AgricultureAnalytics';
 import { CoastalAnalytics } from '@/components/analytics/CoastalAnalytics';
 import { FloodAnalytics } from '@/components/analytics/FloodAnalytics';
+import { CumulativeCashFlowChart } from '@/components/analytics/CumulativeCashFlowChart';
+import { ProjectParams } from '@/components/hud/InterventionWizardModal';
 import { MiniSoilMoistureChart } from '@/components/analytics/MiniSoilMoistureChart';
 import { MiniStormSurgeChart } from '@/components/analytics/MiniStormSurgeChart';
 import { MiniFloodCapacityChart } from '@/components/analytics/MiniFloodCapacityChart';
@@ -21,7 +23,7 @@ import {
   generateFloodRecommendations,
   Recommendation,
 } from '@/utils/generateRecommendations';
-import { Sprout, Waves, Droplets, ChevronDown, ChevronUp, X, AlertTriangle, Lightbulb } from 'lucide-react';
+import { Sprout, Waves, Droplets, ChevronDown, ChevronUp, X, AlertTriangle, Lightbulb, TrendingUp } from 'lucide-react';
 import { GlassCard } from './GlassCard';
 import { Button } from '@/components/ui/button';
 
@@ -56,6 +58,7 @@ interface AnalyticsHighlightsCardProps {
   floodResults?: FloodResults;
   chartData?: ApiChartData | null;
   rainChange?: number;
+  projectParams?: ProjectParams | null;
 }
 
 const modeConfig = {
@@ -114,6 +117,7 @@ export const AnalyticsHighlightsCard = ({
   floodResults,
   chartData = null,
   rainChange = 0,
+  projectParams = null,
 }: AnalyticsHighlightsCardProps) => {
   const [isExpanded, setIsExpanded] = useState(false);
   const [isAnimating, setIsAnimating] = useState(false);
@@ -302,14 +306,33 @@ export const AnalyticsHighlightsCard = ({
             <div className="flex-1 overflow-y-auto overflow-x-hidden min-h-0">
               <div className="p-4">
                 {mode === 'agriculture' && latitude !== null && (
-                  <AgricultureAnalytics
-                    latitude={latitude}
-                    temperatureIncrease={temperature}
-                    cropType={cropType}
-                    embedded
-                    chartData={chartData}
-                    rainChange={rainChange}
-                  />
+                  <>
+                    <AgricultureAnalytics
+                      latitude={latitude}
+                      temperatureIncrease={temperature}
+                      cropType={cropType}
+                      embedded
+                      chartData={chartData}
+                      rainChange={rainChange}
+                    />
+                    {projectParams && (
+                      <div className="mt-6 space-y-3">
+                        <div className="flex items-center gap-2">
+                          <TrendingUp className="w-4 h-4 text-emerald-400" />
+                          <h3 className="text-sm font-medium text-white">Cumulative Cash Flow</h3>
+                        </div>
+                        <p className="text-xs text-white/50">
+                          10-year ROI projection for your adaptation project
+                        </p>
+                        <CumulativeCashFlowChart
+                          capex={projectParams.capex}
+                          opex={projectParams.opex}
+                          yieldBenefit={projectParams.yieldBenefit}
+                          cropPrice={projectParams.cropPrice}
+                        />
+                      </div>
+                    )}
+                  </>
                 )}
                 {mode === 'coastal' && coastalResults && (
                   <CoastalAnalytics

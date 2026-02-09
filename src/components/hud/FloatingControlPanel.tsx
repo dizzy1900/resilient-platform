@@ -1,4 +1,4 @@
-import { Activity, MapPin, Wheat, Coffee, TreePine, Building2, Droplets, Briefcase, DollarSign } from 'lucide-react';
+import { Activity, MapPin, Wheat, Coffee, TreePine, Building2, Droplets, Briefcase, DollarSign, Sprout } from 'lucide-react';
 import { GlassCard } from './GlassCard';
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
@@ -6,6 +6,7 @@ import { Slider } from '@/components/ui/slider';
 import { Switch } from '@/components/ui/switch';
 import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
 import { DashboardMode } from '@/components/dashboard/ModeSelector';
 import { useState, useEffect, useRef } from 'react';
 import { useFinancialSettings } from '@/contexts/FinancialContext';
@@ -29,6 +30,7 @@ interface FloatingControlPanelProps {
   permeablePavementEnabled: boolean;
   onPermeablePavementChange: (enabled: boolean) => void;
   canSimulate: boolean;
+  onOpenInterventionWizard?: () => void;
 }
 
 const crops = [
@@ -55,6 +57,7 @@ export const FloatingControlPanel = ({
   permeablePavementEnabled,
   onPermeablePavementChange,
   canSimulate,
+  onOpenInterventionWizard,
 }: FloatingControlPanelProps) => {
   const [localMangroveWidth, setLocalMangroveWidth] = useState(mangroveWidth);
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
@@ -157,6 +160,14 @@ export const FloatingControlPanel = ({
       <div className="space-y-3 overflow-y-auto flex-1 min-h-0 pr-1 scrollbar-thin scrollbar-thumb-white/10 scrollbar-track-transparent">
         {mode === 'agriculture' && (
           <div className="space-y-3">
+            <Button
+              onClick={onOpenInterventionWizard}
+              className="w-full h-10 text-xs font-semibold text-white bg-gradient-to-r from-emerald-600/80 to-teal-600/80 hover:from-emerald-600 hover:to-teal-600 rounded-xl border border-emerald-500/30 shadow-[0_0_15px_rgba(16,185,129,0.2)] hover:shadow-[0_0_25px_rgba(16,185,129,0.4)] transition-all"
+            >
+              <Sprout className="w-4 h-4 mr-2" />
+              🌱 Define Adaptation Project
+            </Button>
+
             <label className="text-sm font-medium text-white/70">Crop Type</label>
             <Select value={cropType} onValueChange={onCropChange}>
               <SelectTrigger className="w-full h-12 bg-white/5 border-white/10 hover:border-white/20 transition-colors rounded-xl">

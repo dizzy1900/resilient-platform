@@ -16,6 +16,7 @@ import { InfrastructureRiskCard } from '@/components/dashboard/InfrastructureRis
 import { AnalyticsHighlightsCard } from '@/components/hud/AnalyticsHighlightsCard';
 import { UserMenu } from '@/components/auth/UserMenu';
 import { FinancialSettingsModal } from '@/components/hud/FinancialSettingsModal';
+import { InterventionWizardModal, ProjectParams } from '@/components/hud/InterventionWizardModal';
 import { toast } from '@/hooks/use-toast';
 import { Columns2, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -66,6 +67,10 @@ const Index = () => {
   const [permeablePavementEnabled, setPermeablePavementEnabled] = useState(false);
   const [markerPosition, setMarkerPosition] = useState<{ lat: number; lng: number } | null>(null);
   const [isSimulating, setIsSimulating] = useState(false);
+
+  // Intervention Wizard state
+  const [showWizard, setShowWizard] = useState(false);
+  const [projectParams, setProjectParams] = useState<ProjectParams | null>(null);
   const [isCoastalSimulating, setIsCoastalSimulating] = useState(false);
   const [isFloodSimulating, setIsFloodSimulating] = useState(false);
   const [showResults, setShowResults] = useState(false);
@@ -222,6 +227,14 @@ const Index = () => {
           crop: cropType,
           temp_increase: Math.round(tempDelta * 10) / 10,
           rain_change: rainChange,
+          ...(projectParams ? {
+            project_params: {
+              capex: projectParams.capex,
+              opex: projectParams.opex,
+              yield_benefit: projectParams.yieldBenefit,
+              crop_price: projectParams.cropPrice,
+            },
+          } : {}),
         },
       });
 
@@ -311,7 +324,19 @@ const Index = () => {
       setIsSimulating(false);
       setIsSpatialLoading(false);
     }
-  }, [markerPosition, cropType, globalTempTarget, rainChange]);
+  }, [markerPosition, cropType, globalTempTarget, rainChange, projectParams]);
+
+  const handleWizardRunAnalysis = useCallback((params: ProjectParams) => {
+    setProjectParams(params);
+    setShowWizard(false);
+    // Trigger simulation with the new params
+    if (markerPosition) {
+      // Small delay to let state update
+      setTimeout(() => {
+        handleSimulate();
+      }, 100);
+    }
+  }, [markerPosition, handleSimulate]);
 
   const handleCoastalSimulate = useCallback(
     async () => {
@@ -666,6 +691,7 @@ const Index = () => {
             permeablePavementEnabled={permeablePavementEnabled}
             onPermeablePavementChange={handlePermeablePavementChange}
             canSimulate={canSimulate}
+            onOpenInterventionWizard={() => setShowWizard(true)}
           />
         </div>
       )}
@@ -854,9 +880,17 @@ const Index = () => {
             floodResults={mode === 'flood' ? floodResults : undefined}
             chartData={mode === 'agriculture' ? chartData : null}
             rainChange={rainChange}
+            projectParams={mode === 'agriculture' ? projectParams : null}
           />
         </div>
       )}
+
+      <InterventionWizardModal
+        open={showWizard}
+        onOpenChange={setShowWizard}
+        onRunAnalysis={handleWizardRunAnalysis}
+        isSimulating={isSimulating}
+      />
 
       <TimelinePlayer
         selectedYear={selectedYear}
