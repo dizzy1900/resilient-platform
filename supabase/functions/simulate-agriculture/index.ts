@@ -12,6 +12,14 @@ const requestSchema = z.object({
   lat: z.number().min(-90, "Latitude must be >= -90").max(90, "Latitude must be <= 90"),
   lon: z.number().min(-180, "Longitude must be >= -180").max(180, "Longitude must be <= 180"),
   crop: z.string().min(1, "Crop type is required").max(50, "Crop type must be 50 characters or less"),
+  temp_increase: z.number().optional(),
+  rain_change: z.number().optional(),
+  project_params: z.object({
+    capex: z.number().min(0).max(1000000),
+    opex: z.number().min(0).max(1000000),
+    yield_benefit: z.number().min(0).max(100),
+    crop_price: z.number().min(0).max(1000000),
+  }).optional(),
 });
 
 const RAILWAY_API_URL = "https://primary-production-679e.up.railway.app/webhook/simulate";
@@ -53,8 +61,14 @@ serve(async (req) => {
       );
     }
 
-    const { lat, lon, crop } = validationResult.data;
-    console.log("simulate-agriculture: Validated request", { lat, lon, crop });
+    const { lat, lon, crop, temp_increase, rain_change, project_params } = validationResult.data;
+    console.log("simulate-agriculture: Validated request", { lat, lon, crop, temp_increase, rain_change, project_params: !!project_params });
+
+    // Build payload for Railway API
+    const payload: Record<string, unknown> = { lat, lon, crop };
+    if (temp_increase !== undefined) payload.temp_increase = temp_increase;
+    if (rain_change !== undefined) payload.rain_change = rain_change;
+    if (project_params) payload.project_params = project_params;
 
     // Call Railway API
     const response = await fetch(RAILWAY_API_URL, {
@@ -62,7 +76,7 @@ serve(async (req) => {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ lat, lon, crop }),
+      body: JSON.stringify(payload),
     });
 
     if (!response.ok) {
