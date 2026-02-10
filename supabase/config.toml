@@ -11,3 +11,6 @@ verify_jwt = false
 
 [functions.simulate-flood]
 verify_jwt = false
+
+[functions.predict-health]
+verify_jwt = false

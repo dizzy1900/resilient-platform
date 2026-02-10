@@ -152,6 +152,10 @@ export const MobileMenu = ({
                     onSeaWallChange={() => {}}
                     drainageEnabled={false}
                     onDrainageChange={() => {}}
+                    workforceSize={100}
+                    onWorkforceSizeChange={() => {}}
+                    averageDailyWage={15}
+                    onAverageDailyWageChange={() => {}}
                   />
 
                   <SimulationPanel

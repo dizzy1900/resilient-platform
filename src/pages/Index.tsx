@@ -6,6 +6,8 @@ import { FloatingControlPanel } from '@/components/hud/FloatingControlPanel';
 import { SimulationPanel } from '@/components/hud/SimulationPanel';
 import { FloodSimulationPanel } from '@/components/hud/FloodSimulationPanel';
 import { CoastalSimulationPanel } from '@/components/hud/CoastalSimulationPanel';
+import { HealthSimulationPanel } from '@/components/hud/HealthSimulationPanel';
+import { HealthResultsPanel, HealthResults } from '@/components/hud/HealthResultsPanel';
 import { ResultsPanel } from '@/components/hud/ResultsPanel';
 import { PortfolioPanel } from '@/components/portfolio/PortfolioPanel';
 import { PortfolioAsset } from '@/components/portfolio/PortfolioCSVUpload';
@@ -87,9 +89,18 @@ const Index = () => {
 
   const [isCoastalSimulating, setIsCoastalSimulating] = useState(false);
   const [isFloodSimulating, setIsFloodSimulating] = useState(false);
+  const [isHealthSimulating, setIsHealthSimulating] = useState(false);
   const [showResults, setShowResults] = useState(false);
   const [showCoastalResults, setShowCoastalResults] = useState(false);
   const [showFloodResults, setShowFloodResults] = useState(false);
+  const [showHealthResults, setShowHealthResults] = useState(false);
+
+  // Health mode state
+  const [workforceSize, setWorkforceSize] = useState(100);
+  const [averageDailyWage, setAverageDailyWage] = useState(15);
+  const [healthSelectedYear, setHealthSelectedYear] = useState(2026);
+  const [healthTempTarget, setHealthTempTarget] = useState(1.4);
+  const [healthResults, setHealthResults] = useState<HealthResults | null>(null);
   const [isSplitMode, setIsSplitMode] = useState(false);
   const [viewState, setViewState] = useState<ViewState>({
     longitude: 37.9062,
@@ -220,6 +231,7 @@ const Index = () => {
     setShowResults(false);
     setShowCoastalResults(false);
     setShowFloodResults(false);
+    setShowHealthResults(false);
   }, []);
 
   const handleGlobalTempTargetChange = useCallback((value: number) => {
@@ -627,6 +639,7 @@ const Index = () => {
     setShowResults(false);
     setShowCoastalResults(false);
     setShowFloodResults(false);
+    setShowHealthResults(false);
     setSelectedYear(2026);
     setIsTimelinePlaying(false);
     setGlobalTempTarget(1.4);
@@ -641,21 +654,77 @@ const Index = () => {
     setViewState(newViewState);
   }, []);
 
+  // Health simulation handler
+  const handleHealthSimulate = useCallback(async () => {
+    if (!markerPosition) return;
+    setIsHealthSimulating(true);
+    setShowHealthResults(false);
+
+    try {
+      const tempDelta = healthTempTarget - 1.4;
+      const { data: responseData, error } = await supabase.functions.invoke('predict-health', {
+        body: {
+          lat: markerPosition.lat,
+          lon: markerPosition.lng,
+          workforce_size: workforceSize,
+          daily_wage: averageDailyWage,
+          temp_increase: tempDelta,
+        },
+      });
+
+      if (error) throw new Error(error.message || 'Health simulation failed');
+
+      setHealthResults(responseData.data);
+      setShowHealthResults(true);
+    } catch (error) {
+      console.error('Health simulation failed:', error);
+      // Fallback
+      const baseTemp = 28 + (Math.abs(markerPosition.lat) < 15 ? 4 : markerPosition.lat < 25 ? 2 : 0);
+      const projTemp = baseTemp + (healthTempTarget - 1.4);
+      const wbgt = projTemp * 0.7 + 8;
+      const loss = Math.min(50, Math.max(0, Math.round((wbgt - 25) * 5)));
+      setHealthResults({
+        productivity_loss_pct: loss,
+        economic_loss_daily: Math.round(workforceSize * averageDailyWage * (loss / 100)),
+        wbgt: Math.round(wbgt * 10) / 10,
+        projected_temp: Math.round(projTemp * 10) / 10,
+        malaria_risk: Math.abs(markerPosition.lat) < 25 && projTemp >= 25 ? 'High' : 'Low',
+        dengue_risk: Math.abs(markerPosition.lat) < 35 && projTemp >= 25 ? 'High' : 'Low',
+        workforce_size: workforceSize,
+        daily_wage: averageDailyWage,
+      });
+      setShowHealthResults(true);
+      toast({
+        title: 'Using Estimated Values',
+        description: 'Could not reach health API. Showing estimated values.',
+        variant: 'default',
+      });
+    } finally {
+      setIsHealthSimulating(false);
+    }
+  }, [markerPosition, workforceSize, averageDailyWage, healthTempTarget]);
+
   const getCurrentSimulateHandler = useCallback(() => {
     if (mode === 'agriculture') return handleSimulate;
     if (mode === 'coastal') return handleCoastalSimulate;
+    if (mode === 'health') return handleHealthSimulate;
     return handleFloodSimulate;
-  }, [mode, handleSimulate, handleCoastalSimulate, handleFloodSimulate]);
+  }, [mode, handleSimulate, handleCoastalSimulate, handleFloodSimulate, handleHealthSimulate]);
 
   const isCurrentlySimulating =
     mode === 'agriculture'
       ? isSimulating
       : mode === 'coastal'
         ? isCoastalSimulating
-        : isFloodSimulating;
+        : mode === 'health'
+          ? isHealthSimulating
+          : isFloodSimulating;
 
   const showCurrentResults =
-    mode === 'agriculture' ? showResults : mode === 'coastal' ? showCoastalResults : showFloodResults;
+    mode === 'agriculture' ? showResults
+    : mode === 'coastal' ? showCoastalResults
+    : mode === 'health' ? showHealthResults
+    : showFloodResults;
 
   return (
     <div className="relative h-screen w-full overflow-hidden bg-slate-950">
@@ -735,6 +804,10 @@ const Index = () => {
               setDefensiveProjectType(type);
               setShowDefensiveWizard(true);
             }}
+            workforceSize={workforceSize}
+            onWorkforceSizeChange={setWorkforceSize}
+            averageDailyWage={averageDailyWage}
+            onAverageDailyWageChange={setAverageDailyWage}
           />
         </div>
       )}
@@ -776,6 +849,18 @@ const Index = () => {
             onSelectedYearChange={setFloodSelectedYear}
             isUserOverride={isFloodUserOverride}
             onUserOverrideChange={setIsFloodUserOverride}
+          />
+        </div>
+      ) : mode === 'health' ? (
+        <div className="hidden lg:block absolute bottom-32 left-6 z-30">
+          <HealthSimulationPanel
+            onSimulate={handleHealthSimulate}
+            isSimulating={isHealthSimulating}
+            canSimulate={canSimulate}
+            globalTempTarget={healthTempTarget}
+            onGlobalTempTargetChange={setHealthTempTarget}
+            selectedYear={healthSelectedYear}
+            onSelectedYearChange={setHealthSelectedYear}
           />
         </div>
       ) : (
@@ -887,28 +972,36 @@ const Index = () => {
 
       {mode !== 'portfolio' && (
         <div className="absolute bottom-28 sm:bottom-24 lg:bottom-32 right-4 sm:right-6 lg:right-20 left-4 sm:left-auto z-30 flex flex-col gap-2 sm:gap-3 max-w-full sm:max-w-none sm:w-80 lg:w-80">
-          <ResultsPanel
-            mode={mode}
-            visible={showCurrentResults}
-            isLoading={isCurrentlySimulating}
-            agricultureResults={
-              mode === 'agriculture'
-                ? {
-                    avoidedLoss: results.avoidedLoss,
-                    riskReduction: results.riskReduction,
-                    yieldPotential: results.yieldPotential,
-                    monthlyData: results.monthlyData,
-                  }
-                : undefined
-            }
-            coastalResults={mode === 'coastal' ? coastalResults : undefined}
-            floodResults={mode === 'flood' ? floodResults : undefined}
-            mangroveWidth={mangroveWidth}
-            greenRoofsEnabled={greenRoofsEnabled}
-            permeablePavementEnabled={permeablePavementEnabled}
-            tempIncrease={globalTempTarget - 1.4}
-            rainChange={rainChange}
-          />
+          {mode === 'health' ? (
+            <HealthResultsPanel
+              visible={showHealthResults}
+              isLoading={isHealthSimulating}
+              results={healthResults ?? undefined}
+            />
+          ) : (
+            <ResultsPanel
+              mode={mode}
+              visible={showCurrentResults}
+              isLoading={isCurrentlySimulating}
+              agricultureResults={
+                mode === 'agriculture'
+                  ? {
+                      avoidedLoss: results.avoidedLoss,
+                      riskReduction: results.riskReduction,
+                      yieldPotential: results.yieldPotential,
+                      monthlyData: results.monthlyData,
+                    }
+                  : undefined
+              }
+              coastalResults={mode === 'coastal' ? coastalResults : undefined}
+              floodResults={mode === 'flood' ? floodResults : undefined}
+              mangroveWidth={mangroveWidth}
+              greenRoofsEnabled={greenRoofsEnabled}
+              permeablePavementEnabled={permeablePavementEnabled}
+              tempIncrease={globalTempTarget - 1.4}
+              rainChange={rainChange}
+            />
+          )}
 
           <AnalyticsHighlightsCard
             visible={showCurrentResults && !isCurrentlySimulating}
