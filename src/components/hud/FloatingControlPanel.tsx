@@ -34,8 +34,8 @@ interface FloatingControlPanelProps {
 }
 
 const crops = [
-  { value: 'maize', label: '🌽 Maize (Corn)', icon: Wheat },
-  { value: 'cocoa', label: '🍫 Cocoa (Tree Crop)', icon: Coffee },
+  { value: 'maize', label: 'Maize (Corn)', icon: Wheat },
+  { value: 'cocoa', label: 'Cocoa (Tree Crop)', icon: Coffee },
 ];
 
 export const FloatingControlPanel = ({
@@ -160,14 +160,6 @@ export const FloatingControlPanel = ({
       <div className="space-y-3 overflow-y-auto flex-1 min-h-0 pr-1 scrollbar-thin scrollbar-thumb-white/10 scrollbar-track-transparent">
         {mode === 'agriculture' && (
           <div className="space-y-3">
-            <Button
-              onClick={onOpenInterventionWizard}
-              className="w-full h-10 text-xs font-semibold text-white bg-gradient-to-r from-emerald-600/80 to-teal-600/80 hover:from-emerald-600 hover:to-teal-600 rounded-xl border border-emerald-500/30 shadow-[0_0_15px_rgba(16,185,129,0.2)] hover:shadow-[0_0_25px_rgba(16,185,129,0.4)] transition-all"
-            >
-              <Sprout className="w-4 h-4 mr-2" />
-              🌱 Define Adaptation Project
-            </Button>
-
             <label className="text-sm font-medium text-white/70">Select Crop Commodity</label>
             <Select value={cropType} onValueChange={onCropChange}>
               <SelectTrigger className="w-full h-12 bg-white/5 border-white/10 hover:border-white/20 transition-colors rounded-xl">
@@ -185,14 +177,19 @@ export const FloatingControlPanel = ({
                     value={crop.value}
                     className="cursor-pointer hover:bg-white/10 focus:bg-white/10"
                   >
-                    <div className="flex items-center gap-3">
-                      <crop.icon className="w-4 h-4 text-emerald-400" />
-                      <span>{crop.label}</span>
-                    </div>
+                    <span>{crop.label}</span>
                   </SelectItem>
                 ))}
               </SelectContent>
             </Select>
+
+            <Button
+              onClick={onOpenInterventionWizard}
+              className="w-full h-10 text-xs font-semibold text-white bg-gradient-to-r from-emerald-600/80 to-teal-600/80 hover:from-emerald-600 hover:to-teal-600 rounded-xl border border-emerald-500/30 shadow-[0_0_15px_rgba(16,185,129,0.2)] hover:shadow-[0_0_25px_rgba(16,185,129,0.4)] transition-all"
+            >
+              <Sprout className="w-4 h-4 mr-2" />
+              Define Adaptation Project
+            </Button>
           </div>
         )}
 
