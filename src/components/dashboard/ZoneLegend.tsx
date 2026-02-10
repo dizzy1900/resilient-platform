@@ -35,6 +35,16 @@ const modeLabels = {
     shrinkLabel: 'Reduced',
     expandLabel: 'Expanded',
   },
+  health: {
+    label: 'Health Risk Zone',
+    shrinkLabel: 'Reduced',
+    expandLabel: 'Expanded',
+  },
+  portfolio: {
+    label: 'Portfolio Zone',
+    shrinkLabel: 'Reduced',
+    expandLabel: 'Expanded',
+  },
 };
 
 export const ZoneLegend = ({
