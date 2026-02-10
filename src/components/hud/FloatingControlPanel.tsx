@@ -12,6 +12,8 @@ import {
   Shield,
   ArrowUpFromLine,
   Calendar,
+  HeartPulse,
+  Users,
 } from "lucide-react";
 import { GlassCard } from "./GlassCard";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -54,6 +56,11 @@ interface FloatingControlPanelProps {
   drainageEnabled: boolean;
   onDrainageChange: (enabled: boolean) => void;
   onOpenDefensiveWizard?: (type: 'sea_wall' | 'drainage') => void;
+  // Health mode props
+  workforceSize: number;
+  onWorkforceSizeChange: (value: number) => void;
+  averageDailyWage: number;
+  onAverageDailyWageChange: (value: number) => void;
 }
 
 const crops = [
@@ -90,6 +97,10 @@ export const FloatingControlPanel = ({
   drainageEnabled,
   onDrainageChange,
   onOpenDefensiveWizard,
+  workforceSize,
+  onWorkforceSizeChange,
+  averageDailyWage,
+  onAverageDailyWageChange,
 }: FloatingControlPanelProps) => {
   const [localMangroveWidth, setLocalMangroveWidth] = useState(mangroveWidth);
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
@@ -142,7 +153,7 @@ export const FloatingControlPanel = ({
       </div>
 
       <Tabs value={mode} onValueChange={(v) => onModeChange(v as DashboardMode)} className="w-full mb-3 sm:mb-4">
-        <TabsList className="w-full grid grid-cols-4 h-9 sm:h-10 lg:h-11 bg-white/5 border border-white/10 rounded-xl p-0.5 sm:p-1">
+        <TabsList className="w-full grid grid-cols-5 h-9 sm:h-10 lg:h-11 bg-white/5 border border-white/10 rounded-xl p-0.5 sm:p-1">
           <TabsTrigger
             value="agriculture"
             className="rounded-lg text-[9px] lg:text-[10px] font-medium data-[state=active]:bg-emerald-500/20 data-[state=active]:text-emerald-400 data-[state=active]:border data-[state=active]:border-emerald-500/30 text-white/60 transition-all px-1"
@@ -160,6 +171,12 @@ export const FloatingControlPanel = ({
             className="rounded-lg text-[9px] lg:text-[10px] font-medium data-[state=active]:bg-blue-500/20 data-[state=active]:text-blue-400 data-[state=active]:border data-[state=active]:border-blue-500/30 text-white/60 transition-all px-1"
           >
             Flood
+          </TabsTrigger>
+          <TabsTrigger
+            value="health"
+            className="rounded-lg text-[9px] lg:text-[10px] font-medium data-[state=active]:bg-rose-500/20 data-[state=active]:text-rose-400 data-[state=active]:border data-[state=active]:border-rose-500/30 text-white/60 transition-all px-1"
+          >
+            Health
           </TabsTrigger>
           <TabsTrigger
             value="portfolio"
@@ -408,6 +425,46 @@ export const FloatingControlPanel = ({
 
             <p className="text-[10px] text-white/40 leading-tight">
               Toggle interventions to simulate flood protection benefits
+            </p>
+          </div>
+        )}
+
+        {mode === "health" && (
+          <div className="space-y-3">
+            <div className="flex items-center gap-2 text-xs font-medium text-white/70">
+              <Users className="w-4 h-4 text-rose-400" />
+              <span>Workforce Input</span>
+            </div>
+
+            <div className="space-y-2">
+              <Label className="text-xs text-white/50">Outdoor Workforce Size</Label>
+              <Input
+                type="number"
+                value={workforceSize}
+                onChange={(e) => onWorkforceSizeChange(parseInt(e.target.value) || 0)}
+                disabled={!canSimulate}
+                className="bg-white/5 border-white/10 text-white placeholder:text-white/30 rounded-xl"
+                placeholder="100"
+              />
+            </div>
+
+            <div className="space-y-2">
+              <Label className="text-xs text-white/50">Average Daily Wage ($)</Label>
+              <div className="relative">
+                <span className="absolute left-3 top-1/2 -translate-y-1/2 text-white/40 text-sm">$</span>
+                <Input
+                  type="number"
+                  value={averageDailyWage}
+                  onChange={(e) => onAverageDailyWageChange(parseFloat(e.target.value) || 0)}
+                  disabled={!canSimulate}
+                  className="pl-7 bg-white/5 border-white/10 text-white placeholder:text-white/30 rounded-xl"
+                  placeholder="15"
+                />
+              </div>
+            </div>
+
+            <p className="text-[10px] text-white/40 leading-tight">
+              Enter workforce data to estimate heat stress productivity losses
             </p>
           </div>
         )}

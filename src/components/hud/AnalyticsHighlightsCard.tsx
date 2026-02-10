@@ -97,6 +97,14 @@ const modeConfig = {
     borderColor: 'border-blue-500/30',
     gradientFrom: 'from-blue-500/10',
   },
+  health: {
+    icon: Sprout,
+    label: 'Health',
+    color: 'text-rose-400',
+    bgColor: 'bg-rose-500/20',
+    borderColor: 'border-rose-500/30',
+    gradientFrom: 'from-rose-500/10',
+  },
   portfolio: {
     icon: Sprout,
     label: 'Portfolio',
