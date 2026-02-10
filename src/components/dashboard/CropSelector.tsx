@@ -1,11 +1,5 @@
-import { Wheat, Coffee, ChevronDown } from 'lucide-react';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
+import { Wheat, Coffee, ChevronDown } from "lucide-react";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 interface CropSelectorProps {
   value: string;
@@ -13,12 +7,12 @@ interface CropSelectorProps {
 }
 
 const crops = [
-  { value: 'maize', label: '🌽 Maize (Corn)', icon: Wheat },
-  { value: 'cocoa', label: '🍫 Cocoa (Tree Crop)', icon: Coffee },
+  { value: "maize", label: "🌽 Maize (Corn)", icon: Wheat },
+  { value: "cocoa", label: "🍫 Cocoa", icon: Coffee },
 ];
 
 export const CropSelector = ({ value, onChange }: CropSelectorProps) => {
-  const selectedCrop = crops.find(c => c.value === value);
+  const selectedCrop = crops.find((c) => c.value === value);
   const Icon = selectedCrop?.icon || Wheat;
 
   return (
@@ -35,8 +29,8 @@ export const CropSelector = ({ value, onChange }: CropSelectorProps) => {
         </SelectTrigger>
         <SelectContent className="bg-popover border-border">
           {crops.map((crop) => (
-            <SelectItem 
-              key={crop.value} 
+            <SelectItem
+              key={crop.value}
               value={crop.value}
               className="cursor-pointer hover:bg-accent/20 focus:bg-accent/20"
             >
