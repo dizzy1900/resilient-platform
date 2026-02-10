@@ -252,22 +252,42 @@ export const FloatingControlPanel = ({
               <span>Defensive Infrastructure</span>
             </div>
 
-            <div className="flex items-center justify-between p-2.5 rounded-xl bg-white/5 border border-white/10">
-              <div className="flex items-center gap-2">
-                <div className="w-2 h-2 rounded-full bg-teal-500" />
-                <Label htmlFor="sea-wall" className="text-xs text-white/80 cursor-pointer">
-                  Sea Wall
-                </Label>
+            <div className="space-y-2">
+              <div className="flex items-center justify-between p-2.5 rounded-xl bg-white/5 border border-white/10">
+                <div className="flex items-center gap-2">
+                  <div className="w-2 h-2 rounded-full bg-teal-500" />
+                  <Label htmlFor="sea-wall" className="text-xs text-white/80 cursor-pointer">
+                    Sea Wall
+                  </Label>
+                </div>
+                <Switch
+                  id="sea-wall"
+                  checked={seaWallEnabled}
+                  onCheckedChange={(checked) => {
+                    onSeaWallChange(checked);
+                    if (checked && onOpenDefensiveWizard) onOpenDefensiveWizard('sea_wall');
+                  }}
+                  disabled={!canSimulate}
+                />
               </div>
-              <Switch
-                id="sea-wall"
-                checked={seaWallEnabled}
-                onCheckedChange={(checked) => {
-                  onSeaWallChange(checked);
-                  if (checked && onOpenDefensiveWizard) onOpenDefensiveWizard('sea_wall');
-                }}
-                disabled={!canSimulate}
-              />
+
+              <div className="flex items-center justify-between p-2.5 rounded-xl bg-white/5 border border-white/10">
+                <div className="flex items-center gap-2">
+                  <div className="w-2 h-2 rounded-full bg-cyan-500" />
+                  <Label htmlFor="coastal-drainage" className="text-xs text-white/80 cursor-pointer">
+                    Drainage Upgrade
+                  </Label>
+                </div>
+                <Switch
+                  id="coastal-drainage"
+                  checked={drainageEnabled}
+                  onCheckedChange={(checked) => {
+                    onDrainageChange(checked);
+                    if (checked && onOpenDefensiveWizard) onOpenDefensiveWizard('drainage');
+                  }}
+                  disabled={!canSimulate}
+                />
+              </div>
             </div>
           </>
         )}
