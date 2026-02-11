@@ -27,23 +27,18 @@ interface CoastalSimulationPanelProps {
   onAssetLifespanChange: (value: number) => void;
 }
 
-// SLR anchor points (vs Year 2000 baseline for elevation map calibration)
-// These values represent TOTAL sea level rise since year 2000
 const SLR_ANCHORS = [
-  { year: 2026, slr: 0.10 }, // Current: includes 2000-2026 rise
+  { year: 2026, slr: 0.10 },
   { year: 2030, slr: 0.13 },
   { year: 2050, slr: 0.27 },
 ];
 
-// Calculate SLR from year using linear interpolation (vs Year 2000 baseline)
 const calculateSLRFromYear = (year: number): number => {
-  // Before 2026, interpolate from 0 at year 2000 to 0.10 at 2026
   if (year <= SLR_ANCHORS[0].year) {
     const t = (year - 2000) / (SLR_ANCHORS[0].year - 2000);
     return t * SLR_ANCHORS[0].slr;
   }
   
-  // Between anchor points - linear interpolation
   for (let i = 0; i < SLR_ANCHORS.length - 1; i++) {
     const current = SLR_ANCHORS[i];
     const next = SLR_ANCHORS[i + 1];
@@ -54,14 +49,13 @@ const calculateSLRFromYear = (year: number): number => {
     }
   }
   
-  // Beyond last anchor - extrapolate linearly
   const last = SLR_ANCHORS[SLR_ANCHORS.length - 1];
   const prev = SLR_ANCHORS[SLR_ANCHORS.length - 2];
   const rate = (last.slr - prev.slr) / (last.year - prev.year);
   return last.slr + rate * (year - last.year);
 };
 
-const STORM_SURGE_HEIGHT = 2.5; // meters added for 1-in-100 year storm
+const STORM_SURGE_HEIGHT = 2.5;
 
 export const CoastalSimulationPanel = ({
   onSimulate,
@@ -83,30 +77,24 @@ export const CoastalSimulationPanel = ({
   const debounceRef = useRef<NodeJS.Timeout | null>(null);
   const [isDebouncing, setIsDebouncing] = useState(false);
 
-  // Handle year change with automatic SLR interpolation (vs Year 2000 baseline)
   const handleYearChange = useCallback((year: number) => {
     onSelectedYearChange(year);
     const interpolatedSLR = calculateSLRFromYear(year);
     onTotalSLRChange(Math.round(interpolatedSLR * 100) / 100);
   }, [onSelectedYearChange, onTotalSLRChange]);
 
-  // Debounced simulation trigger
   const triggerDebouncedSimulation = useCallback(() => {
     if (!canSimulate) return;
-    
     setIsDebouncing(true);
-    
     if (debounceRef.current) {
       clearTimeout(debounceRef.current);
     }
-    
     debounceRef.current = setTimeout(() => {
       setIsDebouncing(false);
       onSimulate();
     }, 500);
   }, [canSimulate, onSimulate]);
 
-  // Cleanup debounce on unmount
   useEffect(() => {
     return () => {
       if (debounceRef.current) {
@@ -115,16 +103,11 @@ export const CoastalSimulationPanel = ({
     };
   }, []);
 
-  // Calculate total water level (SLR + optional storm surge)
   const totalWaterLevel = totalSLR + (includeStormSurge ? STORM_SURGE_HEIGHT : 0);
 
   const getSLRBadgeColor = () => {
-    if (totalSLR <= 0.1) {
-      return 'bg-emerald-500/20 text-emerald-400 border-emerald-500/30';
-    }
-    if (totalSLR <= 0.5) {
-      return 'bg-amber-500/20 text-amber-400 border-amber-500/30';
-    }
+    if (totalSLR <= 0.1) return 'bg-emerald-500/20 text-emerald-400 border-emerald-500/30';
+    if (totalSLR <= 0.5) return 'bg-amber-500/20 text-amber-400 border-amber-500/30';
     return 'bg-red-500/20 text-red-400 border-red-500/30';
   };
 
@@ -137,6 +120,61 @@ export const CoastalSimulationPanel = ({
   return (
     <GlassCard className="w-full lg:w-80 p-2.5 sm:p-3 lg:p-4 max-h-[calc(100vh-200px)] overflow-y-auto scrollbar-thin scrollbar-thumb-white/10 scrollbar-track-transparent">
       <div className="space-y-3 lg:space-y-4">
+        {/* Asset at Risk - moved above Coastal Parameters */}
+        <div className="space-y-2">
+          <div className="flex items-center gap-2 text-[10px] lg:text-xs font-medium text-white/70">
+            <DollarSign className="w-3.5 h-3.5 text-teal-400" />
+            <span>Asset at Risk</span>
+          </div>
+          <Label className="text-[10px] lg:text-xs text-white/50">Property Value ($)</Label>
+          <div className="relative">
+            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-white/40 text-sm">$</span>
+            <Input
+              type="text"
+              value={propertyValue.toLocaleString()}
+              onChange={(e) => {
+                const numValue = parseFloat(e.target.value.replace(/[^0-9.]/g, "")) || 0;
+                onPropertyValueChange(numValue);
+              }}
+              disabled={!canSimulate}
+              className="pl-7 h-8 bg-white/5 border-white/10 text-white placeholder:text-white/30 rounded-xl text-xs"
+              placeholder="5,000,000"
+            />
+          </div>
+          <Label className="text-[10px] lg:text-xs text-white/50">Daily Revenue ($)</Label>
+          <div className="relative">
+            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-white/40 text-sm">$</span>
+            <Input
+              type="text"
+              value={dailyRevenue.toLocaleString()}
+              onChange={(e) => {
+                const numValue = parseFloat(e.target.value.replace(/[^0-9.]/g, "")) || 0;
+                onDailyRevenueChange(numValue);
+              }}
+              disabled={!canSimulate}
+              className="pl-7 h-8 bg-white/5 border-white/10 text-white placeholder:text-white/30 rounded-xl text-xs"
+              placeholder="20,000"
+            />
+          </div>
+          <div className="flex items-center justify-between">
+            <Label className="text-[10px] lg:text-xs text-white/50 flex items-center gap-1.5">
+              <Calendar className="w-3 h-3 text-white/40" />
+              Asset Lifespan
+            </Label>
+            <span className="text-[10px] lg:text-xs font-semibold text-teal-400 tabular-nums">{assetLifespan} yrs</span>
+          </div>
+          <Slider
+            value={[assetLifespan]}
+            onValueChange={(v) => onAssetLifespanChange(v[0])}
+            min={5}
+            max={50}
+            step={5}
+            className="w-full [&_[data-radix-slider-track]]:bg-white/10 [&_[data-radix-slider-range]]:bg-teal-500 [&_[data-radix-slider-thumb]]:border-teal-500 [&_[data-radix-slider-thumb]]:bg-white"
+          />
+        </div>
+
+        <div className="h-px bg-white/10" />
+
         <div className="flex items-center gap-1.5 sm:gap-2 text-[11px] sm:text-xs lg:text-sm font-medium text-white/70">
           <Waves className="w-3 h-3 sm:w-3.5 sm:h-3.5 lg:w-4 lg:h-4 text-teal-400" />
           <span>Coastal Parameters</span>
@@ -210,7 +248,6 @@ export const CoastalSimulationPanel = ({
             <span>1.0m</span>
             <span>2.0m</span>
           </div>
-          {/* Calibration badge */}
           <div className="flex items-center gap-1 pt-0.5">
             <Badge variant="outline" className="text-[9px] px-1.5 py-0 border-cyan-500/30 text-cyan-400/80 bg-cyan-500/5">
               Includes 2000–2026 rise
@@ -263,60 +300,6 @@ export const CoastalSimulationPanel = ({
               style={{ width: `${Math.min((totalWaterLevel / 4.5) * 100, 100)}%` }}
             />
           </div>
-        </div>
-
-        {/* Asset at Risk */}
-        <div className="h-px bg-white/10" />
-        <div className="space-y-2">
-          <div className="flex items-center gap-2 text-[10px] lg:text-xs font-medium text-white/70">
-            <DollarSign className="w-3.5 h-3.5 text-teal-400" />
-            <span>Asset at Risk</span>
-          </div>
-          <Label className="text-[10px] lg:text-xs text-white/50">Property Value ($)</Label>
-          <div className="relative">
-            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-white/40 text-sm">$</span>
-            <Input
-              type="text"
-              value={propertyValue.toLocaleString()}
-              onChange={(e) => {
-                const numValue = parseFloat(e.target.value.replace(/[^0-9.]/g, "")) || 0;
-                onPropertyValueChange(numValue);
-              }}
-              disabled={!canSimulate}
-              className="pl-7 h-8 bg-white/5 border-white/10 text-white placeholder:text-white/30 rounded-xl text-xs"
-              placeholder="5,000,000"
-            />
-          </div>
-          <Label className="text-[10px] lg:text-xs text-white/50">Daily Revenue ($)</Label>
-          <div className="relative">
-            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-white/40 text-sm">$</span>
-            <Input
-              type="text"
-              value={dailyRevenue.toLocaleString()}
-              onChange={(e) => {
-                const numValue = parseFloat(e.target.value.replace(/[^0-9.]/g, "")) || 0;
-                onDailyRevenueChange(numValue);
-              }}
-              disabled={!canSimulate}
-              className="pl-7 h-8 bg-white/5 border-white/10 text-white placeholder:text-white/30 rounded-xl text-xs"
-              placeholder="20,000"
-            />
-          </div>
-          <div className="flex items-center justify-between">
-            <Label className="text-[10px] lg:text-xs text-white/50 flex items-center gap-1.5">
-              <Calendar className="w-3 h-3 text-white/40" />
-              Asset Lifespan
-            </Label>
-            <span className="text-[10px] lg:text-xs font-semibold text-teal-400 tabular-nums">{assetLifespan} yrs</span>
-          </div>
-          <Slider
-            value={[assetLifespan]}
-            onValueChange={(v) => onAssetLifespanChange(v[0])}
-            min={5}
-            max={50}
-            step={5}
-            className="w-full [&_[data-radix-slider-track]]:bg-white/10 [&_[data-radix-slider-range]]:bg-teal-500 [&_[data-radix-slider-thumb]]:border-teal-500 [&_[data-radix-slider-thumb]]:bg-white"
-          />
         </div>
 
         <Button
