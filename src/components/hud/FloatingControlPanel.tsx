@@ -2,7 +2,7 @@ import {
   Activity,
   MapPin,
   Wheat,
-  Coffee,
+  Bean,
   TreePine,
   Building2,
   Droplets,
@@ -55,7 +55,7 @@ interface FloatingControlPanelProps {
   onSeaWallChange: (enabled: boolean) => void;
   drainageEnabled: boolean;
   onDrainageChange: (enabled: boolean) => void;
-  onOpenDefensiveWizard?: (type: 'sea_wall' | 'drainage') => void;
+  onOpenDefensiveWizard?: (type: "sea_wall" | "drainage") => void;
   // Health mode props
   workforceSize: number;
   onWorkforceSizeChange: (value: number) => void;
@@ -65,7 +65,7 @@ interface FloatingControlPanelProps {
 
 const crops = [
   { value: "maize", label: "Maize (Corn)", icon: Wheat },
-  { value: "cocoa", label: "Cocoa", icon: Coffee },
+  { value: "cocoa", label: "Cocoa", icon: Bean },
 ];
 
 export const FloatingControlPanel = ({
@@ -282,7 +282,7 @@ export const FloatingControlPanel = ({
                   checked={seaWallEnabled}
                   onCheckedChange={(checked) => {
                     onSeaWallChange(checked);
-                    if (checked && onOpenDefensiveWizard) onOpenDefensiveWizard('sea_wall');
+                    if (checked && onOpenDefensiveWizard) onOpenDefensiveWizard("sea_wall");
                   }}
                   disabled={!canSimulate}
                 />
@@ -300,7 +300,7 @@ export const FloatingControlPanel = ({
                   checked={drainageEnabled}
                   onCheckedChange={(checked) => {
                     onDrainageChange(checked);
-                    if (checked && onOpenDefensiveWizard) onOpenDefensiveWizard('drainage');
+                    if (checked && onOpenDefensiveWizard) onOpenDefensiveWizard("drainage");
                   }}
                   disabled={!canSimulate}
                 />
@@ -416,7 +416,7 @@ export const FloatingControlPanel = ({
                   checked={drainageEnabled}
                   onCheckedChange={(checked) => {
                     onDrainageChange(checked);
-                    if (checked && onOpenDefensiveWizard) onOpenDefensiveWizard('drainage');
+                    if (checked && onOpenDefensiveWizard) onOpenDefensiveWizard("drainage");
                   }}
                   disabled={!canSimulate}
                 />
