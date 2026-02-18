@@ -152,6 +152,26 @@ export const GLOBAL_ATLAS_DATA = [
       },
       benchmark_summary: "Rank #47 of 50 | 6th Percentile",
     },
+    temporal_analysis: {
+      history: [
+        {
+          year: 2030,
+          npv: 732736.61,
+          default_prob: 0.0,
+        },
+        {
+          year: 2040,
+          npv: 732736.61,
+          default_prob: 0.0,
+        },
+        {
+          year: 2050,
+          npv: 732736.61,
+          default_prob: 0.0,
+        },
+      ],
+      stranded_asset_year: null,
+    },
   },
   {
     project_type: "agriculture",
@@ -306,6 +326,26 @@ export const GLOBAL_ATLAS_DATA = [
       },
       benchmark_summary: "Rank #26 of 50 | 48th Percentile",
     },
+    temporal_analysis: {
+      history: [
+        {
+          year: 2030,
+          npv: 806266.43,
+          default_prob: 0.0,
+        },
+        {
+          year: 2040,
+          npv: 738693.28,
+          default_prob: 0.0,
+        },
+        {
+          year: 2050,
+          npv: 671120.12,
+          default_prob: 0.0,
+        },
+      ],
+      stranded_asset_year: null,
+    },
   },
   {
     project_type: "agriculture",
@@ -458,6 +498,26 @@ export const GLOBAL_ATLAS_DATA = [
         default_probability_pct: 0.0,
       },
       benchmark_summary: "Rank #32 of 50 | 8th Percentile",
+    },
+    temporal_analysis: {
+      history: [
+        {
+          year: 2030,
+          npv: 732736.61,
+          default_prob: 0.0,
+        },
+        {
+          year: 2040,
+          npv: 732736.61,
+          default_prob: 0.0,
+        },
+        {
+          year: 2050,
+          npv: 740110.09,
+          default_prob: 0.0,
+        },
+      ],
+      stranded_asset_year: null,
     },
   },
   {
@@ -612,6 +672,26 @@ export const GLOBAL_ATLAS_DATA = [
       },
       benchmark_summary: "Rank #33 of 50 | 8th Percentile",
     },
+    temporal_analysis: {
+      history: [
+        {
+          year: 2030,
+          npv: 732736.61,
+          default_prob: 0.0,
+        },
+        {
+          year: 2040,
+          npv: 732736.61,
+          default_prob: 0.0,
+        },
+        {
+          year: 2050,
+          npv: 736171.42,
+          default_prob: 0.0,
+        },
+      ],
+      stranded_asset_year: null,
+    },
   },
   {
     project_type: "agriculture",
@@ -765,6 +845,26 @@ export const GLOBAL_ATLAS_DATA = [
       },
       benchmark_summary: "Rank #10 of 50 | 80th Percentile",
     },
+    temporal_analysis: {
+      history: [
+        {
+          year: 2030,
+          npv: 936225.81,
+          default_prob: 0.0,
+        },
+        {
+          year: 2040,
+          npv: 959208.03,
+          default_prob: 0.0,
+        },
+        {
+          year: 2050,
+          npv: 982190.31,
+          default_prob: 0.0,
+        },
+      ],
+      stranded_asset_year: null,
+    },
   },
   {
     project_type: "agriculture",
@@ -917,6 +1017,26 @@ export const GLOBAL_ATLAS_DATA = [
         default_probability_pct: 200.0,
       },
       benchmark_summary: "Rank #34 of 50 | 8th Percentile",
+    },
+    temporal_analysis: {
+      history: [
+        {
+          year: 2030,
+          npv: 732736.61,
+          default_prob: 0.0,
+        },
+        {
+          year: 2040,
+          npv: 740113.16,
+          default_prob: 0.0,
+        },
+        {
+          year: 2050,
+          npv: 747821.52,
+          default_prob: 0.0,
+        },
+      ],
+      stranded_asset_year: null,
     },
   },
   {
@@ -1072,6 +1192,26 @@ export const GLOBAL_ATLAS_DATA = [
       },
       benchmark_summary: "Rank #6 of 50 | 88th Percentile",
     },
+    temporal_analysis: {
+      history: [
+        {
+          year: 2030,
+          npv: 927090.68,
+          default_prob: 0.0,
+        },
+        {
+          year: 2040,
+          npv: 932277.62,
+          default_prob: 0.0,
+        },
+        {
+          year: 2050,
+          npv: 983434.95,
+          default_prob: 0.0,
+        },
+      ],
+      stranded_asset_year: null,
+    },
   },
   {
     project_type: "agriculture",
@@ -1224,6 +1364,26 @@ export const GLOBAL_ATLAS_DATA = [
         default_probability_pct: 0.0,
       },
       benchmark_summary: "Rank #35 of 50 | 8th Percentile",
+    },
+    temporal_analysis: {
+      history: [
+        {
+          year: 2030,
+          npv: 732736.61,
+          default_prob: 0.0,
+        },
+        {
+          year: 2040,
+          npv: 732736.61,
+          default_prob: 0.0,
+        },
+        {
+          year: 2050,
+          npv: 732736.61,
+          default_prob: 0.0,
+        },
+      ],
+      stranded_asset_year: null,
     },
   },
   {
@@ -1378,6 +1538,26 @@ export const GLOBAL_ATLAS_DATA = [
       },
       benchmark_summary: "Rank #15 of 50 | 50th Percentile",
     },
+    temporal_analysis: {
+      history: [
+        {
+          year: 2030,
+          npv: 880206.22,
+          default_prob: 0.0,
+        },
+        {
+          year: 2040,
+          npv: 880206.22,
+          default_prob: 0.0,
+        },
+        {
+          year: 2050,
+          npv: 880206.22,
+          default_prob: 0.0,
+        },
+      ],
+      stranded_asset_year: null,
+    },
   },
   {
     project_type: "agriculture",
@@ -1530,6 +1710,26 @@ export const GLOBAL_ATLAS_DATA = [
         default_probability_pct: 0.0,
       },
       benchmark_summary: "Rank #7 of 50 | 86th Percentile",
+    },
+    temporal_analysis: {
+      history: [
+        {
+          year: 2030,
+          npv: 918619.11,
+          default_prob: 0.0,
+        },
+        {
+          year: 2040,
+          npv: 880271.11,
+          default_prob: 0.0,
+        },
+        {
+          year: 2050,
+          npv: 880206.22,
+          default_prob: 0.0,
+        },
+      ],
+      stranded_asset_year: null,
     },
   },
   {
@@ -1684,6 +1884,26 @@ export const GLOBAL_ATLAS_DATA = [
       },
       benchmark_summary: "Rank #16 of 50 | 50th Percentile",
     },
+    temporal_analysis: {
+      history: [
+        {
+          year: 2030,
+          npv: 880206.22,
+          default_prob: 0.0,
+        },
+        {
+          year: 2040,
+          npv: 880206.22,
+          default_prob: 0.0,
+        },
+        {
+          year: 2050,
+          npv: 880206.22,
+          default_prob: 0.0,
+        },
+      ],
+      stranded_asset_year: null,
+    },
   },
   {
     project_type: "agriculture",
@@ -1836,6 +2056,26 @@ export const GLOBAL_ATLAS_DATA = [
         default_probability_pct: 0.0,
       },
       benchmark_summary: "Rank #36 of 50 | 8th Percentile",
+    },
+    temporal_analysis: {
+      history: [
+        {
+          year: 2030,
+          npv: 732736.61,
+          default_prob: 0.0,
+        },
+        {
+          year: 2040,
+          npv: 732736.61,
+          default_prob: 0.0,
+        },
+        {
+          year: 2050,
+          npv: 738131.54,
+          default_prob: 0.0,
+        },
+      ],
+      stranded_asset_year: null,
     },
   },
   {
@@ -1991,6 +2231,26 @@ export const GLOBAL_ATLAS_DATA = [
       },
       benchmark_summary: "Rank #4 of 50 | 92th Percentile",
     },
+    temporal_analysis: {
+      history: [
+        {
+          year: 2030,
+          npv: 1077927.82,
+          default_prob: 0.0,
+        },
+        {
+          year: 2040,
+          npv: 1087749.79,
+          default_prob: 0.0,
+        },
+        {
+          year: 2050,
+          npv: 1097571.7,
+          default_prob: 0.0,
+        },
+      ],
+      stranded_asset_year: null,
+    },
   },
   {
     project_type: "agriculture",
@@ -2143,6 +2403,26 @@ export const GLOBAL_ATLAS_DATA = [
         default_probability_pct: 400.0,
       },
       benchmark_summary: "Rank #30 of 50 | 40th Percentile",
+    },
+    temporal_analysis: {
+      history: [
+        {
+          year: 2030,
+          npv: 744740.64,
+          default_prob: 0.0,
+        },
+        {
+          year: 2040,
+          npv: 751421.01,
+          default_prob: 0.0,
+        },
+        {
+          year: 2050,
+          npv: 758101.38,
+          default_prob: 0.0,
+        },
+      ],
+      stranded_asset_year: null,
     },
   },
   {
@@ -2297,6 +2577,26 @@ export const GLOBAL_ATLAS_DATA = [
       },
       benchmark_summary: "Rank #9 of 50 | 82th Percentile",
     },
+    temporal_analysis: {
+      history: [
+        {
+          year: 2030,
+          npv: 936416.91,
+          default_prob: 0.0,
+        },
+        {
+          year: 2040,
+          npv: 959383.27,
+          default_prob: 0.0,
+        },
+        {
+          year: 2050,
+          npv: 982349.57,
+          default_prob: 0.0,
+        },
+      ],
+      stranded_asset_year: null,
+    },
   },
   {
     project_type: "agriculture",
@@ -2450,6 +2750,26 @@ export const GLOBAL_ATLAS_DATA = [
       },
       benchmark_summary: "Rank #17 of 50 | 50th Percentile",
     },
+    temporal_analysis: {
+      history: [
+        {
+          year: 2030,
+          npv: 880206.22,
+          default_prob: 0.0,
+        },
+        {
+          year: 2040,
+          npv: 880206.22,
+          default_prob: 0.0,
+        },
+        {
+          year: 2050,
+          npv: 880206.22,
+          default_prob: 0.0,
+        },
+      ],
+      stranded_asset_year: null,
+    },
   },
   {
     project_type: "agriculture",
@@ -2602,6 +2922,26 @@ export const GLOBAL_ATLAS_DATA = [
         default_probability_pct: 200.0,
       },
       benchmark_summary: "Rank #37 of 50 | 8th Percentile",
+    },
+    temporal_analysis: {
+      history: [
+        {
+          year: 2030,
+          npv: 732736.61,
+          default_prob: 0.0,
+        },
+        {
+          year: 2040,
+          npv: 732736.61,
+          default_prob: 0.0,
+        },
+        {
+          year: 2050,
+          npv: 735950.22,
+          default_prob: 0.0,
+        },
+      ],
+      stranded_asset_year: null,
     },
   },
   {
@@ -2757,6 +3097,26 @@ export const GLOBAL_ATLAS_DATA = [
       },
       benchmark_summary: "Rank #29 of 50 | 42th Percentile",
     },
+    temporal_analysis: {
+      history: [
+        {
+          year: 2030,
+          npv: 751221.93,
+          default_prob: 0.0,
+        },
+        {
+          year: 2040,
+          npv: 757362.19,
+          default_prob: 0.0,
+        },
+        {
+          year: 2050,
+          npv: 842745.25,
+          default_prob: 0.0,
+        },
+      ],
+      stranded_asset_year: null,
+    },
   },
   {
     project_type: "agriculture",
@@ -2909,6 +3269,26 @@ export const GLOBAL_ATLAS_DATA = [
         default_probability_pct: 0.0,
       },
       benchmark_summary: "Rank #18 of 50 | 50th Percentile",
+    },
+    temporal_analysis: {
+      history: [
+        {
+          year: 2030,
+          npv: 880206.22,
+          default_prob: 0.0,
+        },
+        {
+          year: 2040,
+          npv: 880206.22,
+          default_prob: 0.0,
+        },
+        {
+          year: 2050,
+          npv: 880206.22,
+          default_prob: 0.0,
+        },
+      ],
+      stranded_asset_year: null,
     },
   },
   {
@@ -3063,6 +3443,26 @@ export const GLOBAL_ATLAS_DATA = [
       },
       benchmark_summary: "Rank #19 of 50 | 50th Percentile",
     },
+    temporal_analysis: {
+      history: [
+        {
+          year: 2030,
+          npv: 880206.22,
+          default_prob: 0.0,
+        },
+        {
+          year: 2040,
+          npv: 880206.22,
+          default_prob: 0.0,
+        },
+        {
+          year: 2050,
+          npv: 880206.22,
+          default_prob: 0.0,
+        },
+      ],
+      stranded_asset_year: null,
+    },
   },
   {
     project_type: "agriculture",
@@ -3215,6 +3615,26 @@ export const GLOBAL_ATLAS_DATA = [
         default_probability_pct: 0.0,
       },
       benchmark_summary: "Rank #38 of 50 | 8th Percentile",
+    },
+    temporal_analysis: {
+      history: [
+        {
+          year: 2030,
+          npv: 732736.61,
+          default_prob: 0.0,
+        },
+        {
+          year: 2040,
+          npv: 732736.61,
+          default_prob: 0.0,
+        },
+        {
+          year: 2050,
+          npv: 732736.61,
+          default_prob: 0.0,
+        },
+      ],
+      stranded_asset_year: null,
     },
   },
   {
@@ -3369,6 +3789,26 @@ export const GLOBAL_ATLAS_DATA = [
       },
       benchmark_summary: "Rank #1 of 50 | 98th Percentile",
     },
+    temporal_analysis: {
+      history: [
+        {
+          year: 2030,
+          npv: 1405113.12,
+          default_prob: 0.0,
+        },
+        {
+          year: 2040,
+          npv: 1326223.94,
+          default_prob: 0.0,
+        },
+        {
+          year: 2050,
+          npv: 1247334.77,
+          default_prob: 0.0,
+        },
+      ],
+      stranded_asset_year: null,
+    },
   },
   {
     project_type: "agriculture",
@@ -3521,6 +3961,26 @@ export const GLOBAL_ATLAS_DATA = [
         default_probability_pct: 0.0,
       },
       benchmark_summary: "Rank #39 of 50 | 8th Percentile",
+    },
+    temporal_analysis: {
+      history: [
+        {
+          year: 2030,
+          npv: 732736.61,
+          default_prob: 0.0,
+        },
+        {
+          year: 2040,
+          npv: 732736.61,
+          default_prob: 0.0,
+        },
+        {
+          year: 2050,
+          npv: 732736.61,
+          default_prob: 0.0,
+        },
+      ],
+      stranded_asset_year: null,
     },
   },
   {
@@ -3675,6 +4135,26 @@ export const GLOBAL_ATLAS_DATA = [
       },
       benchmark_summary: "Rank #40 of 50 | 8th Percentile",
     },
+    temporal_analysis: {
+      history: [
+        {
+          year: 2030,
+          npv: 732736.61,
+          default_prob: 0.0,
+        },
+        {
+          year: 2040,
+          npv: 732736.61,
+          default_prob: 0.0,
+        },
+        {
+          year: 2050,
+          npv: 740091.66,
+          default_prob: 0.0,
+        },
+      ],
+      stranded_asset_year: null,
+    },
   },
   {
     project_type: "agriculture",
@@ -3827,6 +4307,26 @@ export const GLOBAL_ATLAS_DATA = [
         default_probability_pct: 0.0,
       },
       benchmark_summary: "Rank #20 of 50 | 50th Percentile",
+    },
+    temporal_analysis: {
+      history: [
+        {
+          year: 2030,
+          npv: 880206.22,
+          default_prob: 0.0,
+        },
+        {
+          year: 2040,
+          npv: 883991.46,
+          default_prob: 0.0,
+        },
+        {
+          year: 2050,
+          npv: 913811.6,
+          default_prob: 0.0,
+        },
+      ],
+      stranded_asset_year: null,
     },
   },
   {
@@ -3982,6 +4482,26 @@ export const GLOBAL_ATLAS_DATA = [
       },
       benchmark_summary: "Rank #3 of 50 | 94th Percentile",
     },
+    temporal_analysis: {
+      history: [
+        {
+          year: 2030,
+          npv: 1400661.62,
+          default_prob: 0.0,
+        },
+        {
+          year: 2040,
+          npv: 1385678.22,
+          default_prob: 0.0,
+        },
+        {
+          year: 2050,
+          npv: 1303596.21,
+          default_prob: 0.0,
+        },
+      ],
+      stranded_asset_year: null,
+    },
   },
   {
     project_type: "agriculture",
@@ -4134,6 +4654,26 @@ export const GLOBAL_ATLAS_DATA = [
         default_probability_pct: 200.0,
       },
       benchmark_summary: "Rank #41 of 50 | 8th Percentile",
+    },
+    temporal_analysis: {
+      history: [
+        {
+          year: 2030,
+          npv: 732736.61,
+          default_prob: 0.0,
+        },
+        {
+          year: 2040,
+          npv: 735435.92,
+          default_prob: 0.0,
+        },
+        {
+          year: 2050,
+          npv: 743569.48,
+          default_prob: 0.0,
+        },
+      ],
+      stranded_asset_year: null,
     },
   },
   {
@@ -4288,6 +4828,26 @@ export const GLOBAL_ATLAS_DATA = [
       },
       benchmark_summary: "Rank #42 of 50 | 8th Percentile",
     },
+    temporal_analysis: {
+      history: [
+        {
+          year: 2030,
+          npv: 734130.2,
+          default_prob: 0.0,
+        },
+        {
+          year: 2040,
+          npv: 741694.78,
+          default_prob: 0.0,
+        },
+        {
+          year: 2050,
+          npv: 749259.35,
+          default_prob: 0.0,
+        },
+      ],
+      stranded_asset_year: null,
+    },
   },
   {
     project_type: "agriculture",
@@ -4440,6 +5000,26 @@ export const GLOBAL_ATLAS_DATA = [
         default_probability_pct: 0.0,
       },
       benchmark_summary: "Rank #48 of 50 | 4th Percentile",
+    },
+    temporal_analysis: {
+      history: [
+        {
+          year: 2030,
+          npv: 732736.61,
+          default_prob: 0.0,
+        },
+        {
+          year: 2040,
+          npv: 732736.61,
+          default_prob: 0.0,
+        },
+        {
+          year: 2050,
+          npv: 737652.27,
+          default_prob: 0.0,
+        },
+      ],
+      stranded_asset_year: null,
     },
   },
   {
@@ -4595,6 +5175,26 @@ export const GLOBAL_ATLAS_DATA = [
       },
       benchmark_summary: "Rank #5 of 50 | 90th Percentile",
     },
+    temporal_analysis: {
+      history: [
+        {
+          year: 2030,
+          npv: 944220.75,
+          default_prob: 0.0,
+        },
+        {
+          year: 2040,
+          npv: 911112.78,
+          default_prob: 0.0,
+        },
+        {
+          year: 2050,
+          npv: 946567.55,
+          default_prob: 0.0,
+        },
+      ],
+      stranded_asset_year: null,
+    },
   },
   {
     project_type: "agriculture",
@@ -4748,6 +5348,26 @@ export const GLOBAL_ATLAS_DATA = [
         default_probability_pct: 1600.0,
       },
       benchmark_summary: "Rank #2 of 50 | 96th Percentile",
+    },
+    temporal_analysis: {
+      history: [
+        {
+          year: 2030,
+          npv: 1431604.31,
+          default_prob: 0.0,
+        },
+        {
+          year: 2040,
+          npv: 1396100.21,
+          default_prob: 0.0,
+        },
+        {
+          year: 2050,
+          npv: 1312668.54,
+          default_prob: 0.0,
+        },
+      ],
+      stranded_asset_year: null,
     },
   },
   {
@@ -4903,6 +5523,26 @@ export const GLOBAL_ATLAS_DATA = [
       },
       benchmark_summary: "Rank #50 of 50 | 0th Percentile",
     },
+    temporal_analysis: {
+      history: [
+        {
+          year: 2030,
+          npv: 730068.15,
+          default_prob: 0.0,
+        },
+        {
+          year: 2040,
+          npv: 732338.69,
+          default_prob: 0.0,
+        },
+        {
+          year: 2050,
+          npv: 732736.61,
+          default_prob: 0.0,
+        },
+      ],
+      stranded_asset_year: null,
+    },
   },
   {
     project_type: "agriculture",
@@ -5055,6 +5695,26 @@ export const GLOBAL_ATLAS_DATA = [
         default_probability_pct: 0.0,
       },
       benchmark_summary: "Rank #21 of 50 | 50th Percentile",
+    },
+    temporal_analysis: {
+      history: [
+        {
+          year: 2030,
+          npv: 880206.22,
+          default_prob: 0.0,
+        },
+        {
+          year: 2040,
+          npv: 880206.22,
+          default_prob: 0.0,
+        },
+        {
+          year: 2050,
+          npv: 880206.22,
+          default_prob: 0.0,
+        },
+      ],
+      stranded_asset_year: null,
     },
   },
   {
@@ -5209,6 +5869,26 @@ export const GLOBAL_ATLAS_DATA = [
       },
       benchmark_summary: "Rank #11 of 50 | 78th Percentile",
     },
+    temporal_analysis: {
+      history: [
+        {
+          year: 2030,
+          npv: 917496.0,
+          default_prob: 0.0,
+        },
+        {
+          year: 2040,
+          npv: 942039.06,
+          default_prob: 0.0,
+        },
+        {
+          year: 2050,
+          npv: 966582.12,
+          default_prob: 0.0,
+        },
+      ],
+      stranded_asset_year: null,
+    },
   },
   {
     project_type: "agriculture",
@@ -5361,6 +6041,26 @@ export const GLOBAL_ATLAS_DATA = [
         default_probability_pct: 0.0,
       },
       benchmark_summary: "Rank #13 of 50 | 74th Percentile",
+    },
+    temporal_analysis: {
+      history: [
+        {
+          year: 2030,
+          npv: 912845.36,
+          default_prob: 0.0,
+        },
+        {
+          year: 2040,
+          npv: 937776.02,
+          default_prob: 0.0,
+        },
+        {
+          year: 2050,
+          npv: 962706.62,
+          default_prob: 0.0,
+        },
+      ],
+      stranded_asset_year: null,
     },
   },
   {
@@ -5515,6 +6215,26 @@ export const GLOBAL_ATLAS_DATA = [
       },
       benchmark_summary: "Rank #22 of 50 | 50th Percentile",
     },
+    temporal_analysis: {
+      history: [
+        {
+          year: 2030,
+          npv: 880206.22,
+          default_prob: 0.0,
+        },
+        {
+          year: 2040,
+          npv: 880206.22,
+          default_prob: 0.0,
+        },
+        {
+          year: 2050,
+          npv: 880206.22,
+          default_prob: 0.0,
+        },
+      ],
+      stranded_asset_year: null,
+    },
   },
   {
     project_type: "agriculture",
@@ -5667,6 +6387,26 @@ export const GLOBAL_ATLAS_DATA = [
         default_probability_pct: 0.0,
       },
       benchmark_summary: "Rank #8 of 50 | 84th Percentile",
+    },
+    temporal_analysis: {
+      history: [
+        {
+          year: 2030,
+          npv: 948521.21,
+          default_prob: 0.0,
+        },
+        {
+          year: 2040,
+          npv: 970478.88,
+          default_prob: 0.0,
+        },
+        {
+          year: 2050,
+          npv: 992436.49,
+          default_prob: 0.0,
+        },
+      ],
+      stranded_asset_year: null,
     },
   },
   {
@@ -5822,6 +6562,26 @@ export const GLOBAL_ATLAS_DATA = [
       },
       benchmark_summary: "Rank #12 of 50 | 76th Percentile",
     },
+    temporal_analysis: {
+      history: [
+        {
+          year: 2030,
+          npv: 886912.89,
+          default_prob: 0.0,
+        },
+        {
+          year: 2040,
+          npv: 917073.62,
+          default_prob: 0.0,
+        },
+        {
+          year: 2050,
+          npv: 976061.47,
+          default_prob: 0.0,
+        },
+      ],
+      stranded_asset_year: null,
+    },
   },
   {
     project_type: "agriculture",
@@ -5975,6 +6735,26 @@ export const GLOBAL_ATLAS_DATA = [
       },
       benchmark_summary: "Rank #43 of 50 | 8th Percentile",
     },
+    temporal_analysis: {
+      history: [
+        {
+          year: 2030,
+          npv: 732736.61,
+          default_prob: 0.0,
+        },
+        {
+          year: 2040,
+          npv: 738335.54,
+          default_prob: 0.0,
+        },
+        {
+          year: 2050,
+          npv: 746205.5,
+          default_prob: 0.0,
+        },
+      ],
+      stranded_asset_year: null,
+    },
   },
   {
     project_type: "agriculture",
@@ -6127,6 +6907,26 @@ export const GLOBAL_ATLAS_DATA = [
         default_probability_pct: 200.0,
       },
       benchmark_summary: "Rank #44 of 50 | 8th Percentile",
+    },
+    temporal_analysis: {
+      history: [
+        {
+          year: 2030,
+          npv: 732736.61,
+          default_prob: 0.0,
+        },
+        {
+          year: 2040,
+          npv: 732736.61,
+          default_prob: 0.0,
+        },
+        {
+          year: 2050,
+          npv: 732736.61,
+          default_prob: 0.0,
+        },
+      ],
+      stranded_asset_year: null,
     },
   },
   {
@@ -6282,6 +7082,26 @@ export const GLOBAL_ATLAS_DATA = [
       },
       benchmark_summary: "Rank #14 of 50 | 72th Percentile",
     },
+    temporal_analysis: {
+      history: [
+        {
+          year: 2030,
+          npv: 880206.22,
+          default_prob: 0.0,
+        },
+        {
+          year: 2040,
+          npv: 880206.22,
+          default_prob: 0.0,
+        },
+        {
+          year: 2050,
+          npv: 931820.59,
+          default_prob: 0.0,
+        },
+      ],
+      stranded_asset_year: null,
+    },
   },
   {
     project_type: "agriculture",
@@ -6434,6 +7254,26 @@ export const GLOBAL_ATLAS_DATA = [
         default_probability_pct: 0.0,
       },
       benchmark_summary: "Rank #23 of 50 | 50th Percentile",
+    },
+    temporal_analysis: {
+      history: [
+        {
+          year: 2030,
+          npv: 880206.22,
+          default_prob: 0.0,
+        },
+        {
+          year: 2040,
+          npv: 880206.22,
+          default_prob: 0.0,
+        },
+        {
+          year: 2050,
+          npv: 880206.22,
+          default_prob: 0.0,
+        },
+      ],
+      stranded_asset_year: null,
     },
   },
   {
@@ -6588,6 +7428,26 @@ export const GLOBAL_ATLAS_DATA = [
       },
       benchmark_summary: "Rank #24 of 50 | 50th Percentile",
     },
+    temporal_analysis: {
+      history: [
+        {
+          year: 2030,
+          npv: 880206.22,
+          default_prob: 0.0,
+        },
+        {
+          year: 2040,
+          npv: 880206.22,
+          default_prob: 0.0,
+        },
+        {
+          year: 2050,
+          npv: 880206.22,
+          default_prob: 0.0,
+        },
+      ],
+      stranded_asset_year: null,
+    },
   },
   {
     project_type: "agriculture",
@@ -6740,6 +7600,26 @@ export const GLOBAL_ATLAS_DATA = [
         default_probability_pct: 0.0,
       },
       benchmark_summary: "Rank #25 of 50 | 50th Percentile",
+    },
+    temporal_analysis: {
+      history: [
+        {
+          year: 2030,
+          npv: 880206.22,
+          default_prob: 0.0,
+        },
+        {
+          year: 2040,
+          npv: 880206.22,
+          default_prob: 0.0,
+        },
+        {
+          year: 2050,
+          npv: 890293.14,
+          default_prob: 0.0,
+        },
+      ],
+      stranded_asset_year: null,
     },
   },
   {
@@ -6895,6 +7775,26 @@ export const GLOBAL_ATLAS_DATA = [
       },
       benchmark_summary: "Rank #31 of 50 | 38th Percentile",
     },
+    temporal_analysis: {
+      history: [
+        {
+          year: 2030,
+          npv: 742123.05,
+          default_prob: 0.0,
+        },
+        {
+          year: 2040,
+          npv: 749021.56,
+          default_prob: 0.0,
+        },
+        {
+          year: 2050,
+          npv: 755920.06,
+          default_prob: 0.0,
+        },
+      ],
+      stranded_asset_year: null,
+    },
   },
   {
     project_type: "agriculture",
@@ -7049,6 +7949,26 @@ export const GLOBAL_ATLAS_DATA = [
       },
       benchmark_summary: "Rank #49 of 50 | 2th Percentile",
     },
+    temporal_analysis: {
+      history: [
+        {
+          year: 2030,
+          npv: 730134.2,
+          default_prob: 0.0,
+        },
+        {
+          year: 2040,
+          npv: 732399.27,
+          default_prob: 0.0,
+        },
+        {
+          year: 2050,
+          npv: 732736.61,
+          default_prob: 0.0,
+        },
+      ],
+      stranded_asset_year: null,
+    },
   },
   {
     project_type: "agriculture",
@@ -7201,6 +8121,26 @@ export const GLOBAL_ATLAS_DATA = [
         default_probability_pct: 3600.0,
       },
       benchmark_summary: "Rank #27 of 50 | 46th Percentile",
+    },
+    temporal_analysis: {
+      history: [
+        {
+          year: 2030,
+          npv: 762466.49,
+          default_prob: 0.0,
+        },
+        {
+          year: 2040,
+          npv: 785237.27,
+          default_prob: 0.0,
+        },
+        {
+          year: 2050,
+          npv: 713432.84,
+          default_prob: 0.0,
+        },
+      ],
+      stranded_asset_year: null,
     },
   },
   {
@@ -7355,6 +8295,26 @@ export const GLOBAL_ATLAS_DATA = [
       },
       benchmark_summary: "Rank #45 of 50 | 8th Percentile",
     },
+    temporal_analysis: {
+      history: [
+        {
+          year: 2030,
+          npv: 732736.61,
+          default_prob: 0.0,
+        },
+        {
+          year: 2040,
+          npv: 732736.61,
+          default_prob: 0.0,
+        },
+        {
+          year: 2050,
+          npv: 732736.61,
+          default_prob: 0.0,
+        },
+      ],
+      stranded_asset_year: null,
+    },
   },
   {
     project_type: "agriculture",
@@ -7507,6 +8467,26 @@ export const GLOBAL_ATLAS_DATA = [
         default_probability_pct: 1200.0,
       },
       benchmark_summary: "Rank #28 of 50 | 44th Percentile",
+    },
+    temporal_analysis: {
+      history: [
+        {
+          year: 2030,
+          npv: 751229.3,
+          default_prob: 0.0,
+        },
+        {
+          year: 2040,
+          npv: 757368.95,
+          default_prob: 0.0,
+        },
+        {
+          year: 2050,
+          npv: 842660.46,
+          default_prob: 0.0,
+        },
+      ],
+      stranded_asset_year: null,
     },
   },
   {
@@ -7661,6 +8641,26 @@ export const GLOBAL_ATLAS_DATA = [
       },
       benchmark_summary: "Rank #46 of 50 | 8th Percentile",
     },
+    temporal_analysis: {
+      history: [
+        {
+          year: 2030,
+          npv: 732736.61,
+          default_prob: 0.0,
+        },
+        {
+          year: 2040,
+          npv: 732736.61,
+          default_prob: 0.0,
+        },
+        {
+          year: 2050,
+          npv: 732736.61,
+          default_prob: 0.0,
+        },
+      ],
+      stranded_asset_year: null,
+    },
   },
   {
     project_type: "coastal",
@@ -7797,6 +8797,26 @@ export const GLOBAL_ATLAS_DATA = [
         default_probability_pct: 0.0,
       },
       benchmark_summary: "Rank #17 of 25 | 32th Percentile",
+    },
+    temporal_analysis: {
+      history: [
+        {
+          year: 2030,
+          npv: 0.0,
+          default_prob: 0.0,
+        },
+        {
+          year: 2040,
+          npv: 0.0,
+          default_prob: 0.0,
+        },
+        {
+          year: 2050,
+          npv: 0.0,
+          default_prob: 0.0,
+        },
+      ],
+      stranded_asset_year: null,
     },
   },
   {
@@ -7935,6 +8955,26 @@ export const GLOBAL_ATLAS_DATA = [
       },
       benchmark_summary: "Rank #10 of 25 | 60th Percentile",
     },
+    temporal_analysis: {
+      history: [
+        {
+          year: 2030,
+          npv: 0.0,
+          default_prob: 0.0,
+        },
+        {
+          year: 2040,
+          npv: 0.0,
+          default_prob: 0.0,
+        },
+        {
+          year: 2050,
+          npv: 0.0,
+          default_prob: 0.0,
+        },
+      ],
+      stranded_asset_year: null,
+    },
   },
   {
     project_type: "coastal",
@@ -8071,6 +9111,26 @@ export const GLOBAL_ATLAS_DATA = [
         default_probability_pct: 0.0,
       },
       benchmark_summary: "Rank #6 of 25 | 76th Percentile",
+    },
+    temporal_analysis: {
+      history: [
+        {
+          year: 2030,
+          npv: 0.0,
+          default_prob: 0.0,
+        },
+        {
+          year: 2040,
+          npv: 0.0,
+          default_prob: 0.0,
+        },
+        {
+          year: 2050,
+          npv: 0.0,
+          default_prob: 0.0,
+        },
+      ],
+      stranded_asset_year: null,
     },
   },
   {
@@ -8209,6 +9269,26 @@ export const GLOBAL_ATLAS_DATA = [
       },
       benchmark_summary: "Rank #21 of 25 | 16th Percentile",
     },
+    temporal_analysis: {
+      history: [
+        {
+          year: 2030,
+          npv: 0.0,
+          default_prob: 0.0,
+        },
+        {
+          year: 2040,
+          npv: 0.0,
+          default_prob: 0.0,
+        },
+        {
+          year: 2050,
+          npv: 0.0,
+          default_prob: 0.0,
+        },
+      ],
+      stranded_asset_year: null,
+    },
   },
   {
     project_type: "coastal",
@@ -8345,6 +9425,26 @@ export const GLOBAL_ATLAS_DATA = [
         default_probability_pct: 0.0,
       },
       benchmark_summary: "Rank #9 of 25 | 64th Percentile",
+    },
+    temporal_analysis: {
+      history: [
+        {
+          year: 2030,
+          npv: 0.0,
+          default_prob: 0.0,
+        },
+        {
+          year: 2040,
+          npv: 0.0,
+          default_prob: 0.0,
+        },
+        {
+          year: 2050,
+          npv: 0.0,
+          default_prob: 0.0,
+        },
+      ],
+      stranded_asset_year: null,
     },
   },
   {
@@ -8483,6 +9583,26 @@ export const GLOBAL_ATLAS_DATA = [
       },
       benchmark_summary: "Rank #3 of 25 | 88th Percentile",
     },
+    temporal_analysis: {
+      history: [
+        {
+          year: 2030,
+          npv: 0.0,
+          default_prob: 0.0,
+        },
+        {
+          year: 2040,
+          npv: 0.0,
+          default_prob: 0.0,
+        },
+        {
+          year: 2050,
+          npv: 0.0,
+          default_prob: 0.0,
+        },
+      ],
+      stranded_asset_year: null,
+    },
   },
   {
     project_type: "coastal",
@@ -8619,6 +9739,26 @@ export const GLOBAL_ATLAS_DATA = [
         default_probability_pct: 0.0,
       },
       benchmark_summary: "Rank #5 of 25 | 80th Percentile",
+    },
+    temporal_analysis: {
+      history: [
+        {
+          year: 2030,
+          npv: 0.0,
+          default_prob: 0.0,
+        },
+        {
+          year: 2040,
+          npv: 0.0,
+          default_prob: 0.0,
+        },
+        {
+          year: 2050,
+          npv: 0.0,
+          default_prob: 0.0,
+        },
+      ],
+      stranded_asset_year: null,
     },
   },
   {
@@ -8757,6 +9897,26 @@ export const GLOBAL_ATLAS_DATA = [
       },
       benchmark_summary: "Rank #23 of 25 | 8th Percentile",
     },
+    temporal_analysis: {
+      history: [
+        {
+          year: 2030,
+          npv: 0.0,
+          default_prob: 0.0,
+        },
+        {
+          year: 2040,
+          npv: 0.0,
+          default_prob: 0.0,
+        },
+        {
+          year: 2050,
+          npv: 0.0,
+          default_prob: 0.0,
+        },
+      ],
+      stranded_asset_year: null,
+    },
   },
   {
     project_type: "coastal",
@@ -8893,6 +10053,26 @@ export const GLOBAL_ATLAS_DATA = [
         default_probability_pct: 0.0,
       },
       benchmark_summary: "Rank #12 of 25 | 52th Percentile",
+    },
+    temporal_analysis: {
+      history: [
+        {
+          year: 2030,
+          npv: 0.0,
+          default_prob: 0.0,
+        },
+        {
+          year: 2040,
+          npv: 0.0,
+          default_prob: 0.0,
+        },
+        {
+          year: 2050,
+          npv: 0.0,
+          default_prob: 0.0,
+        },
+      ],
+      stranded_asset_year: null,
     },
   },
   {
@@ -9031,6 +10211,26 @@ export const GLOBAL_ATLAS_DATA = [
       },
       benchmark_summary: "Rank #25 of 25 | 0th Percentile",
     },
+    temporal_analysis: {
+      history: [
+        {
+          year: 2030,
+          npv: 0.0,
+          default_prob: 0.0,
+        },
+        {
+          year: 2040,
+          npv: 0.0,
+          default_prob: 0.0,
+        },
+        {
+          year: 2050,
+          npv: 0.0,
+          default_prob: 0.0,
+        },
+      ],
+      stranded_asset_year: null,
+    },
   },
   {
     project_type: "coastal",
@@ -9167,6 +10367,26 @@ export const GLOBAL_ATLAS_DATA = [
         default_probability_pct: 0.0,
       },
       benchmark_summary: "Rank #24 of 25 | 4th Percentile",
+    },
+    temporal_analysis: {
+      history: [
+        {
+          year: 2030,
+          npv: 0.0,
+          default_prob: 0.0,
+        },
+        {
+          year: 2040,
+          npv: 0.0,
+          default_prob: 0.0,
+        },
+        {
+          year: 2050,
+          npv: 0.0,
+          default_prob: 0.0,
+        },
+      ],
+      stranded_asset_year: null,
     },
   },
   {
@@ -9305,6 +10525,26 @@ export const GLOBAL_ATLAS_DATA = [
       },
       benchmark_summary: "Rank #7 of 25 | 72th Percentile",
     },
+    temporal_analysis: {
+      history: [
+        {
+          year: 2030,
+          npv: 0.0,
+          default_prob: 0.0,
+        },
+        {
+          year: 2040,
+          npv: 0.0,
+          default_prob: 0.0,
+        },
+        {
+          year: 2050,
+          npv: 0.0,
+          default_prob: 0.0,
+        },
+      ],
+      stranded_asset_year: null,
+    },
   },
   {
     project_type: "coastal",
@@ -9441,6 +10681,26 @@ export const GLOBAL_ATLAS_DATA = [
         default_probability_pct: 0.0,
       },
       benchmark_summary: "Rank #22 of 25 | 12th Percentile",
+    },
+    temporal_analysis: {
+      history: [
+        {
+          year: 2030,
+          npv: 0.0,
+          default_prob: 0.0,
+        },
+        {
+          year: 2040,
+          npv: 0.0,
+          default_prob: 0.0,
+        },
+        {
+          year: 2050,
+          npv: 0.0,
+          default_prob: 0.0,
+        },
+      ],
+      stranded_asset_year: null,
     },
   },
   {
@@ -9579,6 +10839,26 @@ export const GLOBAL_ATLAS_DATA = [
       },
       benchmark_summary: "Rank #1 of 25 | 96th Percentile",
     },
+    temporal_analysis: {
+      history: [
+        {
+          year: 2030,
+          npv: 0.0,
+          default_prob: 0.0,
+        },
+        {
+          year: 2040,
+          npv: 0.0,
+          default_prob: 0.0,
+        },
+        {
+          year: 2050,
+          npv: 0.0,
+          default_prob: 0.0,
+        },
+      ],
+      stranded_asset_year: null,
+    },
   },
   {
     project_type: "coastal",
@@ -9715,6 +10995,26 @@ export const GLOBAL_ATLAS_DATA = [
         default_probability_pct: 0.0,
       },
       benchmark_summary: "Rank #20 of 25 | 20th Percentile",
+    },
+    temporal_analysis: {
+      history: [
+        {
+          year: 2030,
+          npv: 0.0,
+          default_prob: 0.0,
+        },
+        {
+          year: 2040,
+          npv: 0.0,
+          default_prob: 0.0,
+        },
+        {
+          year: 2050,
+          npv: 0.0,
+          default_prob: 0.0,
+        },
+      ],
+      stranded_asset_year: null,
     },
   },
   {
@@ -9853,6 +11153,26 @@ export const GLOBAL_ATLAS_DATA = [
       },
       benchmark_summary: "Rank #8 of 25 | 68th Percentile",
     },
+    temporal_analysis: {
+      history: [
+        {
+          year: 2030,
+          npv: 0.0,
+          default_prob: 0.0,
+        },
+        {
+          year: 2040,
+          npv: 0.0,
+          default_prob: 0.0,
+        },
+        {
+          year: 2050,
+          npv: 0.0,
+          default_prob: 0.0,
+        },
+      ],
+      stranded_asset_year: null,
+    },
   },
   {
     project_type: "coastal",
@@ -9989,6 +11309,26 @@ export const GLOBAL_ATLAS_DATA = [
         default_probability_pct: 0.0,
       },
       benchmark_summary: "Rank #14 of 25 | 44th Percentile",
+    },
+    temporal_analysis: {
+      history: [
+        {
+          year: 2030,
+          npv: 0.0,
+          default_prob: 0.0,
+        },
+        {
+          year: 2040,
+          npv: 0.0,
+          default_prob: 0.0,
+        },
+        {
+          year: 2050,
+          npv: 0.0,
+          default_prob: 0.0,
+        },
+      ],
+      stranded_asset_year: null,
     },
   },
   {
@@ -10127,6 +11467,26 @@ export const GLOBAL_ATLAS_DATA = [
       },
       benchmark_summary: "Rank #2 of 25 | 92th Percentile",
     },
+    temporal_analysis: {
+      history: [
+        {
+          year: 2030,
+          npv: 0.0,
+          default_prob: 0.0,
+        },
+        {
+          year: 2040,
+          npv: 0.0,
+          default_prob: 0.0,
+        },
+        {
+          year: 2050,
+          npv: 0.0,
+          default_prob: 0.0,
+        },
+      ],
+      stranded_asset_year: null,
+    },
   },
   {
     project_type: "coastal",
@@ -10263,6 +11623,26 @@ export const GLOBAL_ATLAS_DATA = [
         default_probability_pct: 0.0,
       },
       benchmark_summary: "Rank #13 of 25 | 48th Percentile",
+    },
+    temporal_analysis: {
+      history: [
+        {
+          year: 2030,
+          npv: 0.0,
+          default_prob: 0.0,
+        },
+        {
+          year: 2040,
+          npv: 0.0,
+          default_prob: 0.0,
+        },
+        {
+          year: 2050,
+          npv: 0.0,
+          default_prob: 0.0,
+        },
+      ],
+      stranded_asset_year: null,
     },
   },
   {
@@ -10401,6 +11781,26 @@ export const GLOBAL_ATLAS_DATA = [
       },
       benchmark_summary: "Rank #15 of 25 | 40th Percentile",
     },
+    temporal_analysis: {
+      history: [
+        {
+          year: 2030,
+          npv: 0.0,
+          default_prob: 0.0,
+        },
+        {
+          year: 2040,
+          npv: 0.0,
+          default_prob: 0.0,
+        },
+        {
+          year: 2050,
+          npv: 0.0,
+          default_prob: 0.0,
+        },
+      ],
+      stranded_asset_year: null,
+    },
   },
   {
     project_type: "coastal",
@@ -10537,6 +11937,26 @@ export const GLOBAL_ATLAS_DATA = [
         default_probability_pct: 0.0,
       },
       benchmark_summary: "Rank #18 of 25 | 28th Percentile",
+    },
+    temporal_analysis: {
+      history: [
+        {
+          year: 2030,
+          npv: 0.0,
+          default_prob: 0.0,
+        },
+        {
+          year: 2040,
+          npv: 0.0,
+          default_prob: 0.0,
+        },
+        {
+          year: 2050,
+          npv: 0.0,
+          default_prob: 0.0,
+        },
+      ],
+      stranded_asset_year: null,
     },
   },
   {
@@ -10675,6 +12095,26 @@ export const GLOBAL_ATLAS_DATA = [
       },
       benchmark_summary: "Rank #16 of 25 | 36th Percentile",
     },
+    temporal_analysis: {
+      history: [
+        {
+          year: 2030,
+          npv: 0.0,
+          default_prob: 0.0,
+        },
+        {
+          year: 2040,
+          npv: 0.0,
+          default_prob: 0.0,
+        },
+        {
+          year: 2050,
+          npv: 0.0,
+          default_prob: 0.0,
+        },
+      ],
+      stranded_asset_year: null,
+    },
   },
   {
     project_type: "coastal",
@@ -10811,6 +12251,26 @@ export const GLOBAL_ATLAS_DATA = [
         default_probability_pct: 0.0,
       },
       benchmark_summary: "Rank #19 of 25 | 24th Percentile",
+    },
+    temporal_analysis: {
+      history: [
+        {
+          year: 2030,
+          npv: 0.0,
+          default_prob: 0.0,
+        },
+        {
+          year: 2040,
+          npv: 0.0,
+          default_prob: 0.0,
+        },
+        {
+          year: 2050,
+          npv: 0.0,
+          default_prob: 0.0,
+        },
+      ],
+      stranded_asset_year: null,
     },
   },
   {
@@ -10949,6 +12409,26 @@ export const GLOBAL_ATLAS_DATA = [
       },
       benchmark_summary: "Rank #11 of 25 | 56th Percentile",
     },
+    temporal_analysis: {
+      history: [
+        {
+          year: 2030,
+          npv: 0.0,
+          default_prob: 0.0,
+        },
+        {
+          year: 2040,
+          npv: 0.0,
+          default_prob: 0.0,
+        },
+        {
+          year: 2050,
+          npv: 0.0,
+          default_prob: 0.0,
+        },
+      ],
+      stranded_asset_year: null,
+    },
   },
   {
     project_type: "coastal",
@@ -11085,6 +12565,26 @@ export const GLOBAL_ATLAS_DATA = [
         default_probability_pct: 0.0,
       },
       benchmark_summary: "Rank #4 of 25 | 84th Percentile",
+    },
+    temporal_analysis: {
+      history: [
+        {
+          year: 2030,
+          npv: 0.0,
+          default_prob: 0.0,
+        },
+        {
+          year: 2040,
+          npv: 0.0,
+          default_prob: 0.0,
+        },
+        {
+          year: 2050,
+          npv: 0.0,
+          default_prob: 0.0,
+        },
+      ],
+      stranded_asset_year: null,
     },
   },
   {
@@ -11242,6 +12742,26 @@ export const GLOBAL_ATLAS_DATA = [
       },
       benchmark_summary: "Rank #11 of 25 | 56th Percentile",
     },
+    temporal_analysis: {
+      history: [
+        {
+          year: 2030,
+          npv: 0.0,
+          default_prob: 0.0,
+        },
+        {
+          year: 2040,
+          npv: 0.0,
+          default_prob: 0.0,
+        },
+        {
+          year: 2050,
+          npv: 0.0,
+          default_prob: 0.0,
+        },
+      ],
+      stranded_asset_year: null,
+    },
   },
   {
     project_type: "flood",
@@ -11397,6 +12917,26 @@ export const GLOBAL_ATLAS_DATA = [
         default_probability_pct: 0.0,
       },
       benchmark_summary: "Rank #13 of 25 | 48th Percentile",
+    },
+    temporal_analysis: {
+      history: [
+        {
+          year: 2030,
+          npv: 0.0,
+          default_prob: 0.0,
+        },
+        {
+          year: 2040,
+          npv: 0.0,
+          default_prob: 0.0,
+        },
+        {
+          year: 2050,
+          npv: 0.0,
+          default_prob: 0.0,
+        },
+      ],
+      stranded_asset_year: null,
     },
   },
   {
@@ -11554,6 +13094,26 @@ export const GLOBAL_ATLAS_DATA = [
       },
       benchmark_summary: "Rank #1 of 25 | 96th Percentile",
     },
+    temporal_analysis: {
+      history: [
+        {
+          year: 2030,
+          npv: 0.0,
+          default_prob: 0.0,
+        },
+        {
+          year: 2040,
+          npv: 0.0,
+          default_prob: 0.0,
+        },
+        {
+          year: 2050,
+          npv: 0.0,
+          default_prob: 0.0,
+        },
+      ],
+      stranded_asset_year: null,
+    },
   },
   {
     project_type: "flood",
@@ -11709,6 +13269,26 @@ export const GLOBAL_ATLAS_DATA = [
         default_probability_pct: 0.0,
       },
       benchmark_summary: "Rank #20 of 25 | 20th Percentile",
+    },
+    temporal_analysis: {
+      history: [
+        {
+          year: 2030,
+          npv: 0.0,
+          default_prob: 0.0,
+        },
+        {
+          year: 2040,
+          npv: 0.0,
+          default_prob: 0.0,
+        },
+        {
+          year: 2050,
+          npv: 0.0,
+          default_prob: 0.0,
+        },
+      ],
+      stranded_asset_year: null,
     },
   },
   {
@@ -11866,6 +13446,26 @@ export const GLOBAL_ATLAS_DATA = [
       },
       benchmark_summary: "Rank #21 of 25 | 16th Percentile",
     },
+    temporal_analysis: {
+      history: [
+        {
+          year: 2030,
+          npv: 0.0,
+          default_prob: 0.0,
+        },
+        {
+          year: 2040,
+          npv: 0.0,
+          default_prob: 0.0,
+        },
+        {
+          year: 2050,
+          npv: 0.0,
+          default_prob: 0.0,
+        },
+      ],
+      stranded_asset_year: null,
+    },
   },
   {
     project_type: "flood",
@@ -12021,6 +13621,26 @@ export const GLOBAL_ATLAS_DATA = [
         default_probability_pct: 0.0,
       },
       benchmark_summary: "Rank #19 of 25 | 24th Percentile",
+    },
+    temporal_analysis: {
+      history: [
+        {
+          year: 2030,
+          npv: 0.0,
+          default_prob: 0.0,
+        },
+        {
+          year: 2040,
+          npv: 0.0,
+          default_prob: 0.0,
+        },
+        {
+          year: 2050,
+          npv: 0.0,
+          default_prob: 0.0,
+        },
+      ],
+      stranded_asset_year: null,
     },
   },
   {
@@ -12178,6 +13798,26 @@ export const GLOBAL_ATLAS_DATA = [
       },
       benchmark_summary: "Rank #12 of 25 | 52th Percentile",
     },
+    temporal_analysis: {
+      history: [
+        {
+          year: 2030,
+          npv: 0.0,
+          default_prob: 0.0,
+        },
+        {
+          year: 2040,
+          npv: 0.0,
+          default_prob: 0.0,
+        },
+        {
+          year: 2050,
+          npv: 0.0,
+          default_prob: 0.0,
+        },
+      ],
+      stranded_asset_year: null,
+    },
   },
   {
     project_type: "flood",
@@ -12333,6 +13973,26 @@ export const GLOBAL_ATLAS_DATA = [
         default_probability_pct: 0.0,
       },
       benchmark_summary: "Rank #17 of 25 | 32th Percentile",
+    },
+    temporal_analysis: {
+      history: [
+        {
+          year: 2030,
+          npv: 0.0,
+          default_prob: 0.0,
+        },
+        {
+          year: 2040,
+          npv: 0.0,
+          default_prob: 0.0,
+        },
+        {
+          year: 2050,
+          npv: 0.0,
+          default_prob: 0.0,
+        },
+      ],
+      stranded_asset_year: null,
     },
   },
   {
@@ -12490,6 +14150,26 @@ export const GLOBAL_ATLAS_DATA = [
       },
       benchmark_summary: "Rank #4 of 25 | 84th Percentile",
     },
+    temporal_analysis: {
+      history: [
+        {
+          year: 2030,
+          npv: 0.0,
+          default_prob: 0.0,
+        },
+        {
+          year: 2040,
+          npv: 0.0,
+          default_prob: 0.0,
+        },
+        {
+          year: 2050,
+          npv: 0.0,
+          default_prob: 0.0,
+        },
+      ],
+      stranded_asset_year: null,
+    },
   },
   {
     project_type: "flood",
@@ -12645,6 +14325,26 @@ export const GLOBAL_ATLAS_DATA = [
         default_probability_pct: 200.0,
       },
       benchmark_summary: "Rank #8 of 25 | 68th Percentile",
+    },
+    temporal_analysis: {
+      history: [
+        {
+          year: 2030,
+          npv: 0.0,
+          default_prob: 0.0,
+        },
+        {
+          year: 2040,
+          npv: 0.0,
+          default_prob: 0.0,
+        },
+        {
+          year: 2050,
+          npv: 0.0,
+          default_prob: 0.0,
+        },
+      ],
+      stranded_asset_year: null,
     },
   },
   {
@@ -12802,6 +14502,26 @@ export const GLOBAL_ATLAS_DATA = [
       },
       benchmark_summary: "Rank #6 of 25 | 76th Percentile",
     },
+    temporal_analysis: {
+      history: [
+        {
+          year: 2030,
+          npv: 0.0,
+          default_prob: 0.0,
+        },
+        {
+          year: 2040,
+          npv: 0.0,
+          default_prob: 0.0,
+        },
+        {
+          year: 2050,
+          npv: 0.0,
+          default_prob: 0.0,
+        },
+      ],
+      stranded_asset_year: null,
+    },
   },
   {
     project_type: "flood",
@@ -12957,6 +14677,26 @@ export const GLOBAL_ATLAS_DATA = [
         default_probability_pct: 200.0,
       },
       benchmark_summary: "Rank #25 of 25 | 0th Percentile",
+    },
+    temporal_analysis: {
+      history: [
+        {
+          year: 2030,
+          npv: 0.0,
+          default_prob: 0.0,
+        },
+        {
+          year: 2040,
+          npv: 0.0,
+          default_prob: 0.0,
+        },
+        {
+          year: 2050,
+          npv: 0.0,
+          default_prob: 0.0,
+        },
+      ],
+      stranded_asset_year: null,
     },
   },
   {
@@ -13114,6 +14854,26 @@ export const GLOBAL_ATLAS_DATA = [
       },
       benchmark_summary: "Rank #24 of 25 | 4th Percentile",
     },
+    temporal_analysis: {
+      history: [
+        {
+          year: 2030,
+          npv: 0.0,
+          default_prob: 0.0,
+        },
+        {
+          year: 2040,
+          npv: 0.0,
+          default_prob: 0.0,
+        },
+        {
+          year: 2050,
+          npv: 0.0,
+          default_prob: 0.0,
+        },
+      ],
+      stranded_asset_year: null,
+    },
   },
   {
     project_type: "flood",
@@ -13269,6 +15029,26 @@ export const GLOBAL_ATLAS_DATA = [
         default_probability_pct: 0.0,
       },
       benchmark_summary: "Rank #18 of 25 | 28th Percentile",
+    },
+    temporal_analysis: {
+      history: [
+        {
+          year: 2030,
+          npv: 0.0,
+          default_prob: 0.0,
+        },
+        {
+          year: 2040,
+          npv: 0.0,
+          default_prob: 0.0,
+        },
+        {
+          year: 2050,
+          npv: 0.0,
+          default_prob: 0.0,
+        },
+      ],
+      stranded_asset_year: null,
     },
   },
   {
@@ -13426,6 +15206,26 @@ export const GLOBAL_ATLAS_DATA = [
       },
       benchmark_summary: "Rank #5 of 25 | 80th Percentile",
     },
+    temporal_analysis: {
+      history: [
+        {
+          year: 2030,
+          npv: 0.0,
+          default_prob: 0.0,
+        },
+        {
+          year: 2040,
+          npv: 0.0,
+          default_prob: 0.0,
+        },
+        {
+          year: 2050,
+          npv: 0.0,
+          default_prob: 0.0,
+        },
+      ],
+      stranded_asset_year: null,
+    },
   },
   {
     project_type: "flood",
@@ -13581,6 +15381,26 @@ export const GLOBAL_ATLAS_DATA = [
         default_probability_pct: 0.0,
       },
       benchmark_summary: "Rank #7 of 25 | 72th Percentile",
+    },
+    temporal_analysis: {
+      history: [
+        {
+          year: 2030,
+          npv: 0.0,
+          default_prob: 0.0,
+        },
+        {
+          year: 2040,
+          npv: 0.0,
+          default_prob: 0.0,
+        },
+        {
+          year: 2050,
+          npv: 0.0,
+          default_prob: 0.0,
+        },
+      ],
+      stranded_asset_year: null,
     },
   },
   {
@@ -13738,6 +15558,26 @@ export const GLOBAL_ATLAS_DATA = [
       },
       benchmark_summary: "Rank #15 of 25 | 40th Percentile",
     },
+    temporal_analysis: {
+      history: [
+        {
+          year: 2030,
+          npv: 0.0,
+          default_prob: 0.0,
+        },
+        {
+          year: 2040,
+          npv: 0.0,
+          default_prob: 0.0,
+        },
+        {
+          year: 2050,
+          npv: 0.0,
+          default_prob: 0.0,
+        },
+      ],
+      stranded_asset_year: null,
+    },
   },
   {
     project_type: "flood",
@@ -13893,6 +15733,26 @@ export const GLOBAL_ATLAS_DATA = [
         default_probability_pct: 0.0,
       },
       benchmark_summary: "Rank #9 of 25 | 64th Percentile",
+    },
+    temporal_analysis: {
+      history: [
+        {
+          year: 2030,
+          npv: 0.0,
+          default_prob: 0.0,
+        },
+        {
+          year: 2040,
+          npv: 0.0,
+          default_prob: 0.0,
+        },
+        {
+          year: 2050,
+          npv: 0.0,
+          default_prob: 0.0,
+        },
+      ],
+      stranded_asset_year: null,
     },
   },
   {
@@ -14050,6 +15910,26 @@ export const GLOBAL_ATLAS_DATA = [
       },
       benchmark_summary: "Rank #23 of 25 | 8th Percentile",
     },
+    temporal_analysis: {
+      history: [
+        {
+          year: 2030,
+          npv: 0.0,
+          default_prob: 0.0,
+        },
+        {
+          year: 2040,
+          npv: 0.0,
+          default_prob: 0.0,
+        },
+        {
+          year: 2050,
+          npv: 0.0,
+          default_prob: 0.0,
+        },
+      ],
+      stranded_asset_year: null,
+    },
   },
   {
     project_type: "flood",
@@ -14205,6 +16085,26 @@ export const GLOBAL_ATLAS_DATA = [
         default_probability_pct: 0.0,
       },
       benchmark_summary: "Rank #14 of 25 | 44th Percentile",
+    },
+    temporal_analysis: {
+      history: [
+        {
+          year: 2030,
+          npv: 0.0,
+          default_prob: 0.0,
+        },
+        {
+          year: 2040,
+          npv: 0.0,
+          default_prob: 0.0,
+        },
+        {
+          year: 2050,
+          npv: 0.0,
+          default_prob: 0.0,
+        },
+      ],
+      stranded_asset_year: null,
     },
   },
   {
@@ -14362,6 +16262,26 @@ export const GLOBAL_ATLAS_DATA = [
       },
       benchmark_summary: "Rank #16 of 25 | 36th Percentile",
     },
+    temporal_analysis: {
+      history: [
+        {
+          year: 2030,
+          npv: 0.0,
+          default_prob: 0.0,
+        },
+        {
+          year: 2040,
+          npv: 0.0,
+          default_prob: 0.0,
+        },
+        {
+          year: 2050,
+          npv: 0.0,
+          default_prob: 0.0,
+        },
+      ],
+      stranded_asset_year: null,
+    },
   },
   {
     project_type: "flood",
@@ -14517,6 +16437,26 @@ export const GLOBAL_ATLAS_DATA = [
         default_probability_pct: 0.0,
       },
       benchmark_summary: "Rank #3 of 25 | 88th Percentile",
+    },
+    temporal_analysis: {
+      history: [
+        {
+          year: 2030,
+          npv: 0.0,
+          default_prob: 0.0,
+        },
+        {
+          year: 2040,
+          npv: 0.0,
+          default_prob: 0.0,
+        },
+        {
+          year: 2050,
+          npv: 0.0,
+          default_prob: 0.0,
+        },
+      ],
+      stranded_asset_year: null,
     },
   },
   {
@@ -14674,6 +16614,26 @@ export const GLOBAL_ATLAS_DATA = [
       },
       benchmark_summary: "Rank #2 of 25 | 92th Percentile",
     },
+    temporal_analysis: {
+      history: [
+        {
+          year: 2030,
+          npv: 0.0,
+          default_prob: 0.0,
+        },
+        {
+          year: 2040,
+          npv: 0.0,
+          default_prob: 0.0,
+        },
+        {
+          year: 2050,
+          npv: 0.0,
+          default_prob: 0.0,
+        },
+      ],
+      stranded_asset_year: null,
+    },
   },
   {
     project_type: "flood",
@@ -14830,6 +16790,26 @@ export const GLOBAL_ATLAS_DATA = [
       },
       benchmark_summary: "Rank #22 of 25 | 12th Percentile",
     },
+    temporal_analysis: {
+      history: [
+        {
+          year: 2030,
+          npv: 0.0,
+          default_prob: 0.0,
+        },
+        {
+          year: 2040,
+          npv: 0.0,
+          default_prob: 0.0,
+        },
+        {
+          year: 2050,
+          npv: 0.0,
+          default_prob: 0.0,
+        },
+      ],
+      stranded_asset_year: null,
+    },
   },
   {
     project_type: "flood",
@@ -14985,6 +16965,26 @@ export const GLOBAL_ATLAS_DATA = [
         default_probability_pct: 0.0,
       },
       benchmark_summary: "Rank #10 of 25 | 60th Percentile",
+    },
+    temporal_analysis: {
+      history: [
+        {
+          year: 2030,
+          npv: 0.0,
+          default_prob: 0.0,
+        },
+        {
+          year: 2040,
+          npv: 0.0,
+          default_prob: 0.0,
+        },
+        {
+          year: 2050,
+          npv: 0.0,
+          default_prob: 0.0,
+        },
+      ],
+      stranded_asset_year: null,
     },
   },
 ];
