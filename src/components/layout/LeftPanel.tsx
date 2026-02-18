@@ -94,6 +94,8 @@ interface LeftPanelProps {
   onPlayToggle: () => void;
   isFinanceSimulating: boolean;
   onFinanceSimulate: () => void;
+  atlasOverlay: 'default' | 'credit_rating' | 'financial_risk';
+  onAtlasOverlayChange: (v: 'default' | 'credit_rating' | 'financial_risk') => void;
 }
 
 export function LeftPanel({
@@ -137,6 +139,8 @@ export function LeftPanel({
   onPlayToggle,
   isFinanceSimulating,
   onFinanceSimulate,
+  atlasOverlay,
+  onAtlasOverlayChange,
 }: LeftPanelProps) {
   const [localMangroveWidth, setLocalMangroveWidth] = useState(mangroveWidth);
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
@@ -296,6 +300,40 @@ export function LeftPanel({
                 Click map to select location
               </span>
             )}
+          </div>
+
+          {/* Map overlay selector — persistent across all modes */}
+          <div className="shrink-0 px-4 py-2.5 cb-divider">
+            <div className="cb-label mb-2">Map Overlay</div>
+            <div className="flex gap-1">
+              {(
+                [
+                  { value: 'default', label: 'Default' },
+                  { value: 'credit_rating', label: 'Credit' },
+                  { value: 'financial_risk', label: 'Risk' },
+                ] as const
+              ).map(({ value, label }) => (
+                <button
+                  key={value}
+                  onClick={() => onAtlasOverlayChange(value)}
+                  style={{
+                    flex: 1,
+                    height: 24,
+                    fontSize: 9,
+                    letterSpacing: '0.10em',
+                    textTransform: 'uppercase',
+                    fontFamily: 'monospace',
+                    border: '1px solid var(--cb-border)',
+                    backgroundColor: atlasOverlay === value ? 'var(--cb-surface)' : 'transparent',
+                    color: atlasOverlay === value ? activeItem?.accent ?? 'var(--cb-text)' : 'var(--cb-secondary)',
+                    cursor: 'pointer',
+                    transition: 'color 0.15s, background-color 0.15s',
+                  }}
+                >
+                  {label}
+                </button>
+              ))}
+            </div>
           </div>
 
           {/* Mode-specific content — scrollable */}

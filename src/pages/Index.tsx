@@ -117,6 +117,7 @@ const Index = () => {
   const [selectedYear, setSelectedYear] = useState(2026);
   const [isTimelinePlaying, setIsTimelinePlaying] = useState(false);
   const [isPanelOpen, setIsPanelOpen] = useState(false);
+  const [atlasOverlay, setAtlasOverlay] = useState<'default' | 'credit_rating' | 'financial_risk'>('default');
 
   const [globalTempTarget, setGlobalTempTarget] = useState(1.4);
   const [rainChange, setRainChange] = useState(0);
@@ -953,6 +954,7 @@ const Index = () => {
           zoneData={zoneData}
           portfolioAssets={portfolioMapAssets}
           onAtlasClick={handleAtlasClick}
+        atlasOverlay={atlasOverlay}
         />
 
         {isSplitMode && (
@@ -1032,6 +1034,8 @@ const Index = () => {
         onPlayToggle={() => setIsTimelinePlaying((prev) => !prev)}
         isFinanceSimulating={isFinanceSimulating}
         onFinanceSimulate={handleFinanceSimulate}
+        atlasOverlay={atlasOverlay}
+        onAtlasOverlayChange={setAtlasOverlay}
       />
 
       {/* Desktop Right Panel — simulation results */}

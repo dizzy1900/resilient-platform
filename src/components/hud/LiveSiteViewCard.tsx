@@ -5,10 +5,6 @@ import { MapPin, TrendingUp, AlertTriangle } from 'lucide-react';
 import {
   LineChart,
   Line,
-  XAxis,
-  YAxis,
-  Tooltip as RechartsTooltip,
-  ResponsiveContainer,
 } from 'recharts';
 
 interface SatellitePreview {
@@ -117,45 +113,26 @@ export const LiveSiteViewCard = ({ satellitePreview, marketIntelligence, tempora
 
       {hasTemporalData && temporalAnalysis && (
         <div style={{ borderTop: '1px solid var(--cb-border)' }}>
-          <div className="flex items-center gap-2 px-4 pt-3 pb-2">
-            <TrendingUp style={{ width: 10, height: 10, color: 'var(--cb-secondary)' }} />
-            <span className="cb-section-heading">LIFECYCLE TRAJECTORY</span>
-          </div>
-          <div className="px-4 pb-3 w-full" style={{ height: 100 }}>
-            <ResponsiveContainer width="100%" height="100%">
-              <LineChart data={temporalAnalysis.history} margin={{ top: 4, right: 4, left: -20, bottom: 0 }}>
-                <XAxis
-                  dataKey="year"
-                  tick={{ fill: 'var(--cb-secondary)', fontSize: 9, fontFamily: 'monospace' }}
-                  axisLine={{ stroke: 'var(--cb-border)' }}
-                  tickLine={false}
-                />
-                <YAxis
-                  tick={{ fill: 'var(--cb-secondary)', fontSize: 9, fontFamily: 'monospace' }}
-                  axisLine={{ stroke: 'var(--cb-border)' }}
-                  tickLine={false}
-                  tickFormatter={(v: number) => `$${(v / 1000).toFixed(0)}k`}
-                />
-                <RechartsTooltip
-                  contentStyle={{
-                    backgroundColor: 'var(--cb-bg)',
-                    border: '1px solid var(--cb-border)',
-                    borderRadius: 0,
-                    fontSize: 11,
-                    fontFamily: 'monospace',
-                  }}
-                  labelStyle={{ color: 'var(--cb-secondary)' }}
-                  formatter={(value: number) => [`$${value.toLocaleString()}`, 'NPV']}
-                />
-                <Line
-                  type="monotone"
-                  dataKey="npv"
-                  stroke="#10b981"
-                  strokeWidth={1.5}
-                  dot={false}
-                />
-              </LineChart>
-            </ResponsiveContainer>
+          <div className="flex items-center justify-between px-4 py-2.5">
+            <div className="flex items-center gap-2">
+              <TrendingUp style={{ width: 10, height: 10, color: 'var(--cb-secondary)' }} />
+              <span className="cb-label" style={{ fontFamily: 'monospace', letterSpacing: '0.08em', fontSize: 9 }}>NPV TRAJECTORY (2030–2050)</span>
+            </div>
+            <LineChart
+              width={80}
+              height={28}
+              data={temporalAnalysis.history}
+              margin={{ top: 2, right: 0, bottom: 2, left: 0 }}
+            >
+              <Line
+                type="monotone"
+                dataKey="npv"
+                stroke="#eb796f"
+                strokeWidth={1.5}
+                dot={false}
+                isAnimationActive={false}
+              />
+            </LineChart>
           </div>
           {temporalAnalysis.stranded_asset_year && (
             <div className="mx-4 mb-3 flex items-center gap-2 px-3 py-2" style={{ border: '1px solid var(--cb-border)', backgroundColor: 'var(--cb-surface)' }}>

@@ -50,6 +50,7 @@ interface MapViewProps {
   zoneData?: ZoneData;
   portfolioAssets?: PortfolioMapAsset[];
   onAtlasClick?: (data: AtlasClickData) => void;
+  atlasOverlay?: 'default' | 'credit_rating' | 'financial_risk';
 }
 
 const DEFAULT_VIEW_STATE: ViewState = {
@@ -81,6 +82,7 @@ const LazyMap = ({
   zoneData,
   portfolioAssets,
   onAtlasClick,
+  atlasOverlay = 'default',
 }: MapViewProps) => {
   const [MapComponents, setMapComponents] = useState<any>(null);
   const [error, setError] = useState<string | null>(null);
@@ -403,7 +405,7 @@ const LazyMap = ({
         </Marker>
       )}
 
-      {onAtlasClick && <AtlasMarkers Marker={Marker} onAtlasClick={onAtlasClick} />}
+      {onAtlasClick && <AtlasMarkers Marker={Marker} onAtlasClick={onAtlasClick} overlayMode={atlasOverlay} />}
     </Map>
   );
 };
@@ -420,6 +422,7 @@ export const MapView = ({
   zoneData,
   portfolioAssets,
   onAtlasClick,
+  atlasOverlay = 'default',
 }: MapViewProps) => {
   return (
     <div className="relative w-full h-full">
@@ -435,6 +438,7 @@ export const MapView = ({
         zoneData={zoneData}
         portfolioAssets={portfolioAssets}
         onAtlasClick={onAtlasClick}
+        atlasOverlay={atlasOverlay}
       />
 
       <div className="absolute inset-0 pointer-events-none">
