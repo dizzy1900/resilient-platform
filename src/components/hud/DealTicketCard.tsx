@@ -1,10 +1,7 @@
 import { useMemo } from 'react';
 import { Landmark, Download, CheckCircle2, AlertTriangle, Loader2 } from 'lucide-react';
 import { getDefaultProbability } from './RiskStressTestCard';
-import { GlassCard } from './GlassCard';
-import { Button } from '@/components/ui/button';
 import { structureGreenBond, GreenBondDeal } from '@/utils/structureGreenBond';
-import { Skeleton } from '@/components/ui/skeleton';
 
 interface DealTicketCardProps {
   financialData: any | null;
@@ -19,6 +16,17 @@ const formatCurrency = (value: number) => {
   return `$${value.toFixed(0)}`;
 };
 
+function DataRow({ label, value, valueColor }: { label: string; value: React.ReactNode; valueColor?: string }) {
+  return (
+    <div className="flex items-center justify-between py-2.5 cb-divider">
+      <span className="cb-label">{label}</span>
+      <span className="cb-value" style={valueColor ? { color: valueColor } : {}}>
+        {value}
+      </span>
+    </div>
+  );
+}
+
 export const DealTicketCard = ({ financialData, locationName, isLoading, monteCarloData }: DealTicketCardProps) => {
   const deal: GreenBondDeal | null = useMemo(() => {
     if (!financialData) return null;
@@ -30,7 +38,6 @@ export const DealTicketCard = ({ financialData, locationName, isLoading, monteCa
       const defaultProb = getDefaultProbability(monteCarloData);
       return defaultProb < 2;
     }
-    // Fallback: old logic
     return deal
       ? deal.rating.startsWith('AAA') || deal.rating.startsWith('BBB')
       : false;
@@ -65,116 +72,97 @@ export const DealTicketCard = ({ financialData, locationName, isLoading, monteCa
     URL.revokeObjectURL(url);
   };
 
-  // Loading state
   if (isLoading) {
     return (
-      <GlassCard className="p-4 w-full space-y-3">
+      <div className="px-4 py-4 space-y-3">
         <div className="flex items-center gap-2">
-          <Loader2 className="w-4 h-4 text-amber-400 animate-spin" />
-          <h3 className="text-sm font-semibold text-white">Calculating...</h3>
+          <Loader2 style={{ width: 10, height: 10, color: '#f59e0b' }} className="animate-spin" />
+          <span className="cb-section-heading">CALCULATING...</span>
         </div>
-        <Skeleton className="h-20 w-full bg-white/10 rounded-xl" />
-        <div className="grid grid-cols-3 gap-2">
-          <Skeleton className="h-14 bg-white/10 rounded-xl" />
-          <Skeleton className="h-14 bg-white/10 rounded-xl" />
-          <Skeleton className="h-14 bg-white/10 rounded-xl" />
-        </div>
-        <Skeleton className="h-10 w-full bg-white/10 rounded-xl" />
-      </GlassCard>
+        <div style={{ height: 120, backgroundColor: 'var(--cb-surface)' }} />
+      </div>
     );
   }
 
   if (!deal) {
     return (
-      <GlassCard className="p-4 w-full">
-        <div className="flex items-center gap-2 mb-3">
-          <Landmark className="w-4 h-4 text-amber-400" />
-          <h3 className="text-sm font-semibold text-white">Green Bond Term Sheet</h3>
-        </div>
-        <div className="p-6 rounded-xl bg-white/5 border border-white/10 text-center">
-          <Landmark className="w-6 h-6 text-white/30 mx-auto mb-2" />
-          <p className="text-xs text-white/50">
-            Click a <span className="text-amber-400 font-medium">Global Atlas pin</span> or <span className="text-amber-400 font-medium">Run Simulation</span> to generate a deal ticket.
-          </p>
-        </div>
-      </GlassCard>
+      <div className="px-4 py-6 text-center">
+        <Landmark style={{ width: 16, height: 16, color: 'var(--cb-secondary)', margin: '0 auto 8px' }} />
+        <p style={{ fontSize: 11, color: 'var(--cb-secondary)', lineHeight: 1.6 }}>
+          Click a Global Atlas pin or run a simulation to generate a deal ticket.
+        </p>
+      </div>
     );
   }
 
   return (
-    <GlassCard className="p-4 w-full space-y-3">
-      {/* Header */}
-      <div className="flex items-center justify-between">
+    <div>
+      <div className="px-4 pt-3 pb-2 flex items-center justify-between" style={{ borderBottom: '1px solid var(--cb-border)' }}>
         <div className="flex items-center gap-2">
-          <span className="text-base">🟩</span>
-          <h3 className="text-sm font-semibold text-white">Green Bond Term Sheet</h3>
+          <Landmark style={{ width: 10, height: 10, color: 'var(--cb-secondary)' }} />
+          <span className="cb-section-heading">GREEN BOND TERM SHEET</span>
         </div>
-        {/* Bankability Badge */}
         <div
-          className={`flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] font-semibold border ${
-            isBankable
-              ? 'bg-emerald-500/20 text-emerald-400 border-emerald-500/30'
-              : 'bg-amber-500/20 text-amber-400 border-amber-500/30'
-          }`}
+          className="flex items-center gap-1"
+          style={{
+            border: '1px solid var(--cb-border)',
+            padding: '1px 6px',
+            fontFamily: 'monospace',
+            fontSize: 10,
+            letterSpacing: '0.05em',
+            color: isBankable ? '#10b981' : '#f59e0b',
+          }}
         >
           {isBankable ? (
             <>
-              <CheckCircle2 className="w-3 h-3" />
-              Bankable Deal
+              <CheckCircle2 style={{ width: 8, height: 8 }} />
+              BANKABLE
             </>
           ) : (
             <>
-              <AlertTriangle className="w-3 h-3" />
-              Blended Finance
+              <AlertTriangle style={{ width: 8, height: 8 }} />
+              BLENDED FINANCE
             </>
           )}
         </div>
       </div>
 
-      {/* Location */}
-      {locationName && (
-        <p className="text-[10px] text-white/50 -mt-1 pl-7">{locationName}</p>
-      )}
-
-      {/* Principal */}
-      <div className="p-4 rounded-xl bg-amber-500/10 border border-amber-500/20">
-        <span className="text-[10px] text-white/50 uppercase tracking-wider">Principal (CAPEX)</span>
-        <div className="text-3xl font-bold text-amber-400 tabular-nums mt-0.5">
-          {formatCurrency(deal.principal)}
-        </div>
+      <div className="px-4">
+        <DataRow label="PRINCIPAL (CAPEX)" value={formatCurrency(deal.principal)} valueColor="#f59e0b" />
+        <DataRow label="COUPON RATE" value={`${deal.coupon.toFixed(2)}%`} />
+        <DataRow label="TENOR" value={`${deal.tenor} yr`} />
+        <DataRow label="CREDIT RATING" value={deal.rating.split(' ')[0]} />
+        <DataRow label="GREENIUM SAVINGS" value={formatCurrency(deal.greenium_savings)} valueColor="#10b981" />
       </div>
 
-      {/* Grid: Coupon, Tenor, Rating */}
-      <div className="grid grid-cols-3 gap-2">
-        <div className="p-3 rounded-xl bg-white/5 border border-white/10 text-center">
-          <span className="text-[10px] text-white/50 block">Coupon</span>
-          <span className="text-sm font-bold text-white tabular-nums">{deal.coupon.toFixed(2)}%</span>
-        </div>
-        <div className="p-3 rounded-xl bg-white/5 border border-white/10 text-center">
-          <span className="text-[10px] text-white/50 block">Tenor</span>
-          <span className="text-sm font-bold text-white tabular-nums">{deal.tenor}yr</span>
-        </div>
-        <div className="p-3 rounded-xl bg-white/5 border border-white/10 text-center">
-          <span className="text-[10px] text-white/50 block">Rating</span>
-          <span className="text-[10px] font-bold text-white leading-tight">{deal.rating.split(' ')[0]}</span>
-          <span className="text-[8px] text-white/40 block">{deal.rating.match(/\(.*\)/)?.[0]}</span>
-        </div>
+      <div className="px-4 py-3" style={{ borderTop: '1px solid var(--cb-border)' }}>
+        <button
+          onClick={handleExport}
+          className="flex items-center gap-2 w-full justify-center"
+          style={{
+            border: '1px solid var(--cb-border)',
+            padding: '6px 12px',
+            fontFamily: 'monospace',
+            fontSize: 10,
+            letterSpacing: '0.08em',
+            color: 'var(--cb-secondary)',
+            backgroundColor: 'transparent',
+            cursor: 'pointer',
+            transition: 'color 0.15s, border-color 0.15s',
+          }}
+          onMouseEnter={e => {
+            (e.currentTarget as HTMLButtonElement).style.color = 'var(--cb-text)';
+            (e.currentTarget as HTMLButtonElement).style.borderColor = 'var(--cb-text)';
+          }}
+          onMouseLeave={e => {
+            (e.currentTarget as HTMLButtonElement).style.color = 'var(--cb-secondary)';
+            (e.currentTarget as HTMLButtonElement).style.borderColor = 'var(--cb-border)';
+          }}
+        >
+          <Download style={{ width: 10, height: 10 }} />
+          EXPORT PROSPECTUS
+        </button>
       </div>
-
-      {/* Greenium */}
-      <div className="p-3 rounded-xl bg-white/5 border border-white/10 flex items-center justify-between">
-        <span className="text-xs text-white/60">Greenium Savings (est.)</span>
-        <span className="text-sm font-bold text-emerald-400">{formatCurrency(deal.greenium_savings)}</span>
-      </div>
-
-      {/* Export */}
-      <Button
-        onClick={handleExport}
-        className="w-full h-10 text-xs font-semibold bg-gradient-to-r from-amber-600/80 to-yellow-600/80 hover:from-amber-600 hover:to-yellow-600 rounded-xl border border-amber-500/30 shadow-[0_0_15px_rgba(245,158,11,0.2)] hover:shadow-[0_0_25px_rgba(245,158,11,0.4)] transition-all text-white"
-      >
-        <Download className="w-4 h-4 mr-2" />
-        Export Prospectus (Term Sheet)
-      </Button>
-    </GlassCard>
+    </div>
   );
 };

@@ -1,9 +1,7 @@
 import { useState } from 'react';
-import { GlassCard } from './GlassCard';
-import { Badge } from '@/components/ui/badge';
 import { Dialog, DialogContent } from '@/components/ui/dialog';
 import { Tooltip as UiTooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
-import { MapPin, Landmark, AlertTriangle, TrendingUp } from 'lucide-react';
+import { MapPin, TrendingUp, AlertTriangle } from 'lucide-react';
 import {
   LineChart,
   Line,
@@ -43,38 +41,23 @@ interface LiveSiteViewCardProps {
   temporalAnalysis?: TemporalAnalysis | null;
 }
 
-const getCreditRatingColor = (rating: string) => {
-  const first = rating.charAt(0).toUpperCase();
-  if (first === 'A') return 'text-emerald-500';
-  if (first === 'B') return 'text-orange-500';
-  return 'text-red-500';
-};
-
 const getOutlookIndicator = (outlook?: string) => {
   const normalized = (outlook ?? '').toLowerCase();
   if (normalized === 'positive') return { symbol: '▲', color: 'text-emerald-500' };
   if (normalized.includes('negative') || normalized.includes('watch')) return { symbol: '▼', color: 'text-red-500' };
-  return { symbol: '▬', color: 'text-white/50' };
+  return { symbol: '▬', color: '' };
 };
 
 export const LiveSiteViewCard = ({ satellitePreview, marketIntelligence, temporalAnalysis }: LiveSiteViewCardProps) => {
   const [open, setOpen] = useState(false);
 
-  const formatDate = (iso: string) => {
-    try {
-      return new Date(iso).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
-    } catch {
-      return iso;
-    }
-  };
-
   const hasTemporalData = temporalAnalysis?.history?.some(h => h.npv !== 0) ?? false;
 
   return (
     <>
-      <GlassCard className="overflow-hidden">
+      <div className="w-full">
         <div
-          className={`relative w-full aspect-[16/9] ${satellitePreview ? 'cursor-pointer' : ''}`}
+          className={`relative w-full aspect-[16/9] overflow-hidden ${satellitePreview ? 'cursor-pointer' : ''}`}
           onClick={() => satellitePreview && setOpen(true)}
         >
           {satellitePreview ? (
@@ -82,32 +65,40 @@ export const LiveSiteViewCard = ({ satellitePreview, marketIntelligence, tempora
               src={satellitePreview.thumbnail_url}
               alt="Satellite view of site"
               className="w-full h-full object-cover transition-opacity hover:opacity-80"
+              style={{ filter: 'grayscale(100%)' }}
               onError={(e) => {
                 (e.target as HTMLImageElement).style.display = 'none';
                 (e.target as HTMLImageElement).nextElementSibling?.classList.remove('hidden');
               }}
             />
           ) : null}
-          <div className={`w-full h-full bg-gradient-to-br from-slate-800 to-slate-900 flex items-center justify-center ${satellitePreview ? 'hidden' : ''}`}>
-            <MapPin className="w-8 h-8 text-white/20" />
+          <div className={`w-full h-full flex items-center justify-center ${satellitePreview ? 'hidden' : ''}`} style={{ backgroundColor: 'var(--cb-surface)' }}>
+            <MapPin style={{ width: 20, height: 20, color: 'var(--cb-secondary)' }} />
           </div>
-          <Badge className="absolute top-2 left-2 bg-red-500/90 text-white border-none text-[10px] px-2 py-0.5 uppercase tracking-wider font-bold">
-            Live
-          </Badge>
+
           {marketIntelligence?.credit_rating && (
             <TooltipProvider delayDuration={200}>
               <UiTooltip>
                 <TooltipTrigger asChild>
-                  <Badge className="absolute top-2 right-2 bg-white border-none text-[11px] px-2 py-0.5 font-bold shadow-lg cursor-default">
-                    <span className={getCreditRatingColor(marketIntelligence.credit_rating)}>
-                      {marketIntelligence.credit_rating}
-                    </span>
+                  <div
+                    className="absolute top-2 right-2 flex items-center gap-1 cursor-default"
+                    style={{
+                      border: '1px solid var(--cb-border)',
+                      backgroundColor: 'var(--cb-bg)',
+                      padding: '2px 6px',
+                      fontFamily: 'monospace',
+                      fontSize: 11,
+                      letterSpacing: '0.05em',
+                      color: 'var(--cb-text)',
+                    }}
+                  >
+                    <span>{marketIntelligence.credit_rating}</span>
                     {marketIntelligence.outlook && (
-                      <span className={`ml-1 ${getOutlookIndicator(marketIntelligence.outlook).color}`}>
+                      <span className={getOutlookIndicator(marketIntelligence.outlook).color} style={{ fontSize: 9 }}>
                         {getOutlookIndicator(marketIntelligence.outlook).symbol}
                       </span>
                     )}
-                  </Badge>
+                  </div>
                 </TooltipTrigger>
                 <TooltipContent side="left" className="max-w-[200px] text-xs">
                   Projected rating change based on 2030–2050 climate trajectory.
@@ -116,88 +107,65 @@ export const LiveSiteViewCard = ({ satellitePreview, marketIntelligence, tempora
             </TooltipProvider>
           )}
         </div>
+
         {satellitePreview && (
-          <p className="px-3 py-2 text-[10px] text-white/40 leading-relaxed">
-            Sentinel-2 Satellite • Captured {formatDate(satellitePreview.capture_date)} • Cloud Cover: {(satellitePreview.cloud_cover * 100).toFixed(2)}%
+          <p className="px-4 pt-1 pb-2" style={{ fontSize: 10, color: 'var(--cb-secondary)', fontFamily: 'monospace', letterSpacing: '0.02em' }}>
+            SENTINEL-2 · {new Date(satellitePreview.capture_date).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' }).toUpperCase()} · CLOUD {(satellitePreview.cloud_cover * 100).toFixed(0)}%
           </p>
         )}
-      </GlassCard>
+      </div>
 
-      {/* Peer Benchmarking */}
-      {marketIntelligence?.sector_rank && (
-        <GlassCard className="p-3">
-          <div className="flex items-center gap-2 mb-2">
-            <Landmark className="w-3.5 h-3.5 text-blue-400" />
-            <h4 className="text-[10px] font-semibold text-white/60 uppercase tracking-wider">Peer Benchmarking</h4>
-          </div>
-          <div className="flex items-center justify-between">
-            <div>
-              <span className="text-[10px] text-white/40">Sector Rank</span>
-              <p className="text-sm font-bold text-white tabular-nums">
-                #{marketIntelligence.sector_rank.by_npv} / {marketIntelligence.sector_rank.total_in_sector}
-              </p>
-            </div>
-            <div className="text-right">
-              <span className="text-[10px] text-white/40">Performance</span>
-              <p className="text-sm font-bold text-emerald-400 tabular-nums">
-                Top {(marketIntelligence.percentiles?.composite ?? 0).toFixed(0)}%
-              </p>
-            </div>
-          </div>
-        </GlassCard>
-      )}
-
-      {/* Lifecycle Trajectory Chart */}
       {hasTemporalData && temporalAnalysis && (
-        <GlassCard className="p-3">
-          <div className="flex items-center gap-2 mb-3">
-            <TrendingUp className="w-3.5 h-3.5 text-emerald-400" />
-            <h4 className="text-[10px] font-semibold text-white/60 uppercase tracking-wider">Lifecycle Trajectory</h4>
+        <div style={{ borderTop: '1px solid var(--cb-border)' }}>
+          <div className="flex items-center gap-2 px-4 pt-3 pb-2">
+            <TrendingUp style={{ width: 10, height: 10, color: 'var(--cb-secondary)' }} />
+            <span className="cb-section-heading">LIFECYCLE TRAJECTORY</span>
           </div>
-          <div className="w-full h-36">
+          <div className="px-4 pb-3 w-full" style={{ height: 100 }}>
             <ResponsiveContainer width="100%" height="100%">
-              <LineChart data={temporalAnalysis.history} margin={{ top: 5, right: 10, left: -10, bottom: 0 }}>
+              <LineChart data={temporalAnalysis.history} margin={{ top: 4, right: 4, left: -20, bottom: 0 }}>
                 <XAxis
                   dataKey="year"
-                  tick={{ fill: 'rgba(255,255,255,0.5)', fontSize: 10 }}
-                  axisLine={{ stroke: 'rgba(255,255,255,0.1)' }}
+                  tick={{ fill: 'var(--cb-secondary)', fontSize: 9, fontFamily: 'monospace' }}
+                  axisLine={{ stroke: 'var(--cb-border)' }}
                   tickLine={false}
                 />
                 <YAxis
-                  tick={{ fill: 'rgba(255,255,255,0.5)', fontSize: 10 }}
-                  axisLine={{ stroke: 'rgba(255,255,255,0.1)' }}
+                  tick={{ fill: 'var(--cb-secondary)', fontSize: 9, fontFamily: 'monospace' }}
+                  axisLine={{ stroke: 'var(--cb-border)' }}
                   tickLine={false}
                   tickFormatter={(v: number) => `$${(v / 1000).toFixed(0)}k`}
                 />
                 <RechartsTooltip
                   contentStyle={{
-                    backgroundColor: 'rgba(15, 23, 42, 0.95)',
-                    border: '1px solid rgba(255,255,255,0.1)',
-                    borderRadius: '8px',
-                    fontSize: '12px',
+                    backgroundColor: 'var(--cb-bg)',
+                    border: '1px solid var(--cb-border)',
+                    borderRadius: 0,
+                    fontSize: 11,
+                    fontFamily: 'monospace',
                   }}
-                  labelStyle={{ color: 'rgba(255,255,255,0.7)' }}
+                  labelStyle={{ color: 'var(--cb-secondary)' }}
                   formatter={(value: number) => [`$${value.toLocaleString()}`, 'NPV']}
                 />
                 <Line
                   type="monotone"
                   dataKey="npv"
                   stroke="#10b981"
-                  strokeWidth={2}
-                  dot={{ fill: '#10b981', strokeWidth: 0, r: 3 }}
+                  strokeWidth={1.5}
+                  dot={false}
                 />
               </LineChart>
             </ResponsiveContainer>
           </div>
           {temporalAnalysis.stranded_asset_year && (
-            <div className="mt-2 flex items-center gap-1.5 bg-red-500/10 border border-red-500/20 rounded-lg px-2.5 py-1.5">
-              <AlertTriangle className="w-3.5 h-3.5 text-red-400 shrink-0" />
-              <span className="text-[11px] text-red-400 font-medium">
-                ⚠️ Projected Negative Value by {temporalAnalysis.stranded_asset_year}
+            <div className="mx-4 mb-3 flex items-center gap-2 px-3 py-2" style={{ border: '1px solid var(--cb-border)', backgroundColor: 'var(--cb-surface)' }}>
+              <AlertTriangle style={{ width: 10, height: 10, color: '#f43f5e', flexShrink: 0 }} />
+              <span style={{ fontSize: 10, color: '#f43f5e', fontFamily: 'monospace', letterSpacing: '0.03em' }}>
+                PROJECTED NEGATIVE VALUE BY {temporalAnalysis.stranded_asset_year}
               </span>
             </div>
           )}
-        </GlassCard>
+        </div>
       )}
 
       <Dialog open={open} onOpenChange={setOpen}>
@@ -207,6 +175,7 @@ export const LiveSiteViewCard = ({ satellitePreview, marketIntelligence, tempora
               src={satellitePreview.thumbnail_url}
               alt="Satellite view of site – full screen"
               className="w-full h-full object-contain"
+              style={{ filter: 'grayscale(100%)' }}
             />
           )}
         </DialogContent>

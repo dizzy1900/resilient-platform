@@ -735,7 +735,7 @@ function FinanceContent({
   atlasFinancialData: any;
   atlasMonteCarloData: any;
   atlasExecutiveSummary?: string | null;
-  atlasSensitivityData?: { primary_driver: string; driver_impact_pct: number } | null;
+  atlasSensitivityData?: { primary_driver: string; driver_impact_pct: number; baseline_npv?: number } | null;
   atlasAdaptationStrategy?: any;
   atlasAdaptationPortfolio?: any;
   atlasSatellitePreview?: any;
@@ -755,10 +755,20 @@ function FinanceContent({
     );
   }
 
+  const baselineNpv: number | null =
+    atlasSensitivityData?.baseline_npv ??
+    atlasFinancialData?.npv ??
+    atlasFinancialData?.metrics?.npv_usd?.mean ??
+    null;
+
+  const var95: number | null = atlasMonteCarloData?.metrics?.npv_usd?.p5 ?? null;
+  const primaryDriver: string | null = atlasSensitivityData?.primary_driver ?? null;
+  const sectorRank = atlasMarketIntelligence?.sector_rank;
+
   return (
     <div className="space-y-0">
       {atlasSatellitePreview && (
-        <div className="border-b" style={{ borderColor: 'var(--cb-border)' }}>
+        <div style={{ borderBottom: '1px solid var(--cb-border)' }}>
           <LiveSiteViewCard
             satellitePreview={atlasSatellitePreview}
             marketIntelligence={atlasMarketIntelligence}
@@ -767,27 +777,72 @@ function FinanceContent({
         </div>
       )}
 
+      {locationName && (
+        <div className="px-4 pt-4 pb-4" style={{ borderBottom: '1px solid var(--cb-border)' }}>
+          <h2 style={{ fontSize: 24, fontWeight: 300, letterSpacing: '-0.02em', color: 'var(--cb-text)', lineHeight: 1.2 }}>
+            {locationName}
+          </h2>
+        </div>
+      )}
+
+      {(baselineNpv !== null || var95 !== null || primaryDriver || sectorRank) && (
+        <div style={{ borderBottom: '1px solid var(--cb-border)' }}>
+          <div className="px-4 pt-3 pb-2" style={{ borderBottom: '1px solid var(--cb-border)' }}>
+            <span className="cb-section-heading">FINANCIAL OVERVIEW</span>
+          </div>
+          <div className="px-4">
+            {baselineNpv !== null && (
+              <MetricRow
+                label="BASELINE NPV"
+                value={formatCurrency(baselineNpv)}
+                accent={baselineNpv >= 0 ? '#10b981' : '#f43f5e'}
+              />
+            )}
+            {var95 !== null && (
+              <MetricRow
+                label="VALUE AT RISK"
+                value={formatCurrency(var95)}
+                accent={var95 < 0 ? '#f43f5e' : '#10b981'}
+              />
+            )}
+            {primaryDriver && (
+              <MetricRow label="PRIMARY RISK DRIVER" value={primaryDriver} accent="#f43f5e" />
+            )}
+            {sectorRank && (
+              <MetricRow
+                label="SECTOR RANK"
+                value={`#${sectorRank.by_npv} / ${sectorRank.total_in_sector}`}
+              />
+            )}
+          </div>
+        </div>
+      )}
+
       {atlasExecutiveSummary && (
-        <>
-          <SectionHeader title="Executive Summary" />
-          <div className="px-4 pb-3">
+        <div style={{ borderBottom: '1px solid var(--cb-border)' }}>
+          <div className="px-4 pt-3 pb-2" style={{ borderBottom: '1px solid var(--cb-border)' }}>
+            <span className="cb-section-heading">AI ANALYSIS</span>
+          </div>
+          <div className="px-4 py-3">
             <p
               style={{
                 fontSize: 11,
-                lineHeight: 1.6,
+                lineHeight: 1.7,
                 color: atlasExecutiveSummary.includes('CRITICAL WARNING')
                   ? '#f43f5e'
                   : 'var(--cb-secondary)',
-                fontStyle: 'italic',
+                borderLeft: '2px solid #f59e0b',
+                paddingLeft: 12,
+                margin: 0,
               }}
             >
               {atlasExecutiveSummary}
             </p>
           </div>
-        </>
+        </div>
       )}
 
-      <div className="border-b" style={{ borderColor: 'var(--cb-border)' }}>
+      <div style={{ borderBottom: '1px solid var(--cb-border)' }}>
         <DealTicketCard
           financialData={atlasFinancialData}
           locationName={locationName}
@@ -796,7 +851,7 @@ function FinanceContent({
         />
       </div>
 
-      <div className="border-b" style={{ borderColor: 'var(--cb-border)' }}>
+      <div style={{ borderBottom: '1px solid var(--cb-border)' }}>
         <RiskStressTestCard monteCarloData={atlasMonteCarloData} sensitivityData={atlasSensitivityData} />
       </div>
 
