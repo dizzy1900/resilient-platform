@@ -120,6 +120,7 @@ const Index = () => {
   const [atlasSatellitePreview, setAtlasSatellitePreview] = useState<any>(null);
   const [atlasMarketIntelligence, setAtlasMarketIntelligence] = useState<any>(null);
   const [atlasTemporalAnalysis, setAtlasTemporalAnalysis] = useState<any>(null);
+  const [atlasAdaptationPortfolio, setAtlasAdaptationPortfolio] = useState<any>(null);
   const [viewState, setViewState] = useState<ViewState>({
     longitude: 37.9062,
     latitude: -0.0236,
@@ -721,6 +722,7 @@ const Index = () => {
     setAtlasSatellitePreview(item.satellite_preview ?? null);
     setAtlasMarketIntelligence(item.market_intelligence ?? null);
     setAtlasTemporalAnalysis(item.temporal_analysis ?? null);
+    setAtlasAdaptationPortfolio(item.adaptation_portfolio ?? null);
 
     // 2. Switch mode
     const modeMap: Record<string, DashboardMode> = {
@@ -1267,7 +1269,7 @@ const Index = () => {
             monteCarloData={atlasMonteCarloData}
           />
           <RiskStressTestCard monteCarloData={atlasMonteCarloData} sensitivityData={atlasSensitivityData} />
-          <SolutionEngineCard strategy={atlasAdaptationStrategy} />
+          <SolutionEngineCard strategy={atlasAdaptationStrategy} portfolio={atlasAdaptationPortfolio} />
         </div>
       ) : (
         <div className="absolute bottom-28 sm:bottom-24 lg:bottom-32 right-4 sm:right-6 lg:right-20 left-4 sm:left-auto z-30 flex flex-col gap-2 sm:gap-3 max-w-full sm:max-w-none sm:w-80 lg:w-80">
