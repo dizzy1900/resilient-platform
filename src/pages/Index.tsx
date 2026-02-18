@@ -9,10 +9,6 @@ import { PortfolioHeader } from '@/components/portfolio/PortfolioHeader';
 import { MobileMenu } from '@/components/hud/MobileMenu';
 import { InterventionWizardModal, ProjectParams } from '@/components/hud/InterventionWizardModal';
 import { DefensiveInfrastructureModal, DefensiveProjectParams } from '@/components/hud/DefensiveInfrastructureModal';
-import { SimulationPanel } from '@/components/hud/SimulationPanel';
-import { FloodSimulationPanel } from '@/components/hud/FloodSimulationPanel';
-import { CoastalSimulationPanel } from '@/components/hud/CoastalSimulationPanel';
-import { HealthSimulationPanel } from '@/components/hud/HealthSimulationPanel';
 import { toast } from '@/hooks/use-toast';
 import { Polygon } from '@/utils/polygonMath';
 import { generateIrregularZone, ZoneMode } from '@/utils/zoneGeneration';
@@ -1041,6 +1037,35 @@ const Index = () => {
         onFinanceSimulate={handleFinanceSimulate}
         atlasOverlay={atlasOverlay}
         onAtlasOverlayChange={setAtlasOverlay}
+        globalTempTarget={globalTempTarget}
+        onGlobalTempTargetChange={handleGlobalTempTargetChange}
+        rainChange={rainChange}
+        onRainChangeChange={handleRainChangeChange}
+        onAgricultureSimulate={getCurrentSimulateHandler()}
+        isAgricultureSimulating={isCurrentlySimulating}
+        yieldPotential={showResults ? results.yieldPotential : null}
+        totalRainIntensity={totalRainIntensity}
+        onTotalRainIntensityChange={setTotalRainIntensity}
+        floodSelectedYear={floodSelectedYear}
+        onFloodSelectedYearChange={setFloodSelectedYear}
+        isFloodUserOverride={isFloodUserOverride}
+        onFloodUserOverrideChange={setIsFloodUserOverride}
+        onFloodSimulate={handleFloodSimulate}
+        isFloodSimulating={isFloodSimulating}
+        totalSLR={totalSLR}
+        onTotalSLRChange={setTotalSLR}
+        includeStormSurge={includeStormSurge}
+        onIncludeStormSurgeChange={setIncludeStormSurge}
+        coastalSelectedYear={coastalSelectedYear}
+        onCoastalSelectedYearChange={setCoastalSelectedYear}
+        onCoastalSimulate={handleCoastalSimulate}
+        isCoastalSimulating={isCoastalSimulating}
+        healthTempTarget={healthTempTarget}
+        onHealthTempTargetChange={setHealthTempTarget}
+        healthSelectedYear={healthSelectedYear}
+        onHealthSelectedYearChange={setHealthSelectedYear}
+        onHealthSimulate={handleHealthSimulate}
+        isHealthSimulating={isHealthSimulating}
       />
 
       {/* Desktop Right Panel — simulation results */}
@@ -1104,89 +1129,6 @@ const Index = () => {
         >
           <PortfolioHeader onModeChange={handleModeChange} />
           <PortfolioPanel onAssetsChange={setPortfolioAssets} />
-        </div>
-      )}
-
-      {/* Simulation panels — shown in left panel area below main controls (desktop) */}
-      {mode === 'coastal' && (
-        <div
-          className="hidden lg:block absolute z-20"
-          style={{ left: 360, bottom: 0, width: 280 }}
-        >
-          <CoastalSimulationPanel
-            onSimulate={handleCoastalSimulate}
-            isSimulating={isCoastalSimulating}
-            canSimulate={canSimulate}
-            totalSLR={totalSLR}
-            onTotalSLRChange={setTotalSLR}
-            includeStormSurge={includeStormSurge}
-            onIncludeStormSurgeChange={setIncludeStormSurge}
-            selectedYear={coastalSelectedYear}
-            onSelectedYearChange={setCoastalSelectedYear}
-            propertyValue={propertyValue}
-            onPropertyValueChange={setPropertyValue}
-            dailyRevenue={dailyRevenue}
-            onDailyRevenueChange={setDailyRevenue}
-            assetLifespan={assetLifespan}
-            onAssetLifespanChange={setAssetLifespan}
-          />
-        </div>
-      )}
-
-      {mode === 'flood' && (
-        <div
-          className="hidden lg:block absolute z-20"
-          style={{ left: 360, bottom: 0, width: 280 }}
-        >
-          <FloodSimulationPanel
-            onSimulate={handleFloodSimulate}
-            isSimulating={isFloodSimulating}
-            canSimulate={canSimulate}
-            totalRainIntensity={totalRainIntensity}
-            onTotalRainIntensityChange={setTotalRainIntensity}
-            selectedYear={floodSelectedYear}
-            onSelectedYearChange={setFloodSelectedYear}
-            isUserOverride={isFloodUserOverride}
-            onUserOverrideChange={setIsFloodUserOverride}
-          />
-        </div>
-      )}
-
-      {mode === 'health' && (
-        <div
-          className="hidden lg:block absolute z-20"
-          style={{ left: 360, bottom: 0, width: 280 }}
-        >
-          <HealthSimulationPanel
-            onSimulate={handleHealthSimulate}
-            isSimulating={isHealthSimulating}
-            canSimulate={canSimulate}
-            globalTempTarget={healthTempTarget}
-            onGlobalTempTargetChange={setHealthTempTarget}
-            selectedYear={healthSelectedYear}
-            onSelectedYearChange={setHealthSelectedYear}
-          />
-        </div>
-      )}
-
-      {mode === 'agriculture' && (
-        <div
-          className="hidden lg:block absolute z-20"
-          style={{ left: 360, bottom: 0, width: 280 }}
-        >
-          <SimulationPanel
-            mode={mode}
-            onSimulate={getCurrentSimulateHandler()}
-            isSimulating={isCurrentlySimulating}
-            canSimulate={canSimulate}
-            globalTempTarget={globalTempTarget}
-            onGlobalTempTargetChange={handleGlobalTempTargetChange}
-            rainChange={rainChange}
-            onRainChangeChange={handleRainChangeChange}
-            selectedYear={selectedYear}
-            onSelectedYearChange={handleSelectedYearChange}
-            yieldPotential={showResults ? results.yieldPotential : null}
-          />
         </div>
       )}
 
