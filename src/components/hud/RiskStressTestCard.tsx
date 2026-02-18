@@ -1,6 +1,14 @@
-import { ShieldAlert, TrendingDown, TrendingUp } from 'lucide-react';
+import { useState } from 'react';
+import { ShieldAlert, TrendingDown, TrendingUp, ChevronDown, ChevronUp } from 'lucide-react';
 
 interface MonteCarloData {
+  mean_npv?: number;
+  VaR_95?: number;
+  default_probability?: number;
+  simulation_count?: number;
+  std_dev_npv?: number;
+  min_npv?: number;
+  max_npv?: number;
   metrics?: {
     npv_usd?: {
       mean?: number;
@@ -11,9 +19,17 @@ interface MonteCarloData {
   };
 }
 
+interface SensitivityRankItem {
+  driver: string;
+  shocked_npv: number;
+  impact_pct: number;
+}
+
 interface SensitivityData {
   primary_driver: string;
   driver_impact_pct: number;
+  baseline_npv?: number;
+  sensitivity_ranking?: SensitivityRankItem[];
 }
 
 interface RiskStressTestCardProps {
@@ -22,10 +38,11 @@ interface RiskStressTestCardProps {
 }
 
 const getVaR95 = (mc: MonteCarloData): number => {
-  return mc.metrics?.npv_usd?.p5 ?? 0;
+  return mc.VaR_95 ?? mc.metrics?.npv_usd?.p5 ?? 0;
 };
 
 const getDefaultProbability = (mc: MonteCarloData): number => {
+  if (mc.default_probability !== undefined) return mc.default_probability;
   const mean = mc.metrics?.npv_usd?.mean ?? 0;
   const std = mc.metrics?.npv_usd?.std ?? 1;
   if (std === 0) return mean < 0 ? 100 : 0;
@@ -47,6 +64,13 @@ const getDefaultProbColor = (prob: number) => {
   return { bar: '#f43f5e', text: '#f43f5e', label: 'HIGH RISK' };
 };
 
+const getImpactColor = (impact: number) => {
+  if (Math.abs(impact) < 5) return 'var(--cb-secondary)';
+  if (impact > 100) return '#f43f5e';
+  if (impact > 0) return '#eb796f';
+  return '#10b981';
+};
+
 function DataRow({ label, value, valueColor }: { label: string; value: React.ReactNode; valueColor?: string }) {
   return (
     <div className="flex items-center justify-between py-2.5 cb-divider">
@@ -59,12 +83,20 @@ function DataRow({ label, value, valueColor }: { label: string; value: React.Rea
 }
 
 export const RiskStressTestCard = ({ monteCarloData, sensitivityData }: RiskStressTestCardProps) => {
+  const [rankingOpen, setRankingOpen] = useState(false);
+
   if (!monteCarloData) return null;
 
   const var95 = getVaR95(monteCarloData);
   const defaultProb = getDefaultProbability(monteCarloData);
   const isVarNegative = var95 < 0;
   const probStyle = getDefaultProbColor(defaultProb);
+
+  const simCount = monteCarloData.simulation_count;
+  const minNpv = monteCarloData.min_npv ?? monteCarloData.metrics?.npv_usd?.min;
+  const maxNpv = monteCarloData.max_npv;
+  const hasRange = minNpv !== undefined && maxNpv !== undefined;
+  const hasRanking = (sensitivityData?.sensitivity_ranking?.length ?? 0) > 0;
 
   return (
     <div>
@@ -108,14 +140,63 @@ export const RiskStressTestCard = ({ monteCarloData, sensitivityData }: RiskStre
           </div>
         </div>
 
+        {simCount !== undefined && (
+          <DataRow
+            label="SIMULATION RUNS"
+            value={`${simCount.toLocaleString()} SCENARIOS`}
+          />
+        )}
+
+        {hasRange && (
+          <DataRow
+            label="NPV RANGE"
+            value={`${formatCurrency(minNpv!)} → ${formatCurrency(maxNpv!)}`}
+          />
+        )}
+
         {sensitivityData && (
           <DataRow
             label="PRIMARY RISK DRIVER"
-            value={`${sensitivityData.primary_driver} · ${sensitivityData.driver_impact_pct}%`}
+            value={`${sensitivityData.primary_driver} · ${sensitivityData.driver_impact_pct.toFixed(1)}%`}
             valueColor="#f43f5e"
           />
         )}
       </div>
+
+      {hasRanking && (
+        <div style={{ borderTop: '1px solid var(--cb-border)' }}>
+          <button
+            className="w-full flex items-center justify-between px-4 py-2.5"
+            style={{
+              backgroundColor: 'transparent',
+              cursor: 'pointer',
+              borderBottom: rankingOpen ? '1px solid var(--cb-border)' : 'none',
+            }}
+            onClick={() => setRankingOpen(v => !v)}
+          >
+            <span style={{ fontFamily: 'monospace', fontSize: 9, letterSpacing: '0.08em', color: 'var(--cb-secondary)', textTransform: 'uppercase' }}>DRIVER BREAKDOWN</span>
+            {rankingOpen
+              ? <ChevronUp style={{ width: 10, height: 10, color: 'var(--cb-secondary)' }} />
+              : <ChevronDown style={{ width: 10, height: 10, color: 'var(--cb-secondary)' }} />
+            }
+          </button>
+
+          {rankingOpen && (
+            <div className="px-4 pb-3">
+              {sensitivityData!.sensitivity_ranking!.map((item, i) => (
+                <div key={i} className="flex items-center justify-between py-2 cb-divider">
+                  <span style={{ fontFamily: 'monospace', fontSize: 10, color: 'var(--cb-secondary)', letterSpacing: '0.03em', maxWidth: '60%', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                    {item.driver.toUpperCase()}
+                  </span>
+                  <span style={{ fontFamily: 'monospace', fontSize: 10, letterSpacing: '0.05em', color: getImpactColor(item.impact_pct) }}>
+                    {item.impact_pct > 0 ? '+' : ''}{item.impact_pct.toFixed(1)}%
+                  </span>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+      )}
     </div>
   );
 };

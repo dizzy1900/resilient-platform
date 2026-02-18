@@ -100,7 +100,12 @@ const Index = () => {
   const [atlasLocationName, setAtlasLocationName] = useState<string | null>(null);
   const [atlasMonteCarloData, setAtlasMonteCarloData] = useState<any>(null);
   const [atlasExecutiveSummary, setAtlasExecutiveSummary] = useState<string | null>(null);
-  const [atlasSensitivityData, setAtlasSensitivityData] = useState<{ primary_driver: string; driver_impact_pct: number } | null>(null);
+  const [atlasSensitivityData, setAtlasSensitivityData] = useState<{
+    primary_driver: string;
+    driver_impact_pct: number;
+    baseline_npv?: number;
+    sensitivity_ranking?: { driver: string; shocked_npv: number; impact_pct: number }[];
+  } | null>(null);
   const [atlasAdaptationStrategy, setAtlasAdaptationStrategy] = useState<any>(null);
   const [atlasSatellitePreview, setAtlasSatellitePreview] = useState<any>(null);
   const [atlasMarketIntelligence, setAtlasMarketIntelligence] = useState<any>(null);

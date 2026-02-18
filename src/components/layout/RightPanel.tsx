@@ -83,7 +83,7 @@ interface RightPanelProps {
   atlasFinancialData?: any;
   atlasMonteCarloData?: any;
   atlasExecutiveSummary?: string | null;
-  atlasSensitivityData?: { primary_driver: string; driver_impact_pct: number } | null;
+  atlasSensitivityData?: { primary_driver: string; driver_impact_pct: number; baseline_npv?: number; sensitivity_ranking?: { driver: string; shocked_npv: number; impact_pct: number }[] } | null;
   atlasAdaptationStrategy?: any;
   atlasSatellitePreview?: any;
   atlasMarketIntelligence?: any;
@@ -719,6 +719,26 @@ function HealthContent({ results, visible }: { results: HealthResults | null; vi
   );
 }
 
+function renderBoldSummary(text: string): React.ReactNode {
+  const parts = text.split(/(\*\*[^*]+\*\*)/g);
+  return parts.map((part, i) => {
+    if (part.startsWith('**') && part.endsWith('**')) {
+      return (
+        <span key={i} style={{ color: 'var(--cb-text)', fontWeight: 600 }}>
+          {part.slice(2, -2)}
+        </span>
+      );
+    }
+    return <span key={i}>{part}</span>;
+  });
+}
+
+function extractConfidence(text: string, fallback?: string): string | null {
+  const m = text.match(/Model Confidence:\s*(\w+)/i);
+  if (m) return m[1];
+  return fallback ?? null;
+}
+
 function FinanceContent({
   atlasFinancialData,
   atlasMonteCarloData,
@@ -735,7 +755,7 @@ function FinanceContent({
   atlasFinancialData: any;
   atlasMonteCarloData: any;
   atlasExecutiveSummary?: string | null;
-  atlasSensitivityData?: { primary_driver: string; driver_impact_pct: number; baseline_npv?: number } | null;
+  atlasSensitivityData?: { primary_driver: string; driver_impact_pct: number; baseline_npv?: number; sensitivity_ranking?: { driver: string; shocked_npv: number; impact_pct: number }[] } | null;
   atlasAdaptationStrategy?: any;
   atlasAdaptationPortfolio?: any;
   atlasSatellitePreview?: any;
@@ -761,7 +781,7 @@ function FinanceContent({
     atlasFinancialData?.metrics?.npv_usd?.mean ??
     null;
 
-  const var95: number | null = atlasMonteCarloData?.metrics?.npv_usd?.p5 ?? null;
+  const var95: number | null = atlasMonteCarloData?.VaR_95 ?? atlasMonteCarloData?.metrics?.npv_usd?.p5 ?? null;
   const primaryDriver: string | null = atlasSensitivityData?.primary_driver ?? null;
   const sectorRank = atlasMarketIntelligence?.sector_rank;
 
@@ -818,29 +838,48 @@ function FinanceContent({
         </div>
       )}
 
-      {atlasExecutiveSummary && (
-        <div style={{ borderBottom: '1px solid var(--cb-border)' }}>
-          <div className="px-4 pt-3 pb-2" style={{ borderBottom: '1px solid var(--cb-border)' }}>
-            <span className="cb-section-heading">AI ANALYSIS</span>
+      {atlasExecutiveSummary && (() => {
+        const isCritical = atlasExecutiveSummary.includes('CRITICAL WARNING');
+        const confidence = extractConfidence(atlasExecutiveSummary, atlasMarketIntelligence?.confidence_score);
+        const confidenceColor = confidence?.toLowerCase() === 'high' ? '#10b981'
+          : confidence?.toLowerCase() === 'medium' ? '#f59e0b'
+          : '#f43f5e';
+        return (
+          <div style={{ borderBottom: '1px solid var(--cb-border)' }}>
+            <div className="px-4 pt-3 pb-2 flex items-center justify-between" style={{ borderBottom: '1px solid var(--cb-border)' }}>
+              <span className="cb-section-heading">AI ANALYSIS</span>
+              {confidence && (
+                <span
+                  style={{
+                    fontFamily: 'monospace',
+                    fontSize: 9,
+                    letterSpacing: '0.06em',
+                    border: `1px solid ${confidenceColor}`,
+                    color: confidenceColor,
+                    padding: '0px 5px',
+                  }}
+                >
+                  {confidence.toUpperCase()} CONFIDENCE
+                </span>
+              )}
+            </div>
+            <div className="px-4 py-4">
+              <p
+                style={{
+                  fontSize: 11,
+                  lineHeight: 1.7,
+                  color: isCritical ? '#f43f5e' : 'var(--cb-secondary)',
+                  borderLeft: `2px solid ${isCritical ? '#f43f5e' : '#f59e0b'}`,
+                  paddingLeft: 12,
+                  margin: 0,
+                }}
+              >
+                {renderBoldSummary(atlasExecutiveSummary)}
+              </p>
+            </div>
           </div>
-          <div className="px-4 py-3">
-            <p
-              style={{
-                fontSize: 11,
-                lineHeight: 1.7,
-                color: atlasExecutiveSummary.includes('CRITICAL WARNING')
-                  ? '#f43f5e'
-                  : 'var(--cb-secondary)',
-                borderLeft: '2px solid #f59e0b',
-                paddingLeft: 12,
-                margin: 0,
-              }}
-            >
-              {atlasExecutiveSummary}
-            </p>
-          </div>
-        </div>
-      )}
+        );
+      })()}
 
       <div style={{ borderBottom: '1px solid var(--cb-border)' }}>
         <DealTicketCard

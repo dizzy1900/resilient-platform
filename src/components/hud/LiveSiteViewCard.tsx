@@ -2,10 +2,7 @@ import { useState } from 'react';
 import { Dialog, DialogContent } from '@/components/ui/dialog';
 import { Tooltip as UiTooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 import { MapPin, TrendingUp, TriangleAlert as AlertTriangle } from 'lucide-react';
-import {
-  LineChart,
-  Line,
-} from 'recharts';
+import { LineChart, Line } from 'recharts';
 
 interface SatellitePreview {
   thumbnail_url: string;
@@ -16,6 +13,8 @@ interface SatellitePreview {
 
 interface MarketIntelligence {
   credit_rating: string;
+  credit_grade?: string;
+  investment_grade?: boolean;
   outlook?: string;
   sector_rank?: {
     by_npv: number;
@@ -23,7 +22,14 @@ interface MarketIntelligence {
   };
   percentiles?: {
     composite: number;
+    npv?: number;
+    roi?: number;
+    risk?: number;
   };
+  benchmark_summary?: string;
+  confidence_score?: string;
+  rating_trajectory?: Record<string, string>;
+  projected_downgrade_year?: number | null;
 }
 
 interface TemporalAnalysis {
@@ -44,10 +50,24 @@ const getOutlookIndicator = (outlook?: string) => {
   return { symbol: '▬', color: '' };
 };
 
+const getConfidenceColor = (score?: string) => {
+  if (!score) return 'var(--cb-secondary)';
+  const s = score.toLowerCase();
+  if (s === 'high') return '#10b981';
+  if (s === 'medium') return '#f59e0b';
+  return '#f43f5e';
+};
+
 export const LiveSiteViewCard = ({ satellitePreview, marketIntelligence, temporalAnalysis }: LiveSiteViewCardProps) => {
   const [open, setOpen] = useState(false);
 
   const hasTemporalData = temporalAnalysis?.history?.some(h => h.npv !== 0) ?? false;
+  const hasMarketData = !!(
+    marketIntelligence?.sector_rank ||
+    marketIntelligence?.percentiles?.composite !== undefined ||
+    marketIntelligence?.benchmark_summary ||
+    marketIntelligence?.investment_grade !== undefined
+  );
 
   return (
     <>
@@ -140,6 +160,102 @@ export const LiveSiteViewCard = ({ satellitePreview, marketIntelligence, tempora
               <span style={{ fontSize: 10, color: '#f43f5e', fontFamily: 'monospace', letterSpacing: '0.03em' }}>
                 PROJECTED NEGATIVE VALUE BY {temporalAnalysis.stranded_asset_year}
               </span>
+            </div>
+          )}
+        </div>
+      )}
+
+      {hasMarketData && marketIntelligence && (
+        <div style={{ borderTop: '1px solid var(--cb-border)' }}>
+          <div className="px-4 pt-3 pb-2" style={{ borderBottom: '1px solid var(--cb-border)' }}>
+            <span className="cb-section-heading">MARKET INTELLIGENCE</span>
+          </div>
+
+          <div className="px-4">
+            {marketIntelligence.sector_rank && (
+              <div className="flex items-center justify-between py-2.5 cb-divider">
+                <span className="cb-label">SECTOR RANK</span>
+                <span style={{ fontFamily: 'monospace', fontSize: 10, letterSpacing: '0.05em', color: 'var(--cb-text)' }}>
+                  RANK{' '}
+                  <span style={{ color: '#f59e0b', fontWeight: 600 }}>
+                    #{marketIntelligence.sector_rank.by_npv}
+                  </span>
+                  {' '}OF {marketIntelligence.sector_rank.total_in_sector}
+                </span>
+              </div>
+            )}
+
+            {marketIntelligence.investment_grade !== undefined && (
+              <div className="flex items-center justify-between py-2.5 cb-divider">
+                <span className="cb-label">GRADE</span>
+                <span
+                  style={{
+                    fontFamily: 'monospace',
+                    fontSize: 10,
+                    letterSpacing: '0.05em',
+                    border: '1px solid var(--cb-border)',
+                    padding: '1px 6px',
+                    color: marketIntelligence.investment_grade ? '#10b981' : '#f43f5e',
+                  }}
+                >
+                  {marketIntelligence.investment_grade ? 'INVESTMENT GRADE' : 'SPECULATIVE'}
+                </span>
+              </div>
+            )}
+
+            {marketIntelligence.outlook && marketIntelligence.confidence_score && (
+              <div className="flex items-center justify-between py-2.5 cb-divider">
+                <span className="cb-label">OUTLOOK · CONFIDENCE</span>
+                <span style={{ fontFamily: 'monospace', fontSize: 10, letterSpacing: '0.04em', color: 'var(--cb-secondary)' }}>
+                  {marketIntelligence.outlook.toUpperCase()} ·{' '}
+                  <span style={{ color: getConfidenceColor(marketIntelligence.confidence_score) }}>
+                    {marketIntelligence.confidence_score.toUpperCase()}
+                  </span>
+                </span>
+              </div>
+            )}
+
+            {marketIntelligence.percentiles?.composite !== undefined && (
+              <div className="py-2.5 cb-divider">
+                <div className="flex items-center justify-between mb-1.5">
+                  <span className="cb-label">COMPOSITE PERCENTILE</span>
+                  <span style={{ fontFamily: 'monospace', fontSize: 10, letterSpacing: '0.05em', color: '#10b981' }}>
+                    {marketIntelligence.percentiles.composite.toFixed(1)}th
+                  </span>
+                </div>
+                <div className="w-full h-px relative" style={{ backgroundColor: 'var(--cb-border)' }}>
+                  <div
+                    style={{
+                      position: 'absolute',
+                      top: 0,
+                      left: 0,
+                      height: 2,
+                      marginTop: -0.5,
+                      width: `${Math.min(marketIntelligence.percentiles.composite, 100)}%`,
+                      backgroundColor: '#10b981',
+                    }}
+                  />
+                </div>
+              </div>
+            )}
+          </div>
+
+          {marketIntelligence.benchmark_summary && (
+            <div className="px-4 pt-2 pb-3">
+              <p
+                style={{
+                  fontSize: 10,
+                  lineHeight: 1.6,
+                  color: 'var(--cb-secondary)',
+                  fontFamily: 'monospace',
+                  letterSpacing: '0.02em',
+                  borderLeft: '2px solid var(--cb-border)',
+                  paddingLeft: 10,
+                  margin: 0,
+                }}
+              >
+                {marketIntelligence.benchmark_summary.toUpperCase()}
+              </p>
             </div>
           )}
         </div>

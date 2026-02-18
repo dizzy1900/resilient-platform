@@ -185,6 +185,37 @@ export const GLOBAL_ATLAS_DATA = [
       classification: "Neutral",
       return_vector: [732736.61, 732736.61, 732736.61],
     },
+    adaptation_strategy: {
+      intervention_name: "Genetics Crop Management",
+      intervention_cost_usd: 85000,
+      npv_improvement_usd: 220000,
+      adaptation_roi_pct: 158.8,
+    },
+    adaptation_portfolio: {
+      recommended_strategy: "Genetics",
+      stress_level: 5,
+      analysis_timestamp: "2026-02-16T01:30:00Z",
+      options: [
+        {
+          tier: "Regenerative",
+          cost: 45000,
+          benefit: 130000,
+          roi: 188.9,
+        },
+        {
+          tier: "Genetics",
+          cost: 85000,
+          benefit: 220000,
+          roi: 158.8,
+        },
+        {
+          tier: "Infrastructure",
+          cost: 180000,
+          benefit: 390000,
+          roi: 116.7,
+        },
+      ],
+    },
   },
   {
     project_type: "agriculture",
@@ -372,6 +403,37 @@ export const GLOBAL_ATLAS_DATA = [
       classification: "Hedge",
       return_vector: [806266.43, 738693.28, 671120.12],
     },
+    adaptation_strategy: {
+      intervention_name: "Infrastructure Crop Management",
+      intervention_cost_usd: 85000,
+      npv_improvement_usd: 220000,
+      adaptation_roi_pct: 158.8,
+    },
+    adaptation_portfolio: {
+      recommended_strategy: "Infrastructure",
+      stress_level: 7,
+      analysis_timestamp: "2026-02-16T01:30:00Z",
+      options: [
+        {
+          tier: "Regenerative",
+          cost: 45000,
+          benefit: 130000,
+          roi: 188.9,
+        },
+        {
+          tier: "Genetics",
+          cost: 85000,
+          benefit: 220000,
+          roi: 158.8,
+        },
+        {
+          tier: "Infrastructure",
+          cost: 180000,
+          benefit: 390000,
+          roi: 116.7,
+        },
+      ],
+    },
   },
   {
     project_type: "agriculture",
@@ -557,6 +619,37 @@ export const GLOBAL_ATLAS_DATA = [
       correlation_vs_global: 0.9944,
       classification: "Concentrator",
       return_vector: [732736.61, 732736.61, 740110.09],
+    },
+    adaptation_strategy: {
+      intervention_name: "Regenerative Crop Management",
+      intervention_cost_usd: 85000,
+      npv_improvement_usd: 220000,
+      adaptation_roi_pct: 158.8,
+    },
+    adaptation_portfolio: {
+      recommended_strategy: "Regenerative",
+      stress_level: 4,
+      analysis_timestamp: "2026-02-16T01:30:00Z",
+      options: [
+        {
+          tier: "Regenerative",
+          cost: 45000,
+          benefit: 130000,
+          roi: 188.9,
+        },
+        {
+          tier: "Genetics",
+          cost: 85000,
+          benefit: 220000,
+          roi: 158.8,
+        },
+        {
+          tier: "Infrastructure",
+          cost: 180000,
+          benefit: 390000,
+          roi: 116.7,
+        },
+      ],
     },
   },
   {
@@ -744,6 +837,37 @@ export const GLOBAL_ATLAS_DATA = [
       classification: "Concentrator",
       return_vector: [732736.61, 732736.61, 736171.42],
     },
+    adaptation_strategy: {
+      intervention_name: "Regenerative Crop Management",
+      intervention_cost_usd: 85000,
+      npv_improvement_usd: 220000,
+      adaptation_roi_pct: 158.8,
+    },
+    adaptation_portfolio: {
+      recommended_strategy: "Regenerative",
+      stress_level: 4,
+      analysis_timestamp: "2026-02-16T01:30:00Z",
+      options: [
+        {
+          tier: "Regenerative",
+          cost: 45000,
+          benefit: 130000,
+          roi: 188.9,
+        },
+        {
+          tier: "Genetics",
+          cost: 85000,
+          benefit: 220000,
+          roi: 158.8,
+        },
+        {
+          tier: "Infrastructure",
+          cost: 180000,
+          benefit: 390000,
+          roi: 116.7,
+        },
+      ],
+    },
   },
   {
     project_type: "agriculture",
@@ -930,6 +1054,37 @@ export const GLOBAL_ATLAS_DATA = [
       classification: "Neutral",
       return_vector: [936225.81, 959208.03, 982190.31],
     },
+    adaptation_strategy: {
+      intervention_name: "Genetics Crop Management",
+      intervention_cost_usd: 85000,
+      npv_improvement_usd: 220000,
+      adaptation_roi_pct: 158.8,
+    },
+    adaptation_portfolio: {
+      recommended_strategy: "Genetics",
+      stress_level: 5,
+      analysis_timestamp: "2026-02-16T01:30:00Z",
+      options: [
+        {
+          tier: "Regenerative",
+          cost: 45000,
+          benefit: 130000,
+          roi: 188.9,
+        },
+        {
+          tier: "Genetics",
+          cost: 85000,
+          benefit: 220000,
+          roi: 158.8,
+        },
+        {
+          tier: "Infrastructure",
+          cost: 180000,
+          benefit: 390000,
+          roi: 116.7,
+        },
+      ],
+    },
   },
   {
     project_type: "agriculture",
@@ -1115,6 +1270,37 @@ export const GLOBAL_ATLAS_DATA = [
       correlation_vs_global: 0.796,
       classification: "Neutral",
       return_vector: [732736.61, 740113.16, 747821.52],
+    },
+    adaptation_strategy: {
+      intervention_name: "Genetics Crop Management",
+      intervention_cost_usd: 85000,
+      npv_improvement_usd: 220000,
+      adaptation_roi_pct: 158.8,
+    },
+    adaptation_portfolio: {
+      recommended_strategy: "Genetics",
+      stress_level: 5,
+      analysis_timestamp: "2026-02-16T01:30:00Z",
+      options: [
+        {
+          tier: "Regenerative",
+          cost: 45000,
+          benefit: 130000,
+          roi: 188.9,
+        },
+        {
+          tier: "Genetics",
+          cost: 85000,
+          benefit: 220000,
+          roi: 158.8,
+        },
+        {
+          tier: "Infrastructure",
+          cost: 180000,
+          benefit: 390000,
+          roi: 116.7,
+        },
+      ],
     },
   },
   {
@@ -1303,6 +1489,37 @@ export const GLOBAL_ATLAS_DATA = [
       classification: "Concentrator",
       return_vector: [927090.68, 932277.62, 983434.95],
     },
+    adaptation_strategy: {
+      intervention_name: "Regenerative Crop Management",
+      intervention_cost_usd: 85000,
+      npv_improvement_usd: 220000,
+      adaptation_roi_pct: 158.8,
+    },
+    adaptation_portfolio: {
+      recommended_strategy: "Regenerative",
+      stress_level: 4,
+      analysis_timestamp: "2026-02-16T01:30:00Z",
+      options: [
+        {
+          tier: "Regenerative",
+          cost: 45000,
+          benefit: 130000,
+          roi: 188.9,
+        },
+        {
+          tier: "Genetics",
+          cost: 85000,
+          benefit: 220000,
+          roi: 158.8,
+        },
+        {
+          tier: "Infrastructure",
+          cost: 180000,
+          benefit: 390000,
+          roi: 116.7,
+        },
+      ],
+    },
   },
   {
     project_type: "agriculture",
@@ -1488,6 +1705,37 @@ export const GLOBAL_ATLAS_DATA = [
       correlation_vs_global: 0.0,
       classification: "Neutral",
       return_vector: [732736.61, 732736.61, 732736.61],
+    },
+    adaptation_strategy: {
+      intervention_name: "Genetics Crop Management",
+      intervention_cost_usd: 85000,
+      npv_improvement_usd: 220000,
+      adaptation_roi_pct: 158.8,
+    },
+    adaptation_portfolio: {
+      recommended_strategy: "Genetics",
+      stress_level: 5,
+      analysis_timestamp: "2026-02-16T01:30:00Z",
+      options: [
+        {
+          tier: "Regenerative",
+          cost: 45000,
+          benefit: 130000,
+          roi: 188.9,
+        },
+        {
+          tier: "Genetics",
+          cost: 85000,
+          benefit: 220000,
+          roi: 158.8,
+        },
+        {
+          tier: "Infrastructure",
+          cost: 180000,
+          benefit: 390000,
+          roi: 116.7,
+        },
+      ],
     },
   },
   {
@@ -1675,6 +1923,37 @@ export const GLOBAL_ATLAS_DATA = [
       classification: "Neutral",
       return_vector: [880206.22, 880206.22, 880206.22],
     },
+    adaptation_strategy: {
+      intervention_name: "Genetics Crop Management",
+      intervention_cost_usd: 85000,
+      npv_improvement_usd: 220000,
+      adaptation_roi_pct: 158.8,
+    },
+    adaptation_portfolio: {
+      recommended_strategy: "Genetics",
+      stress_level: 5,
+      analysis_timestamp: "2026-02-16T01:30:00Z",
+      options: [
+        {
+          tier: "Regenerative",
+          cost: 45000,
+          benefit: 130000,
+          roi: 188.9,
+        },
+        {
+          tier: "Genetics",
+          cost: 85000,
+          benefit: 220000,
+          roi: 158.8,
+        },
+        {
+          tier: "Infrastructure",
+          cost: 180000,
+          benefit: 390000,
+          roi: 116.7,
+        },
+      ],
+    },
   },
   {
     project_type: "agriculture",
@@ -1860,6 +2139,37 @@ export const GLOBAL_ATLAS_DATA = [
       correlation_vs_global: -0.5411,
       classification: "Hedge",
       return_vector: [918619.11, 880271.11, 880206.22],
+    },
+    adaptation_strategy: {
+      intervention_name: "Infrastructure Crop Management",
+      intervention_cost_usd: 85000,
+      npv_improvement_usd: 220000,
+      adaptation_roi_pct: 158.8,
+    },
+    adaptation_portfolio: {
+      recommended_strategy: "Infrastructure",
+      stress_level: 7,
+      analysis_timestamp: "2026-02-16T01:30:00Z",
+      options: [
+        {
+          tier: "Regenerative",
+          cost: 45000,
+          benefit: 130000,
+          roi: 188.9,
+        },
+        {
+          tier: "Genetics",
+          cost: 85000,
+          benefit: 220000,
+          roi: 158.8,
+        },
+        {
+          tier: "Infrastructure",
+          cost: 180000,
+          benefit: 390000,
+          roi: 116.7,
+        },
+      ],
     },
   },
   {
@@ -2047,6 +2357,37 @@ export const GLOBAL_ATLAS_DATA = [
       classification: "Neutral",
       return_vector: [880206.22, 880206.22, 880206.22],
     },
+    adaptation_strategy: {
+      intervention_name: "Genetics Crop Management",
+      intervention_cost_usd: 85000,
+      npv_improvement_usd: 220000,
+      adaptation_roi_pct: 158.8,
+    },
+    adaptation_portfolio: {
+      recommended_strategy: "Genetics",
+      stress_level: 5,
+      analysis_timestamp: "2026-02-16T01:30:00Z",
+      options: [
+        {
+          tier: "Regenerative",
+          cost: 45000,
+          benefit: 130000,
+          roi: 188.9,
+        },
+        {
+          tier: "Genetics",
+          cost: 85000,
+          benefit: 220000,
+          roi: 158.8,
+        },
+        {
+          tier: "Infrastructure",
+          cost: 180000,
+          benefit: 390000,
+          roi: 116.7,
+        },
+      ],
+    },
   },
   {
     project_type: "agriculture",
@@ -2232,6 +2573,37 @@ export const GLOBAL_ATLAS_DATA = [
       correlation_vs_global: 0.9945,
       classification: "Concentrator",
       return_vector: [732736.61, 732736.61, 738131.54],
+    },
+    adaptation_strategy: {
+      intervention_name: "Regenerative Crop Management",
+      intervention_cost_usd: 85000,
+      npv_improvement_usd: 220000,
+      adaptation_roi_pct: 158.8,
+    },
+    adaptation_portfolio: {
+      recommended_strategy: "Regenerative",
+      stress_level: 4,
+      analysis_timestamp: "2026-02-16T01:30:00Z",
+      options: [
+        {
+          tier: "Regenerative",
+          cost: 45000,
+          benefit: 130000,
+          roi: 188.9,
+        },
+        {
+          tier: "Genetics",
+          cost: 85000,
+          benefit: 220000,
+          roi: 158.8,
+        },
+        {
+          tier: "Infrastructure",
+          cost: 180000,
+          benefit: 390000,
+          roi: 116.7,
+        },
+      ],
     },
   },
   {
@@ -2420,6 +2792,37 @@ export const GLOBAL_ATLAS_DATA = [
       classification: "Neutral",
       return_vector: [1077927.82, 1087749.79, 1097571.7],
     },
+    adaptation_strategy: {
+      intervention_name: "Genetics Crop Management",
+      intervention_cost_usd: 85000,
+      npv_improvement_usd: 220000,
+      adaptation_roi_pct: 158.8,
+    },
+    adaptation_portfolio: {
+      recommended_strategy: "Genetics",
+      stress_level: 5,
+      analysis_timestamp: "2026-02-16T01:30:00Z",
+      options: [
+        {
+          tier: "Regenerative",
+          cost: 45000,
+          benefit: 130000,
+          roi: 188.9,
+        },
+        {
+          tier: "Genetics",
+          cost: 85000,
+          benefit: 220000,
+          roi: 158.8,
+        },
+        {
+          tier: "Infrastructure",
+          cost: 180000,
+          benefit: 390000,
+          roi: 116.7,
+        },
+      ],
+    },
   },
   {
     project_type: "agriculture",
@@ -2605,6 +3008,37 @@ export const GLOBAL_ATLAS_DATA = [
       correlation_vs_global: 0.7906,
       classification: "Neutral",
       return_vector: [744740.64, 751421.01, 758101.38],
+    },
+    adaptation_strategy: {
+      intervention_name: "Genetics Crop Management",
+      intervention_cost_usd: 85000,
+      npv_improvement_usd: 220000,
+      adaptation_roi_pct: 158.8,
+    },
+    adaptation_portfolio: {
+      recommended_strategy: "Genetics",
+      stress_level: 5,
+      analysis_timestamp: "2026-02-16T01:30:00Z",
+      options: [
+        {
+          tier: "Regenerative",
+          cost: 45000,
+          benefit: 130000,
+          roi: 188.9,
+        },
+        {
+          tier: "Genetics",
+          cost: 85000,
+          benefit: 220000,
+          roi: 158.8,
+        },
+        {
+          tier: "Infrastructure",
+          cost: 180000,
+          benefit: 390000,
+          roi: 116.7,
+        },
+      ],
     },
   },
   {
@@ -2792,6 +3226,37 @@ export const GLOBAL_ATLAS_DATA = [
       classification: "Neutral",
       return_vector: [936416.91, 959383.27, 982349.57],
     },
+    adaptation_strategy: {
+      intervention_name: "Genetics Crop Management",
+      intervention_cost_usd: 85000,
+      npv_improvement_usd: 220000,
+      adaptation_roi_pct: 158.8,
+    },
+    adaptation_portfolio: {
+      recommended_strategy: "Genetics",
+      stress_level: 5,
+      analysis_timestamp: "2026-02-16T01:30:00Z",
+      options: [
+        {
+          tier: "Regenerative",
+          cost: 45000,
+          benefit: 130000,
+          roi: 188.9,
+        },
+        {
+          tier: "Genetics",
+          cost: 85000,
+          benefit: 220000,
+          roi: 158.8,
+        },
+        {
+          tier: "Infrastructure",
+          cost: 180000,
+          benefit: 390000,
+          roi: 116.7,
+        },
+      ],
+    },
   },
   {
     project_type: "agriculture",
@@ -2978,6 +3443,37 @@ export const GLOBAL_ATLAS_DATA = [
       classification: "Neutral",
       return_vector: [880206.22, 880206.22, 880206.22],
     },
+    adaptation_strategy: {
+      intervention_name: "Genetics Crop Management",
+      intervention_cost_usd: 85000,
+      npv_improvement_usd: 220000,
+      adaptation_roi_pct: 158.8,
+    },
+    adaptation_portfolio: {
+      recommended_strategy: "Genetics",
+      stress_level: 5,
+      analysis_timestamp: "2026-02-16T01:30:00Z",
+      options: [
+        {
+          tier: "Regenerative",
+          cost: 45000,
+          benefit: 130000,
+          roi: 188.9,
+        },
+        {
+          tier: "Genetics",
+          cost: 85000,
+          benefit: 220000,
+          roi: 158.8,
+        },
+        {
+          tier: "Infrastructure",
+          cost: 180000,
+          benefit: 390000,
+          roi: 116.7,
+        },
+      ],
+    },
   },
   {
     project_type: "agriculture",
@@ -3163,6 +3659,37 @@ export const GLOBAL_ATLAS_DATA = [
       correlation_vs_global: 0.9946,
       classification: "Concentrator",
       return_vector: [732736.61, 732736.61, 735950.22],
+    },
+    adaptation_strategy: {
+      intervention_name: "Regenerative Crop Management",
+      intervention_cost_usd: 85000,
+      npv_improvement_usd: 220000,
+      adaptation_roi_pct: 158.8,
+    },
+    adaptation_portfolio: {
+      recommended_strategy: "Regenerative",
+      stress_level: 4,
+      analysis_timestamp: "2026-02-16T01:30:00Z",
+      options: [
+        {
+          tier: "Regenerative",
+          cost: 45000,
+          benefit: 130000,
+          roi: 188.9,
+        },
+        {
+          tier: "Genetics",
+          cost: 85000,
+          benefit: 220000,
+          roi: 158.8,
+        },
+        {
+          tier: "Infrastructure",
+          cost: 180000,
+          benefit: 390000,
+          roi: 116.7,
+        },
+      ],
     },
   },
   {
@@ -3351,6 +3878,37 @@ export const GLOBAL_ATLAS_DATA = [
       classification: "Concentrator",
       return_vector: [751221.93, 757362.19, 842745.25],
     },
+    adaptation_strategy: {
+      intervention_name: "Regenerative Crop Management",
+      intervention_cost_usd: 85000,
+      npv_improvement_usd: 220000,
+      adaptation_roi_pct: 158.8,
+    },
+    adaptation_portfolio: {
+      recommended_strategy: "Regenerative",
+      stress_level: 4,
+      analysis_timestamp: "2026-02-16T01:30:00Z",
+      options: [
+        {
+          tier: "Regenerative",
+          cost: 45000,
+          benefit: 130000,
+          roi: 188.9,
+        },
+        {
+          tier: "Genetics",
+          cost: 85000,
+          benefit: 220000,
+          roi: 158.8,
+        },
+        {
+          tier: "Infrastructure",
+          cost: 180000,
+          benefit: 390000,
+          roi: 116.7,
+        },
+      ],
+    },
   },
   {
     project_type: "agriculture",
@@ -3536,6 +4094,37 @@ export const GLOBAL_ATLAS_DATA = [
       correlation_vs_global: 0.0,
       classification: "Neutral",
       return_vector: [880206.22, 880206.22, 880206.22],
+    },
+    adaptation_strategy: {
+      intervention_name: "Genetics Crop Management",
+      intervention_cost_usd: 85000,
+      npv_improvement_usd: 220000,
+      adaptation_roi_pct: 158.8,
+    },
+    adaptation_portfolio: {
+      recommended_strategy: "Genetics",
+      stress_level: 5,
+      analysis_timestamp: "2026-02-16T01:30:00Z",
+      options: [
+        {
+          tier: "Regenerative",
+          cost: 45000,
+          benefit: 130000,
+          roi: 188.9,
+        },
+        {
+          tier: "Genetics",
+          cost: 85000,
+          benefit: 220000,
+          roi: 158.8,
+        },
+        {
+          tier: "Infrastructure",
+          cost: 180000,
+          benefit: 390000,
+          roi: 116.7,
+        },
+      ],
     },
   },
   {
@@ -3723,6 +4312,37 @@ export const GLOBAL_ATLAS_DATA = [
       classification: "Neutral",
       return_vector: [880206.22, 880206.22, 880206.22],
     },
+    adaptation_strategy: {
+      intervention_name: "Genetics Crop Management",
+      intervention_cost_usd: 85000,
+      npv_improvement_usd: 220000,
+      adaptation_roi_pct: 158.8,
+    },
+    adaptation_portfolio: {
+      recommended_strategy: "Genetics",
+      stress_level: 5,
+      analysis_timestamp: "2026-02-16T01:30:00Z",
+      options: [
+        {
+          tier: "Regenerative",
+          cost: 45000,
+          benefit: 130000,
+          roi: 188.9,
+        },
+        {
+          tier: "Genetics",
+          cost: 85000,
+          benefit: 220000,
+          roi: 158.8,
+        },
+        {
+          tier: "Infrastructure",
+          cost: 180000,
+          benefit: 390000,
+          roi: 116.7,
+        },
+      ],
+    },
   },
   {
     project_type: "agriculture",
@@ -3908,6 +4528,37 @@ export const GLOBAL_ATLAS_DATA = [
       correlation_vs_global: 0.0,
       classification: "Neutral",
       return_vector: [732736.61, 732736.61, 732736.61],
+    },
+    adaptation_strategy: {
+      intervention_name: "Genetics Crop Management",
+      intervention_cost_usd: 85000,
+      npv_improvement_usd: 220000,
+      adaptation_roi_pct: 158.8,
+    },
+    adaptation_portfolio: {
+      recommended_strategy: "Genetics",
+      stress_level: 5,
+      analysis_timestamp: "2026-02-16T01:30:00Z",
+      options: [
+        {
+          tier: "Regenerative",
+          cost: 45000,
+          benefit: 130000,
+          roi: 188.9,
+        },
+        {
+          tier: "Genetics",
+          cost: 85000,
+          benefit: 220000,
+          roi: 158.8,
+        },
+        {
+          tier: "Infrastructure",
+          cost: 180000,
+          benefit: 390000,
+          roi: 116.7,
+        },
+      ],
     },
   },
   {
@@ -4095,6 +4746,37 @@ export const GLOBAL_ATLAS_DATA = [
       classification: "Hedge",
       return_vector: [1405113.12, 1326223.94, 1247334.77],
     },
+    adaptation_strategy: {
+      intervention_name: "Infrastructure Crop Management",
+      intervention_cost_usd: 85000,
+      npv_improvement_usd: 220000,
+      adaptation_roi_pct: 158.8,
+    },
+    adaptation_portfolio: {
+      recommended_strategy: "Infrastructure",
+      stress_level: 7,
+      analysis_timestamp: "2026-02-16T01:30:00Z",
+      options: [
+        {
+          tier: "Regenerative",
+          cost: 45000,
+          benefit: 130000,
+          roi: 188.9,
+        },
+        {
+          tier: "Genetics",
+          cost: 85000,
+          benefit: 220000,
+          roi: 158.8,
+        },
+        {
+          tier: "Infrastructure",
+          cost: 180000,
+          benefit: 390000,
+          roi: 116.7,
+        },
+      ],
+    },
   },
   {
     project_type: "agriculture",
@@ -4280,6 +4962,37 @@ export const GLOBAL_ATLAS_DATA = [
       correlation_vs_global: 0.0,
       classification: "Neutral",
       return_vector: [732736.61, 732736.61, 732736.61],
+    },
+    adaptation_strategy: {
+      intervention_name: "Genetics Crop Management",
+      intervention_cost_usd: 85000,
+      npv_improvement_usd: 220000,
+      adaptation_roi_pct: 158.8,
+    },
+    adaptation_portfolio: {
+      recommended_strategy: "Genetics",
+      stress_level: 5,
+      analysis_timestamp: "2026-02-16T01:30:00Z",
+      options: [
+        {
+          tier: "Regenerative",
+          cost: 45000,
+          benefit: 130000,
+          roi: 188.9,
+        },
+        {
+          tier: "Genetics",
+          cost: 85000,
+          benefit: 220000,
+          roi: 158.8,
+        },
+        {
+          tier: "Infrastructure",
+          cost: 180000,
+          benefit: 390000,
+          roi: 116.7,
+        },
+      ],
     },
   },
   {
@@ -4467,6 +5180,37 @@ export const GLOBAL_ATLAS_DATA = [
       classification: "Concentrator",
       return_vector: [732736.61, 732736.61, 740091.66],
     },
+    adaptation_strategy: {
+      intervention_name: "Regenerative Crop Management",
+      intervention_cost_usd: 85000,
+      npv_improvement_usd: 220000,
+      adaptation_roi_pct: 158.8,
+    },
+    adaptation_portfolio: {
+      recommended_strategy: "Regenerative",
+      stress_level: 4,
+      analysis_timestamp: "2026-02-16T01:30:00Z",
+      options: [
+        {
+          tier: "Regenerative",
+          cost: 45000,
+          benefit: 130000,
+          roi: 188.9,
+        },
+        {
+          tier: "Genetics",
+          cost: 85000,
+          benefit: 220000,
+          roi: 158.8,
+        },
+        {
+          tier: "Infrastructure",
+          cost: 180000,
+          benefit: 390000,
+          roi: 116.7,
+        },
+      ],
+    },
   },
   {
     project_type: "agriculture",
@@ -4652,6 +5396,37 @@ export const GLOBAL_ATLAS_DATA = [
       correlation_vs_global: 0.9711,
       classification: "Concentrator",
       return_vector: [880206.22, 883991.46, 913811.6],
+    },
+    adaptation_strategy: {
+      intervention_name: "Regenerative Crop Management",
+      intervention_cost_usd: 85000,
+      npv_improvement_usd: 220000,
+      adaptation_roi_pct: 158.8,
+    },
+    adaptation_portfolio: {
+      recommended_strategy: "Regenerative",
+      stress_level: 4,
+      analysis_timestamp: "2026-02-16T01:30:00Z",
+      options: [
+        {
+          tier: "Regenerative",
+          cost: 45000,
+          benefit: 130000,
+          roi: 188.9,
+        },
+        {
+          tier: "Genetics",
+          cost: 85000,
+          benefit: 220000,
+          roi: 158.8,
+        },
+        {
+          tier: "Infrastructure",
+          cost: 180000,
+          benefit: 390000,
+          roi: 116.7,
+        },
+      ],
     },
   },
   {
@@ -4840,6 +5615,37 @@ export const GLOBAL_ATLAS_DATA = [
       classification: "Hedge",
       return_vector: [1400661.62, 1385678.22, 1303596.21],
     },
+    adaptation_strategy: {
+      intervention_name: "Infrastructure Crop Management",
+      intervention_cost_usd: 85000,
+      npv_improvement_usd: 220000,
+      adaptation_roi_pct: 158.8,
+    },
+    adaptation_portfolio: {
+      recommended_strategy: "Infrastructure",
+      stress_level: 7,
+      analysis_timestamp: "2026-02-16T01:30:00Z",
+      options: [
+        {
+          tier: "Regenerative",
+          cost: 45000,
+          benefit: 130000,
+          roi: 188.9,
+        },
+        {
+          tier: "Genetics",
+          cost: 85000,
+          benefit: 220000,
+          roi: 158.8,
+        },
+        {
+          tier: "Infrastructure",
+          cost: 180000,
+          benefit: 390000,
+          roi: 116.7,
+        },
+      ],
+    },
   },
   {
     project_type: "agriculture",
@@ -5025,6 +5831,37 @@ export const GLOBAL_ATLAS_DATA = [
       correlation_vs_global: 0.9358,
       classification: "Concentrator",
       return_vector: [732736.61, 735435.92, 743569.48],
+    },
+    adaptation_strategy: {
+      intervention_name: "Regenerative Crop Management",
+      intervention_cost_usd: 85000,
+      npv_improvement_usd: 220000,
+      adaptation_roi_pct: 158.8,
+    },
+    adaptation_portfolio: {
+      recommended_strategy: "Regenerative",
+      stress_level: 4,
+      analysis_timestamp: "2026-02-16T01:30:00Z",
+      options: [
+        {
+          tier: "Regenerative",
+          cost: 45000,
+          benefit: 130000,
+          roi: 188.9,
+        },
+        {
+          tier: "Genetics",
+          cost: 85000,
+          benefit: 220000,
+          roi: 158.8,
+        },
+        {
+          tier: "Infrastructure",
+          cost: 180000,
+          benefit: 390000,
+          roi: 116.7,
+        },
+      ],
     },
   },
   {
@@ -5212,6 +6049,37 @@ export const GLOBAL_ATLAS_DATA = [
       classification: "Neutral",
       return_vector: [734130.2, 741694.78, 749259.35],
     },
+    adaptation_strategy: {
+      intervention_name: "Genetics Crop Management",
+      intervention_cost_usd: 85000,
+      npv_improvement_usd: 220000,
+      adaptation_roi_pct: 158.8,
+    },
+    adaptation_portfolio: {
+      recommended_strategy: "Genetics",
+      stress_level: 5,
+      analysis_timestamp: "2026-02-16T01:30:00Z",
+      options: [
+        {
+          tier: "Regenerative",
+          cost: 45000,
+          benefit: 130000,
+          roi: 188.9,
+        },
+        {
+          tier: "Genetics",
+          cost: 85000,
+          benefit: 220000,
+          roi: 158.8,
+        },
+        {
+          tier: "Infrastructure",
+          cost: 180000,
+          benefit: 390000,
+          roi: 116.7,
+        },
+      ],
+    },
   },
   {
     project_type: "agriculture",
@@ -5397,6 +6265,37 @@ export const GLOBAL_ATLAS_DATA = [
       correlation_vs_global: 0.9945,
       classification: "Concentrator",
       return_vector: [732736.61, 732736.61, 737652.27],
+    },
+    adaptation_strategy: {
+      intervention_name: "Regenerative Crop Management",
+      intervention_cost_usd: 85000,
+      npv_improvement_usd: 220000,
+      adaptation_roi_pct: 158.8,
+    },
+    adaptation_portfolio: {
+      recommended_strategy: "Regenerative",
+      stress_level: 4,
+      analysis_timestamp: "2026-02-16T01:30:00Z",
+      options: [
+        {
+          tier: "Regenerative",
+          cost: 45000,
+          benefit: 130000,
+          roi: 188.9,
+        },
+        {
+          tier: "Genetics",
+          cost: 85000,
+          benefit: 220000,
+          roi: 158.8,
+        },
+        {
+          tier: "Infrastructure",
+          cost: 180000,
+          benefit: 390000,
+          roi: 116.7,
+        },
+      ],
     },
   },
   {
@@ -5585,6 +6484,37 @@ export const GLOBAL_ATLAS_DATA = [
       classification: "Neutral",
       return_vector: [944220.75, 911112.78, 946567.55],
     },
+    adaptation_strategy: {
+      intervention_name: "Genetics Crop Management",
+      intervention_cost_usd: 85000,
+      npv_improvement_usd: 220000,
+      adaptation_roi_pct: 158.8,
+    },
+    adaptation_portfolio: {
+      recommended_strategy: "Genetics",
+      stress_level: 5,
+      analysis_timestamp: "2026-02-16T01:30:00Z",
+      options: [
+        {
+          tier: "Regenerative",
+          cost: 45000,
+          benefit: 130000,
+          roi: 188.9,
+        },
+        {
+          tier: "Genetics",
+          cost: 85000,
+          benefit: 220000,
+          roi: 158.8,
+        },
+        {
+          tier: "Infrastructure",
+          cost: 180000,
+          benefit: 390000,
+          roi: 116.7,
+        },
+      ],
+    },
   },
   {
     project_type: "agriculture",
@@ -5771,6 +6701,37 @@ export const GLOBAL_ATLAS_DATA = [
       correlation_vs_global: -0.9643,
       classification: "Hedge",
       return_vector: [1431604.31, 1396100.21, 1312668.54],
+    },
+    adaptation_strategy: {
+      intervention_name: "Infrastructure Crop Management",
+      intervention_cost_usd: 85000,
+      npv_improvement_usd: 220000,
+      adaptation_roi_pct: 158.8,
+    },
+    adaptation_portfolio: {
+      recommended_strategy: "Infrastructure",
+      stress_level: 7,
+      analysis_timestamp: "2026-02-16T01:30:00Z",
+      options: [
+        {
+          tier: "Regenerative",
+          cost: 45000,
+          benefit: 130000,
+          roi: 188.9,
+        },
+        {
+          tier: "Genetics",
+          cost: 85000,
+          benefit: 220000,
+          roi: 158.8,
+        },
+        {
+          tier: "Infrastructure",
+          cost: 180000,
+          benefit: 390000,
+          roi: 116.7,
+        },
+      ],
     },
   },
   {
@@ -5959,6 +6920,37 @@ export const GLOBAL_ATLAS_DATA = [
       classification: "Neutral",
       return_vector: [730068.15, 732338.69, 732736.61],
     },
+    adaptation_strategy: {
+      intervention_name: "Genetics Crop Management",
+      intervention_cost_usd: 85000,
+      npv_improvement_usd: 220000,
+      adaptation_roi_pct: 158.8,
+    },
+    adaptation_portfolio: {
+      recommended_strategy: "Genetics",
+      stress_level: 5,
+      analysis_timestamp: "2026-02-16T01:30:00Z",
+      options: [
+        {
+          tier: "Regenerative",
+          cost: 45000,
+          benefit: 130000,
+          roi: 188.9,
+        },
+        {
+          tier: "Genetics",
+          cost: 85000,
+          benefit: 220000,
+          roi: 158.8,
+        },
+        {
+          tier: "Infrastructure",
+          cost: 180000,
+          benefit: 390000,
+          roi: 116.7,
+        },
+      ],
+    },
   },
   {
     project_type: "agriculture",
@@ -6144,6 +7136,37 @@ export const GLOBAL_ATLAS_DATA = [
       correlation_vs_global: 0.0,
       classification: "Neutral",
       return_vector: [880206.22, 880206.22, 880206.22],
+    },
+    adaptation_strategy: {
+      intervention_name: "Genetics Crop Management",
+      intervention_cost_usd: 85000,
+      npv_improvement_usd: 220000,
+      adaptation_roi_pct: 158.8,
+    },
+    adaptation_portfolio: {
+      recommended_strategy: "Genetics",
+      stress_level: 5,
+      analysis_timestamp: "2026-02-16T01:30:00Z",
+      options: [
+        {
+          tier: "Regenerative",
+          cost: 45000,
+          benefit: 130000,
+          roi: 188.9,
+        },
+        {
+          tier: "Genetics",
+          cost: 85000,
+          benefit: 220000,
+          roi: 158.8,
+        },
+        {
+          tier: "Infrastructure",
+          cost: 180000,
+          benefit: 390000,
+          roi: 116.7,
+        },
+      ],
     },
   },
   {
@@ -6331,6 +7354,37 @@ export const GLOBAL_ATLAS_DATA = [
       classification: "Neutral",
       return_vector: [917496.0, 942039.06, 966582.12],
     },
+    adaptation_strategy: {
+      intervention_name: "Genetics Crop Management",
+      intervention_cost_usd: 85000,
+      npv_improvement_usd: 220000,
+      adaptation_roi_pct: 158.8,
+    },
+    adaptation_portfolio: {
+      recommended_strategy: "Genetics",
+      stress_level: 5,
+      analysis_timestamp: "2026-02-16T01:30:00Z",
+      options: [
+        {
+          tier: "Regenerative",
+          cost: 45000,
+          benefit: 130000,
+          roi: 188.9,
+        },
+        {
+          tier: "Genetics",
+          cost: 85000,
+          benefit: 220000,
+          roi: 158.8,
+        },
+        {
+          tier: "Infrastructure",
+          cost: 180000,
+          benefit: 390000,
+          roi: 116.7,
+        },
+      ],
+    },
   },
   {
     project_type: "agriculture",
@@ -6516,6 +7570,37 @@ export const GLOBAL_ATLAS_DATA = [
       correlation_vs_global: 0.7216,
       classification: "Neutral",
       return_vector: [912845.36, 937776.02, 962706.62],
+    },
+    adaptation_strategy: {
+      intervention_name: "Genetics Crop Management",
+      intervention_cost_usd: 85000,
+      npv_improvement_usd: 220000,
+      adaptation_roi_pct: 158.8,
+    },
+    adaptation_portfolio: {
+      recommended_strategy: "Genetics",
+      stress_level: 5,
+      analysis_timestamp: "2026-02-16T01:30:00Z",
+      options: [
+        {
+          tier: "Regenerative",
+          cost: 45000,
+          benefit: 130000,
+          roi: 188.9,
+        },
+        {
+          tier: "Genetics",
+          cost: 85000,
+          benefit: 220000,
+          roi: 158.8,
+        },
+        {
+          tier: "Infrastructure",
+          cost: 180000,
+          benefit: 390000,
+          roi: 116.7,
+        },
+      ],
     },
   },
   {
@@ -6703,6 +7788,37 @@ export const GLOBAL_ATLAS_DATA = [
       classification: "Neutral",
       return_vector: [880206.22, 880206.22, 880206.22],
     },
+    adaptation_strategy: {
+      intervention_name: "Genetics Crop Management",
+      intervention_cost_usd: 85000,
+      npv_improvement_usd: 220000,
+      adaptation_roi_pct: 158.8,
+    },
+    adaptation_portfolio: {
+      recommended_strategy: "Genetics",
+      stress_level: 5,
+      analysis_timestamp: "2026-02-16T01:30:00Z",
+      options: [
+        {
+          tier: "Regenerative",
+          cost: 45000,
+          benefit: 130000,
+          roi: 188.9,
+        },
+        {
+          tier: "Genetics",
+          cost: 85000,
+          benefit: 220000,
+          roi: 158.8,
+        },
+        {
+          tier: "Infrastructure",
+          cost: 180000,
+          benefit: 390000,
+          roi: 116.7,
+        },
+      ],
+    },
   },
   {
     project_type: "agriculture",
@@ -6888,6 +8004,37 @@ export const GLOBAL_ATLAS_DATA = [
       correlation_vs_global: 0.7346,
       classification: "Neutral",
       return_vector: [948521.21, 970478.88, 992436.49],
+    },
+    adaptation_strategy: {
+      intervention_name: "Genetics Crop Management",
+      intervention_cost_usd: 85000,
+      npv_improvement_usd: 220000,
+      adaptation_roi_pct: 158.8,
+    },
+    adaptation_portfolio: {
+      recommended_strategy: "Genetics",
+      stress_level: 5,
+      analysis_timestamp: "2026-02-16T01:30:00Z",
+      options: [
+        {
+          tier: "Regenerative",
+          cost: 45000,
+          benefit: 130000,
+          roi: 188.9,
+        },
+        {
+          tier: "Genetics",
+          cost: 85000,
+          benefit: 220000,
+          roi: 158.8,
+        },
+        {
+          tier: "Infrastructure",
+          cost: 180000,
+          benefit: 390000,
+          roi: 116.7,
+        },
+      ],
     },
   },
   {
@@ -7076,6 +8223,37 @@ export const GLOBAL_ATLAS_DATA = [
       classification: "Neutral",
       return_vector: [886912.89, 917073.62, 976061.47],
     },
+    adaptation_strategy: {
+      intervention_name: "Genetics Crop Management",
+      intervention_cost_usd: 85000,
+      npv_improvement_usd: 220000,
+      adaptation_roi_pct: 158.8,
+    },
+    adaptation_portfolio: {
+      recommended_strategy: "Genetics",
+      stress_level: 5,
+      analysis_timestamp: "2026-02-16T01:30:00Z",
+      options: [
+        {
+          tier: "Regenerative",
+          cost: 45000,
+          benefit: 130000,
+          roi: 188.9,
+        },
+        {
+          tier: "Genetics",
+          cost: 85000,
+          benefit: 220000,
+          roi: 158.8,
+        },
+        {
+          tier: "Infrastructure",
+          cost: 180000,
+          benefit: 390000,
+          roi: 116.7,
+        },
+      ],
+    },
   },
   {
     project_type: "agriculture",
@@ -7262,6 +8440,37 @@ export const GLOBAL_ATLAS_DATA = [
       classification: "Concentrator",
       return_vector: [732736.61, 738335.54, 746205.5],
     },
+    adaptation_strategy: {
+      intervention_name: "Regenerative Crop Management",
+      intervention_cost_usd: 85000,
+      npv_improvement_usd: 220000,
+      adaptation_roi_pct: 158.8,
+    },
+    adaptation_portfolio: {
+      recommended_strategy: "Regenerative",
+      stress_level: 4,
+      analysis_timestamp: "2026-02-16T01:30:00Z",
+      options: [
+        {
+          tier: "Regenerative",
+          cost: 45000,
+          benefit: 130000,
+          roi: 188.9,
+        },
+        {
+          tier: "Genetics",
+          cost: 85000,
+          benefit: 220000,
+          roi: 158.8,
+        },
+        {
+          tier: "Infrastructure",
+          cost: 180000,
+          benefit: 390000,
+          roi: 116.7,
+        },
+      ],
+    },
   },
   {
     project_type: "agriculture",
@@ -7447,6 +8656,37 @@ export const GLOBAL_ATLAS_DATA = [
       correlation_vs_global: 0.0,
       classification: "Neutral",
       return_vector: [732736.61, 732736.61, 732736.61],
+    },
+    adaptation_strategy: {
+      intervention_name: "Genetics Crop Management",
+      intervention_cost_usd: 85000,
+      npv_improvement_usd: 220000,
+      adaptation_roi_pct: 158.8,
+    },
+    adaptation_portfolio: {
+      recommended_strategy: "Genetics",
+      stress_level: 5,
+      analysis_timestamp: "2026-02-16T01:30:00Z",
+      options: [
+        {
+          tier: "Regenerative",
+          cost: 45000,
+          benefit: 130000,
+          roi: 188.9,
+        },
+        {
+          tier: "Genetics",
+          cost: 85000,
+          benefit: 220000,
+          roi: 158.8,
+        },
+        {
+          tier: "Infrastructure",
+          cost: 180000,
+          benefit: 390000,
+          roi: 116.7,
+        },
+      ],
     },
   },
   {
@@ -7635,6 +8875,37 @@ export const GLOBAL_ATLAS_DATA = [
       classification: "Concentrator",
       return_vector: [880206.22, 880206.22, 931820.59],
     },
+    adaptation_strategy: {
+      intervention_name: "Regenerative Crop Management",
+      intervention_cost_usd: 85000,
+      npv_improvement_usd: 220000,
+      adaptation_roi_pct: 158.8,
+    },
+    adaptation_portfolio: {
+      recommended_strategy: "Regenerative",
+      stress_level: 4,
+      analysis_timestamp: "2026-02-16T01:30:00Z",
+      options: [
+        {
+          tier: "Regenerative",
+          cost: 45000,
+          benefit: 130000,
+          roi: 188.9,
+        },
+        {
+          tier: "Genetics",
+          cost: 85000,
+          benefit: 220000,
+          roi: 158.8,
+        },
+        {
+          tier: "Infrastructure",
+          cost: 180000,
+          benefit: 390000,
+          roi: 116.7,
+        },
+      ],
+    },
   },
   {
     project_type: "agriculture",
@@ -7820,6 +9091,37 @@ export const GLOBAL_ATLAS_DATA = [
       correlation_vs_global: 0.0,
       classification: "Neutral",
       return_vector: [880206.22, 880206.22, 880206.22],
+    },
+    adaptation_strategy: {
+      intervention_name: "Genetics Crop Management",
+      intervention_cost_usd: 85000,
+      npv_improvement_usd: 220000,
+      adaptation_roi_pct: 158.8,
+    },
+    adaptation_portfolio: {
+      recommended_strategy: "Genetics",
+      stress_level: 5,
+      analysis_timestamp: "2026-02-16T01:30:00Z",
+      options: [
+        {
+          tier: "Regenerative",
+          cost: 45000,
+          benefit: 130000,
+          roi: 188.9,
+        },
+        {
+          tier: "Genetics",
+          cost: 85000,
+          benefit: 220000,
+          roi: 158.8,
+        },
+        {
+          tier: "Infrastructure",
+          cost: 180000,
+          benefit: 390000,
+          roi: 116.7,
+        },
+      ],
     },
   },
   {
@@ -8007,6 +9309,37 @@ export const GLOBAL_ATLAS_DATA = [
       classification: "Neutral",
       return_vector: [880206.22, 880206.22, 880206.22],
     },
+    adaptation_strategy: {
+      intervention_name: "Genetics Crop Management",
+      intervention_cost_usd: 85000,
+      npv_improvement_usd: 220000,
+      adaptation_roi_pct: 158.8,
+    },
+    adaptation_portfolio: {
+      recommended_strategy: "Genetics",
+      stress_level: 5,
+      analysis_timestamp: "2026-02-16T01:30:00Z",
+      options: [
+        {
+          tier: "Regenerative",
+          cost: 45000,
+          benefit: 130000,
+          roi: 188.9,
+        },
+        {
+          tier: "Genetics",
+          cost: 85000,
+          benefit: 220000,
+          roi: 158.8,
+        },
+        {
+          tier: "Infrastructure",
+          cost: 180000,
+          benefit: 390000,
+          roi: 116.7,
+        },
+      ],
+    },
   },
   {
     project_type: "agriculture",
@@ -8192,6 +9525,37 @@ export const GLOBAL_ATLAS_DATA = [
       correlation_vs_global: 0.9942,
       classification: "Concentrator",
       return_vector: [880206.22, 880206.22, 890293.14],
+    },
+    adaptation_strategy: {
+      intervention_name: "Regenerative Crop Management",
+      intervention_cost_usd: 85000,
+      npv_improvement_usd: 220000,
+      adaptation_roi_pct: 158.8,
+    },
+    adaptation_portfolio: {
+      recommended_strategy: "Regenerative",
+      stress_level: 4,
+      analysis_timestamp: "2026-02-16T01:30:00Z",
+      options: [
+        {
+          tier: "Regenerative",
+          cost: 45000,
+          benefit: 130000,
+          roi: 188.9,
+        },
+        {
+          tier: "Genetics",
+          cost: 85000,
+          benefit: 220000,
+          roi: 158.8,
+        },
+        {
+          tier: "Infrastructure",
+          cost: 180000,
+          benefit: 390000,
+          roi: 116.7,
+        },
+      ],
     },
   },
   {
@@ -8380,6 +9744,37 @@ export const GLOBAL_ATLAS_DATA = [
       classification: "Neutral",
       return_vector: [742123.05, 749021.56, 755920.06],
     },
+    adaptation_strategy: {
+      intervention_name: "Genetics Crop Management",
+      intervention_cost_usd: 85000,
+      npv_improvement_usd: 220000,
+      adaptation_roi_pct: 158.8,
+    },
+    adaptation_portfolio: {
+      recommended_strategy: "Genetics",
+      stress_level: 5,
+      analysis_timestamp: "2026-02-16T01:30:00Z",
+      options: [
+        {
+          tier: "Regenerative",
+          cost: 45000,
+          benefit: 130000,
+          roi: 188.9,
+        },
+        {
+          tier: "Genetics",
+          cost: 85000,
+          benefit: 220000,
+          roi: 158.8,
+        },
+        {
+          tier: "Infrastructure",
+          cost: 180000,
+          benefit: 390000,
+          roi: 116.7,
+        },
+      ],
+    },
   },
   {
     project_type: "agriculture",
@@ -8567,6 +9962,37 @@ export const GLOBAL_ATLAS_DATA = [
       classification: "Neutral",
       return_vector: [730134.2, 732399.27, 732736.61],
     },
+    adaptation_strategy: {
+      intervention_name: "Genetics Crop Management",
+      intervention_cost_usd: 85000,
+      npv_improvement_usd: 220000,
+      adaptation_roi_pct: 158.8,
+    },
+    adaptation_portfolio: {
+      recommended_strategy: "Genetics",
+      stress_level: 5,
+      analysis_timestamp: "2026-02-16T01:30:00Z",
+      options: [
+        {
+          tier: "Regenerative",
+          cost: 45000,
+          benefit: 130000,
+          roi: 188.9,
+        },
+        {
+          tier: "Genetics",
+          cost: 85000,
+          benefit: 220000,
+          roi: 158.8,
+        },
+        {
+          tier: "Infrastructure",
+          cost: 180000,
+          benefit: 390000,
+          roi: 116.7,
+        },
+      ],
+    },
   },
   {
     project_type: "agriculture",
@@ -8752,6 +10178,37 @@ export const GLOBAL_ATLAS_DATA = [
       correlation_vs_global: -0.9865,
       classification: "Hedge",
       return_vector: [762466.49, 785237.27, 713432.84],
+    },
+    adaptation_strategy: {
+      intervention_name: "Infrastructure Crop Management",
+      intervention_cost_usd: 85000,
+      npv_improvement_usd: 220000,
+      adaptation_roi_pct: 158.8,
+    },
+    adaptation_portfolio: {
+      recommended_strategy: "Infrastructure",
+      stress_level: 7,
+      analysis_timestamp: "2026-02-16T01:30:00Z",
+      options: [
+        {
+          tier: "Regenerative",
+          cost: 45000,
+          benefit: 130000,
+          roi: 188.9,
+        },
+        {
+          tier: "Genetics",
+          cost: 85000,
+          benefit: 220000,
+          roi: 158.8,
+        },
+        {
+          tier: "Infrastructure",
+          cost: 180000,
+          benefit: 390000,
+          roi: 116.7,
+        },
+      ],
     },
   },
   {
@@ -8939,6 +10396,37 @@ export const GLOBAL_ATLAS_DATA = [
       classification: "Neutral",
       return_vector: [732736.61, 732736.61, 732736.61],
     },
+    adaptation_strategy: {
+      intervention_name: "Genetics Crop Management",
+      intervention_cost_usd: 85000,
+      npv_improvement_usd: 220000,
+      adaptation_roi_pct: 158.8,
+    },
+    adaptation_portfolio: {
+      recommended_strategy: "Genetics",
+      stress_level: 5,
+      analysis_timestamp: "2026-02-16T01:30:00Z",
+      options: [
+        {
+          tier: "Regenerative",
+          cost: 45000,
+          benefit: 130000,
+          roi: 188.9,
+        },
+        {
+          tier: "Genetics",
+          cost: 85000,
+          benefit: 220000,
+          roi: 158.8,
+        },
+        {
+          tier: "Infrastructure",
+          cost: 180000,
+          benefit: 390000,
+          roi: 116.7,
+        },
+      ],
+    },
   },
   {
     project_type: "agriculture",
@@ -9124,6 +10612,37 @@ export const GLOBAL_ATLAS_DATA = [
       correlation_vs_global: 0.9629,
       classification: "Concentrator",
       return_vector: [751229.3, 757368.95, 842660.46],
+    },
+    adaptation_strategy: {
+      intervention_name: "Regenerative Crop Management",
+      intervention_cost_usd: 85000,
+      npv_improvement_usd: 220000,
+      adaptation_roi_pct: 158.8,
+    },
+    adaptation_portfolio: {
+      recommended_strategy: "Regenerative",
+      stress_level: 4,
+      analysis_timestamp: "2026-02-16T01:30:00Z",
+      options: [
+        {
+          tier: "Regenerative",
+          cost: 45000,
+          benefit: 130000,
+          roi: 188.9,
+        },
+        {
+          tier: "Genetics",
+          cost: 85000,
+          benefit: 220000,
+          roi: 158.8,
+        },
+        {
+          tier: "Infrastructure",
+          cost: 180000,
+          benefit: 390000,
+          roi: 116.7,
+        },
+      ],
     },
   },
   {
@@ -9311,6 +10830,37 @@ export const GLOBAL_ATLAS_DATA = [
       classification: "Neutral",
       return_vector: [732736.61, 732736.61, 732736.61],
     },
+    adaptation_strategy: {
+      intervention_name: "Genetics Crop Management",
+      intervention_cost_usd: 85000,
+      npv_improvement_usd: 220000,
+      adaptation_roi_pct: 158.8,
+    },
+    adaptation_portfolio: {
+      recommended_strategy: "Genetics",
+      stress_level: 5,
+      analysis_timestamp: "2026-02-16T01:30:00Z",
+      options: [
+        {
+          tier: "Regenerative",
+          cost: 45000,
+          benefit: 130000,
+          roi: 188.9,
+        },
+        {
+          tier: "Genetics",
+          cost: 85000,
+          benefit: 220000,
+          roi: 158.8,
+        },
+        {
+          tier: "Infrastructure",
+          cost: 180000,
+          benefit: 390000,
+          roi: 116.7,
+        },
+      ],
+    },
   },
   {
     project_type: "coastal",
@@ -9480,6 +11030,37 @@ export const GLOBAL_ATLAS_DATA = [
       correlation_vs_global: 0.0,
       classification: "Neutral",
       return_vector: [0.0, 0.0, 0.0],
+    },
+    adaptation_strategy: {
+      intervention_name: "Genetics Crop Management",
+      intervention_cost_usd: 85000,
+      npv_improvement_usd: 220000,
+      adaptation_roi_pct: 158.8,
+    },
+    adaptation_portfolio: {
+      recommended_strategy: "Genetics",
+      stress_level: 5,
+      analysis_timestamp: "2026-02-16T01:30:00Z",
+      options: [
+        {
+          tier: "Regenerative",
+          cost: 45000,
+          benefit: 130000,
+          roi: 188.9,
+        },
+        {
+          tier: "Genetics",
+          cost: 85000,
+          benefit: 220000,
+          roi: 158.8,
+        },
+        {
+          tier: "Infrastructure",
+          cost: 180000,
+          benefit: 390000,
+          roi: 116.7,
+        },
+      ],
     },
   },
   {
@@ -9651,6 +11232,37 @@ export const GLOBAL_ATLAS_DATA = [
       classification: "Neutral",
       return_vector: [0.0, 0.0, 0.0],
     },
+    adaptation_strategy: {
+      intervention_name: "Genetics Crop Management",
+      intervention_cost_usd: 85000,
+      npv_improvement_usd: 220000,
+      adaptation_roi_pct: 158.8,
+    },
+    adaptation_portfolio: {
+      recommended_strategy: "Genetics",
+      stress_level: 5,
+      analysis_timestamp: "2026-02-16T01:30:00Z",
+      options: [
+        {
+          tier: "Regenerative",
+          cost: 45000,
+          benefit: 130000,
+          roi: 188.9,
+        },
+        {
+          tier: "Genetics",
+          cost: 85000,
+          benefit: 220000,
+          roi: 158.8,
+        },
+        {
+          tier: "Infrastructure",
+          cost: 180000,
+          benefit: 390000,
+          roi: 116.7,
+        },
+      ],
+    },
   },
   {
     project_type: "coastal",
@@ -9820,6 +11432,37 @@ export const GLOBAL_ATLAS_DATA = [
       correlation_vs_global: 0.0,
       classification: "Neutral",
       return_vector: [0.0, 0.0, 0.0],
+    },
+    adaptation_strategy: {
+      intervention_name: "Genetics Crop Management",
+      intervention_cost_usd: 85000,
+      npv_improvement_usd: 220000,
+      adaptation_roi_pct: 158.8,
+    },
+    adaptation_portfolio: {
+      recommended_strategy: "Genetics",
+      stress_level: 5,
+      analysis_timestamp: "2026-02-16T01:30:00Z",
+      options: [
+        {
+          tier: "Regenerative",
+          cost: 45000,
+          benefit: 130000,
+          roi: 188.9,
+        },
+        {
+          tier: "Genetics",
+          cost: 85000,
+          benefit: 220000,
+          roi: 158.8,
+        },
+        {
+          tier: "Infrastructure",
+          cost: 180000,
+          benefit: 390000,
+          roi: 116.7,
+        },
+      ],
     },
   },
   {
@@ -9991,6 +11634,37 @@ export const GLOBAL_ATLAS_DATA = [
       classification: "Neutral",
       return_vector: [0.0, 0.0, 0.0],
     },
+    adaptation_strategy: {
+      intervention_name: "Genetics Crop Management",
+      intervention_cost_usd: 85000,
+      npv_improvement_usd: 220000,
+      adaptation_roi_pct: 158.8,
+    },
+    adaptation_portfolio: {
+      recommended_strategy: "Genetics",
+      stress_level: 5,
+      analysis_timestamp: "2026-02-16T01:30:00Z",
+      options: [
+        {
+          tier: "Regenerative",
+          cost: 45000,
+          benefit: 130000,
+          roi: 188.9,
+        },
+        {
+          tier: "Genetics",
+          cost: 85000,
+          benefit: 220000,
+          roi: 158.8,
+        },
+        {
+          tier: "Infrastructure",
+          cost: 180000,
+          benefit: 390000,
+          roi: 116.7,
+        },
+      ],
+    },
   },
   {
     project_type: "coastal",
@@ -10160,6 +11834,37 @@ export const GLOBAL_ATLAS_DATA = [
       correlation_vs_global: 0.0,
       classification: "Neutral",
       return_vector: [0.0, 0.0, 0.0],
+    },
+    adaptation_strategy: {
+      intervention_name: "Genetics Crop Management",
+      intervention_cost_usd: 85000,
+      npv_improvement_usd: 220000,
+      adaptation_roi_pct: 158.8,
+    },
+    adaptation_portfolio: {
+      recommended_strategy: "Genetics",
+      stress_level: 5,
+      analysis_timestamp: "2026-02-16T01:30:00Z",
+      options: [
+        {
+          tier: "Regenerative",
+          cost: 45000,
+          benefit: 130000,
+          roi: 188.9,
+        },
+        {
+          tier: "Genetics",
+          cost: 85000,
+          benefit: 220000,
+          roi: 158.8,
+        },
+        {
+          tier: "Infrastructure",
+          cost: 180000,
+          benefit: 390000,
+          roi: 116.7,
+        },
+      ],
     },
   },
   {
@@ -10331,6 +12036,37 @@ export const GLOBAL_ATLAS_DATA = [
       classification: "Neutral",
       return_vector: [0.0, 0.0, 0.0],
     },
+    adaptation_strategy: {
+      intervention_name: "Genetics Crop Management",
+      intervention_cost_usd: 85000,
+      npv_improvement_usd: 220000,
+      adaptation_roi_pct: 158.8,
+    },
+    adaptation_portfolio: {
+      recommended_strategy: "Genetics",
+      stress_level: 5,
+      analysis_timestamp: "2026-02-16T01:30:00Z",
+      options: [
+        {
+          tier: "Regenerative",
+          cost: 45000,
+          benefit: 130000,
+          roi: 188.9,
+        },
+        {
+          tier: "Genetics",
+          cost: 85000,
+          benefit: 220000,
+          roi: 158.8,
+        },
+        {
+          tier: "Infrastructure",
+          cost: 180000,
+          benefit: 390000,
+          roi: 116.7,
+        },
+      ],
+    },
   },
   {
     project_type: "coastal",
@@ -10500,6 +12236,37 @@ export const GLOBAL_ATLAS_DATA = [
       correlation_vs_global: 0.0,
       classification: "Neutral",
       return_vector: [0.0, 0.0, 0.0],
+    },
+    adaptation_strategy: {
+      intervention_name: "Genetics Crop Management",
+      intervention_cost_usd: 85000,
+      npv_improvement_usd: 220000,
+      adaptation_roi_pct: 158.8,
+    },
+    adaptation_portfolio: {
+      recommended_strategy: "Genetics",
+      stress_level: 5,
+      analysis_timestamp: "2026-02-16T01:30:00Z",
+      options: [
+        {
+          tier: "Regenerative",
+          cost: 45000,
+          benefit: 130000,
+          roi: 188.9,
+        },
+        {
+          tier: "Genetics",
+          cost: 85000,
+          benefit: 220000,
+          roi: 158.8,
+        },
+        {
+          tier: "Infrastructure",
+          cost: 180000,
+          benefit: 390000,
+          roi: 116.7,
+        },
+      ],
     },
   },
   {
@@ -10671,6 +12438,37 @@ export const GLOBAL_ATLAS_DATA = [
       classification: "Neutral",
       return_vector: [0.0, 0.0, 0.0],
     },
+    adaptation_strategy: {
+      intervention_name: "Genetics Crop Management",
+      intervention_cost_usd: 85000,
+      npv_improvement_usd: 220000,
+      adaptation_roi_pct: 158.8,
+    },
+    adaptation_portfolio: {
+      recommended_strategy: "Genetics",
+      stress_level: 5,
+      analysis_timestamp: "2026-02-16T01:30:00Z",
+      options: [
+        {
+          tier: "Regenerative",
+          cost: 45000,
+          benefit: 130000,
+          roi: 188.9,
+        },
+        {
+          tier: "Genetics",
+          cost: 85000,
+          benefit: 220000,
+          roi: 158.8,
+        },
+        {
+          tier: "Infrastructure",
+          cost: 180000,
+          benefit: 390000,
+          roi: 116.7,
+        },
+      ],
+    },
   },
   {
     project_type: "coastal",
@@ -10840,6 +12638,37 @@ export const GLOBAL_ATLAS_DATA = [
       correlation_vs_global: 0.0,
       classification: "Neutral",
       return_vector: [0.0, 0.0, 0.0],
+    },
+    adaptation_strategy: {
+      intervention_name: "Genetics Crop Management",
+      intervention_cost_usd: 85000,
+      npv_improvement_usd: 220000,
+      adaptation_roi_pct: 158.8,
+    },
+    adaptation_portfolio: {
+      recommended_strategy: "Genetics",
+      stress_level: 5,
+      analysis_timestamp: "2026-02-16T01:30:00Z",
+      options: [
+        {
+          tier: "Regenerative",
+          cost: 45000,
+          benefit: 130000,
+          roi: 188.9,
+        },
+        {
+          tier: "Genetics",
+          cost: 85000,
+          benefit: 220000,
+          roi: 158.8,
+        },
+        {
+          tier: "Infrastructure",
+          cost: 180000,
+          benefit: 390000,
+          roi: 116.7,
+        },
+      ],
     },
   },
   {
@@ -11011,6 +12840,37 @@ export const GLOBAL_ATLAS_DATA = [
       classification: "Neutral",
       return_vector: [0.0, 0.0, 0.0],
     },
+    adaptation_strategy: {
+      intervention_name: "Genetics Crop Management",
+      intervention_cost_usd: 85000,
+      npv_improvement_usd: 220000,
+      adaptation_roi_pct: 158.8,
+    },
+    adaptation_portfolio: {
+      recommended_strategy: "Genetics",
+      stress_level: 5,
+      analysis_timestamp: "2026-02-16T01:30:00Z",
+      options: [
+        {
+          tier: "Regenerative",
+          cost: 45000,
+          benefit: 130000,
+          roi: 188.9,
+        },
+        {
+          tier: "Genetics",
+          cost: 85000,
+          benefit: 220000,
+          roi: 158.8,
+        },
+        {
+          tier: "Infrastructure",
+          cost: 180000,
+          benefit: 390000,
+          roi: 116.7,
+        },
+      ],
+    },
   },
   {
     project_type: "coastal",
@@ -11180,6 +13040,37 @@ export const GLOBAL_ATLAS_DATA = [
       correlation_vs_global: 0.0,
       classification: "Neutral",
       return_vector: [0.0, 0.0, 0.0],
+    },
+    adaptation_strategy: {
+      intervention_name: "Genetics Crop Management",
+      intervention_cost_usd: 85000,
+      npv_improvement_usd: 220000,
+      adaptation_roi_pct: 158.8,
+    },
+    adaptation_portfolio: {
+      recommended_strategy: "Genetics",
+      stress_level: 5,
+      analysis_timestamp: "2026-02-16T01:30:00Z",
+      options: [
+        {
+          tier: "Regenerative",
+          cost: 45000,
+          benefit: 130000,
+          roi: 188.9,
+        },
+        {
+          tier: "Genetics",
+          cost: 85000,
+          benefit: 220000,
+          roi: 158.8,
+        },
+        {
+          tier: "Infrastructure",
+          cost: 180000,
+          benefit: 390000,
+          roi: 116.7,
+        },
+      ],
     },
   },
   {
@@ -11351,6 +13242,37 @@ export const GLOBAL_ATLAS_DATA = [
       classification: "Neutral",
       return_vector: [0.0, 0.0, 0.0],
     },
+    adaptation_strategy: {
+      intervention_name: "Genetics Crop Management",
+      intervention_cost_usd: 85000,
+      npv_improvement_usd: 220000,
+      adaptation_roi_pct: 158.8,
+    },
+    adaptation_portfolio: {
+      recommended_strategy: "Genetics",
+      stress_level: 5,
+      analysis_timestamp: "2026-02-16T01:30:00Z",
+      options: [
+        {
+          tier: "Regenerative",
+          cost: 45000,
+          benefit: 130000,
+          roi: 188.9,
+        },
+        {
+          tier: "Genetics",
+          cost: 85000,
+          benefit: 220000,
+          roi: 158.8,
+        },
+        {
+          tier: "Infrastructure",
+          cost: 180000,
+          benefit: 390000,
+          roi: 116.7,
+        },
+      ],
+    },
   },
   {
     project_type: "coastal",
@@ -11520,6 +13442,37 @@ export const GLOBAL_ATLAS_DATA = [
       correlation_vs_global: 0.0,
       classification: "Neutral",
       return_vector: [0.0, 0.0, 0.0],
+    },
+    adaptation_strategy: {
+      intervention_name: "Genetics Crop Management",
+      intervention_cost_usd: 85000,
+      npv_improvement_usd: 220000,
+      adaptation_roi_pct: 158.8,
+    },
+    adaptation_portfolio: {
+      recommended_strategy: "Genetics",
+      stress_level: 5,
+      analysis_timestamp: "2026-02-16T01:30:00Z",
+      options: [
+        {
+          tier: "Regenerative",
+          cost: 45000,
+          benefit: 130000,
+          roi: 188.9,
+        },
+        {
+          tier: "Genetics",
+          cost: 85000,
+          benefit: 220000,
+          roi: 158.8,
+        },
+        {
+          tier: "Infrastructure",
+          cost: 180000,
+          benefit: 390000,
+          roi: 116.7,
+        },
+      ],
     },
   },
   {
@@ -11691,6 +13644,37 @@ export const GLOBAL_ATLAS_DATA = [
       classification: "Neutral",
       return_vector: [0.0, 0.0, 0.0],
     },
+    adaptation_strategy: {
+      intervention_name: "Genetics Crop Management",
+      intervention_cost_usd: 85000,
+      npv_improvement_usd: 220000,
+      adaptation_roi_pct: 158.8,
+    },
+    adaptation_portfolio: {
+      recommended_strategy: "Genetics",
+      stress_level: 5,
+      analysis_timestamp: "2026-02-16T01:30:00Z",
+      options: [
+        {
+          tier: "Regenerative",
+          cost: 45000,
+          benefit: 130000,
+          roi: 188.9,
+        },
+        {
+          tier: "Genetics",
+          cost: 85000,
+          benefit: 220000,
+          roi: 158.8,
+        },
+        {
+          tier: "Infrastructure",
+          cost: 180000,
+          benefit: 390000,
+          roi: 116.7,
+        },
+      ],
+    },
   },
   {
     project_type: "coastal",
@@ -11860,6 +13844,37 @@ export const GLOBAL_ATLAS_DATA = [
       correlation_vs_global: 0.0,
       classification: "Neutral",
       return_vector: [0.0, 0.0, 0.0],
+    },
+    adaptation_strategy: {
+      intervention_name: "Genetics Crop Management",
+      intervention_cost_usd: 85000,
+      npv_improvement_usd: 220000,
+      adaptation_roi_pct: 158.8,
+    },
+    adaptation_portfolio: {
+      recommended_strategy: "Genetics",
+      stress_level: 5,
+      analysis_timestamp: "2026-02-16T01:30:00Z",
+      options: [
+        {
+          tier: "Regenerative",
+          cost: 45000,
+          benefit: 130000,
+          roi: 188.9,
+        },
+        {
+          tier: "Genetics",
+          cost: 85000,
+          benefit: 220000,
+          roi: 158.8,
+        },
+        {
+          tier: "Infrastructure",
+          cost: 180000,
+          benefit: 390000,
+          roi: 116.7,
+        },
+      ],
     },
   },
   {
@@ -12031,6 +14046,37 @@ export const GLOBAL_ATLAS_DATA = [
       classification: "Neutral",
       return_vector: [0.0, 0.0, 0.0],
     },
+    adaptation_strategy: {
+      intervention_name: "Genetics Crop Management",
+      intervention_cost_usd: 85000,
+      npv_improvement_usd: 220000,
+      adaptation_roi_pct: 158.8,
+    },
+    adaptation_portfolio: {
+      recommended_strategy: "Genetics",
+      stress_level: 5,
+      analysis_timestamp: "2026-02-16T01:30:00Z",
+      options: [
+        {
+          tier: "Regenerative",
+          cost: 45000,
+          benefit: 130000,
+          roi: 188.9,
+        },
+        {
+          tier: "Genetics",
+          cost: 85000,
+          benefit: 220000,
+          roi: 158.8,
+        },
+        {
+          tier: "Infrastructure",
+          cost: 180000,
+          benefit: 390000,
+          roi: 116.7,
+        },
+      ],
+    },
   },
   {
     project_type: "coastal",
@@ -12200,6 +14246,37 @@ export const GLOBAL_ATLAS_DATA = [
       correlation_vs_global: 0.0,
       classification: "Neutral",
       return_vector: [0.0, 0.0, 0.0],
+    },
+    adaptation_strategy: {
+      intervention_name: "Genetics Crop Management",
+      intervention_cost_usd: 85000,
+      npv_improvement_usd: 220000,
+      adaptation_roi_pct: 158.8,
+    },
+    adaptation_portfolio: {
+      recommended_strategy: "Genetics",
+      stress_level: 5,
+      analysis_timestamp: "2026-02-16T01:30:00Z",
+      options: [
+        {
+          tier: "Regenerative",
+          cost: 45000,
+          benefit: 130000,
+          roi: 188.9,
+        },
+        {
+          tier: "Genetics",
+          cost: 85000,
+          benefit: 220000,
+          roi: 158.8,
+        },
+        {
+          tier: "Infrastructure",
+          cost: 180000,
+          benefit: 390000,
+          roi: 116.7,
+        },
+      ],
     },
   },
   {
@@ -12371,6 +14448,37 @@ export const GLOBAL_ATLAS_DATA = [
       classification: "Neutral",
       return_vector: [0.0, 0.0, 0.0],
     },
+    adaptation_strategy: {
+      intervention_name: "Genetics Crop Management",
+      intervention_cost_usd: 85000,
+      npv_improvement_usd: 220000,
+      adaptation_roi_pct: 158.8,
+    },
+    adaptation_portfolio: {
+      recommended_strategy: "Genetics",
+      stress_level: 5,
+      analysis_timestamp: "2026-02-16T01:30:00Z",
+      options: [
+        {
+          tier: "Regenerative",
+          cost: 45000,
+          benefit: 130000,
+          roi: 188.9,
+        },
+        {
+          tier: "Genetics",
+          cost: 85000,
+          benefit: 220000,
+          roi: 158.8,
+        },
+        {
+          tier: "Infrastructure",
+          cost: 180000,
+          benefit: 390000,
+          roi: 116.7,
+        },
+      ],
+    },
   },
   {
     project_type: "coastal",
@@ -12540,6 +14648,37 @@ export const GLOBAL_ATLAS_DATA = [
       correlation_vs_global: 0.0,
       classification: "Neutral",
       return_vector: [0.0, 0.0, 0.0],
+    },
+    adaptation_strategy: {
+      intervention_name: "Genetics Crop Management",
+      intervention_cost_usd: 85000,
+      npv_improvement_usd: 220000,
+      adaptation_roi_pct: 158.8,
+    },
+    adaptation_portfolio: {
+      recommended_strategy: "Genetics",
+      stress_level: 5,
+      analysis_timestamp: "2026-02-16T01:30:00Z",
+      options: [
+        {
+          tier: "Regenerative",
+          cost: 45000,
+          benefit: 130000,
+          roi: 188.9,
+        },
+        {
+          tier: "Genetics",
+          cost: 85000,
+          benefit: 220000,
+          roi: 158.8,
+        },
+        {
+          tier: "Infrastructure",
+          cost: 180000,
+          benefit: 390000,
+          roi: 116.7,
+        },
+      ],
     },
   },
   {
@@ -12711,6 +14850,37 @@ export const GLOBAL_ATLAS_DATA = [
       classification: "Neutral",
       return_vector: [0.0, 0.0, 0.0],
     },
+    adaptation_strategy: {
+      intervention_name: "Genetics Crop Management",
+      intervention_cost_usd: 85000,
+      npv_improvement_usd: 220000,
+      adaptation_roi_pct: 158.8,
+    },
+    adaptation_portfolio: {
+      recommended_strategy: "Genetics",
+      stress_level: 5,
+      analysis_timestamp: "2026-02-16T01:30:00Z",
+      options: [
+        {
+          tier: "Regenerative",
+          cost: 45000,
+          benefit: 130000,
+          roi: 188.9,
+        },
+        {
+          tier: "Genetics",
+          cost: 85000,
+          benefit: 220000,
+          roi: 158.8,
+        },
+        {
+          tier: "Infrastructure",
+          cost: 180000,
+          benefit: 390000,
+          roi: 116.7,
+        },
+      ],
+    },
   },
   {
     project_type: "coastal",
@@ -12880,6 +15050,37 @@ export const GLOBAL_ATLAS_DATA = [
       correlation_vs_global: 0.0,
       classification: "Neutral",
       return_vector: [0.0, 0.0, 0.0],
+    },
+    adaptation_strategy: {
+      intervention_name: "Genetics Crop Management",
+      intervention_cost_usd: 85000,
+      npv_improvement_usd: 220000,
+      adaptation_roi_pct: 158.8,
+    },
+    adaptation_portfolio: {
+      recommended_strategy: "Genetics",
+      stress_level: 5,
+      analysis_timestamp: "2026-02-16T01:30:00Z",
+      options: [
+        {
+          tier: "Regenerative",
+          cost: 45000,
+          benefit: 130000,
+          roi: 188.9,
+        },
+        {
+          tier: "Genetics",
+          cost: 85000,
+          benefit: 220000,
+          roi: 158.8,
+        },
+        {
+          tier: "Infrastructure",
+          cost: 180000,
+          benefit: 390000,
+          roi: 116.7,
+        },
+      ],
     },
   },
   {
@@ -13051,6 +15252,37 @@ export const GLOBAL_ATLAS_DATA = [
       classification: "Neutral",
       return_vector: [0.0, 0.0, 0.0],
     },
+    adaptation_strategy: {
+      intervention_name: "Genetics Crop Management",
+      intervention_cost_usd: 85000,
+      npv_improvement_usd: 220000,
+      adaptation_roi_pct: 158.8,
+    },
+    adaptation_portfolio: {
+      recommended_strategy: "Genetics",
+      stress_level: 5,
+      analysis_timestamp: "2026-02-16T01:30:00Z",
+      options: [
+        {
+          tier: "Regenerative",
+          cost: 45000,
+          benefit: 130000,
+          roi: 188.9,
+        },
+        {
+          tier: "Genetics",
+          cost: 85000,
+          benefit: 220000,
+          roi: 158.8,
+        },
+        {
+          tier: "Infrastructure",
+          cost: 180000,
+          benefit: 390000,
+          roi: 116.7,
+        },
+      ],
+    },
   },
   {
     project_type: "coastal",
@@ -13220,6 +15452,37 @@ export const GLOBAL_ATLAS_DATA = [
       correlation_vs_global: 0.0,
       classification: "Neutral",
       return_vector: [0.0, 0.0, 0.0],
+    },
+    adaptation_strategy: {
+      intervention_name: "Genetics Crop Management",
+      intervention_cost_usd: 85000,
+      npv_improvement_usd: 220000,
+      adaptation_roi_pct: 158.8,
+    },
+    adaptation_portfolio: {
+      recommended_strategy: "Genetics",
+      stress_level: 5,
+      analysis_timestamp: "2026-02-16T01:30:00Z",
+      options: [
+        {
+          tier: "Regenerative",
+          cost: 45000,
+          benefit: 130000,
+          roi: 188.9,
+        },
+        {
+          tier: "Genetics",
+          cost: 85000,
+          benefit: 220000,
+          roi: 158.8,
+        },
+        {
+          tier: "Infrastructure",
+          cost: 180000,
+          benefit: 390000,
+          roi: 116.7,
+        },
+      ],
     },
   },
   {
@@ -13391,6 +15654,37 @@ export const GLOBAL_ATLAS_DATA = [
       classification: "Neutral",
       return_vector: [0.0, 0.0, 0.0],
     },
+    adaptation_strategy: {
+      intervention_name: "Genetics Crop Management",
+      intervention_cost_usd: 85000,
+      npv_improvement_usd: 220000,
+      adaptation_roi_pct: 158.8,
+    },
+    adaptation_portfolio: {
+      recommended_strategy: "Genetics",
+      stress_level: 5,
+      analysis_timestamp: "2026-02-16T01:30:00Z",
+      options: [
+        {
+          tier: "Regenerative",
+          cost: 45000,
+          benefit: 130000,
+          roi: 188.9,
+        },
+        {
+          tier: "Genetics",
+          cost: 85000,
+          benefit: 220000,
+          roi: 158.8,
+        },
+        {
+          tier: "Infrastructure",
+          cost: 180000,
+          benefit: 390000,
+          roi: 116.7,
+        },
+      ],
+    },
   },
   {
     project_type: "coastal",
@@ -13560,6 +15854,37 @@ export const GLOBAL_ATLAS_DATA = [
       correlation_vs_global: 0.0,
       classification: "Neutral",
       return_vector: [0.0, 0.0, 0.0],
+    },
+    adaptation_strategy: {
+      intervention_name: "Genetics Crop Management",
+      intervention_cost_usd: 85000,
+      npv_improvement_usd: 220000,
+      adaptation_roi_pct: 158.8,
+    },
+    adaptation_portfolio: {
+      recommended_strategy: "Genetics",
+      stress_level: 5,
+      analysis_timestamp: "2026-02-16T01:30:00Z",
+      options: [
+        {
+          tier: "Regenerative",
+          cost: 45000,
+          benefit: 130000,
+          roi: 188.9,
+        },
+        {
+          tier: "Genetics",
+          cost: 85000,
+          benefit: 220000,
+          roi: 158.8,
+        },
+        {
+          tier: "Infrastructure",
+          cost: 180000,
+          benefit: 390000,
+          roi: 116.7,
+        },
+      ],
     },
   },
   {
@@ -13750,6 +16075,37 @@ export const GLOBAL_ATLAS_DATA = [
       classification: "Neutral",
       return_vector: [0.0, 0.0, 0.0],
     },
+    adaptation_strategy: {
+      intervention_name: "Genetics Crop Management",
+      intervention_cost_usd: 85000,
+      npv_improvement_usd: 220000,
+      adaptation_roi_pct: 158.8,
+    },
+    adaptation_portfolio: {
+      recommended_strategy: "Genetics",
+      stress_level: 5,
+      analysis_timestamp: "2026-02-16T01:30:00Z",
+      options: [
+        {
+          tier: "Regenerative",
+          cost: 45000,
+          benefit: 130000,
+          roi: 188.9,
+        },
+        {
+          tier: "Genetics",
+          cost: 85000,
+          benefit: 220000,
+          roi: 158.8,
+        },
+        {
+          tier: "Infrastructure",
+          cost: 180000,
+          benefit: 390000,
+          roi: 116.7,
+        },
+      ],
+    },
   },
   {
     project_type: "flood",
@@ -13938,6 +16294,37 @@ export const GLOBAL_ATLAS_DATA = [
       correlation_vs_global: 0.0,
       classification: "Neutral",
       return_vector: [0.0, 0.0, 0.0],
+    },
+    adaptation_strategy: {
+      intervention_name: "Genetics Crop Management",
+      intervention_cost_usd: 85000,
+      npv_improvement_usd: 220000,
+      adaptation_roi_pct: 158.8,
+    },
+    adaptation_portfolio: {
+      recommended_strategy: "Genetics",
+      stress_level: 5,
+      analysis_timestamp: "2026-02-16T01:30:00Z",
+      options: [
+        {
+          tier: "Regenerative",
+          cost: 45000,
+          benefit: 130000,
+          roi: 188.9,
+        },
+        {
+          tier: "Genetics",
+          cost: 85000,
+          benefit: 220000,
+          roi: 158.8,
+        },
+        {
+          tier: "Infrastructure",
+          cost: 180000,
+          benefit: 390000,
+          roi: 116.7,
+        },
+      ],
     },
   },
   {
@@ -14128,6 +16515,37 @@ export const GLOBAL_ATLAS_DATA = [
       classification: "Neutral",
       return_vector: [0.0, 0.0, 0.0],
     },
+    adaptation_strategy: {
+      intervention_name: "Genetics Crop Management",
+      intervention_cost_usd: 85000,
+      npv_improvement_usd: 220000,
+      adaptation_roi_pct: 158.8,
+    },
+    adaptation_portfolio: {
+      recommended_strategy: "Genetics",
+      stress_level: 5,
+      analysis_timestamp: "2026-02-16T01:30:00Z",
+      options: [
+        {
+          tier: "Regenerative",
+          cost: 45000,
+          benefit: 130000,
+          roi: 188.9,
+        },
+        {
+          tier: "Genetics",
+          cost: 85000,
+          benefit: 220000,
+          roi: 158.8,
+        },
+        {
+          tier: "Infrastructure",
+          cost: 180000,
+          benefit: 390000,
+          roi: 116.7,
+        },
+      ],
+    },
   },
   {
     project_type: "flood",
@@ -14316,6 +16734,37 @@ export const GLOBAL_ATLAS_DATA = [
       correlation_vs_global: 0.0,
       classification: "Neutral",
       return_vector: [0.0, 0.0, 0.0],
+    },
+    adaptation_strategy: {
+      intervention_name: "Genetics Crop Management",
+      intervention_cost_usd: 85000,
+      npv_improvement_usd: 220000,
+      adaptation_roi_pct: 158.8,
+    },
+    adaptation_portfolio: {
+      recommended_strategy: "Genetics",
+      stress_level: 5,
+      analysis_timestamp: "2026-02-16T01:30:00Z",
+      options: [
+        {
+          tier: "Regenerative",
+          cost: 45000,
+          benefit: 130000,
+          roi: 188.9,
+        },
+        {
+          tier: "Genetics",
+          cost: 85000,
+          benefit: 220000,
+          roi: 158.8,
+        },
+        {
+          tier: "Infrastructure",
+          cost: 180000,
+          benefit: 390000,
+          roi: 116.7,
+        },
+      ],
     },
   },
   {
@@ -14506,6 +16955,37 @@ export const GLOBAL_ATLAS_DATA = [
       classification: "Neutral",
       return_vector: [0.0, 0.0, 0.0],
     },
+    adaptation_strategy: {
+      intervention_name: "Genetics Crop Management",
+      intervention_cost_usd: 85000,
+      npv_improvement_usd: 220000,
+      adaptation_roi_pct: 158.8,
+    },
+    adaptation_portfolio: {
+      recommended_strategy: "Genetics",
+      stress_level: 5,
+      analysis_timestamp: "2026-02-16T01:30:00Z",
+      options: [
+        {
+          tier: "Regenerative",
+          cost: 45000,
+          benefit: 130000,
+          roi: 188.9,
+        },
+        {
+          tier: "Genetics",
+          cost: 85000,
+          benefit: 220000,
+          roi: 158.8,
+        },
+        {
+          tier: "Infrastructure",
+          cost: 180000,
+          benefit: 390000,
+          roi: 116.7,
+        },
+      ],
+    },
   },
   {
     project_type: "flood",
@@ -14694,6 +17174,37 @@ export const GLOBAL_ATLAS_DATA = [
       correlation_vs_global: 0.0,
       classification: "Neutral",
       return_vector: [0.0, 0.0, 0.0],
+    },
+    adaptation_strategy: {
+      intervention_name: "Genetics Crop Management",
+      intervention_cost_usd: 85000,
+      npv_improvement_usd: 220000,
+      adaptation_roi_pct: 158.8,
+    },
+    adaptation_portfolio: {
+      recommended_strategy: "Genetics",
+      stress_level: 5,
+      analysis_timestamp: "2026-02-16T01:30:00Z",
+      options: [
+        {
+          tier: "Regenerative",
+          cost: 45000,
+          benefit: 130000,
+          roi: 188.9,
+        },
+        {
+          tier: "Genetics",
+          cost: 85000,
+          benefit: 220000,
+          roi: 158.8,
+        },
+        {
+          tier: "Infrastructure",
+          cost: 180000,
+          benefit: 390000,
+          roi: 116.7,
+        },
+      ],
     },
   },
   {
@@ -14884,6 +17395,37 @@ export const GLOBAL_ATLAS_DATA = [
       classification: "Neutral",
       return_vector: [0.0, 0.0, 0.0],
     },
+    adaptation_strategy: {
+      intervention_name: "Genetics Crop Management",
+      intervention_cost_usd: 85000,
+      npv_improvement_usd: 220000,
+      adaptation_roi_pct: 158.8,
+    },
+    adaptation_portfolio: {
+      recommended_strategy: "Genetics",
+      stress_level: 5,
+      analysis_timestamp: "2026-02-16T01:30:00Z",
+      options: [
+        {
+          tier: "Regenerative",
+          cost: 45000,
+          benefit: 130000,
+          roi: 188.9,
+        },
+        {
+          tier: "Genetics",
+          cost: 85000,
+          benefit: 220000,
+          roi: 158.8,
+        },
+        {
+          tier: "Infrastructure",
+          cost: 180000,
+          benefit: 390000,
+          roi: 116.7,
+        },
+      ],
+    },
   },
   {
     project_type: "flood",
@@ -15072,6 +17614,37 @@ export const GLOBAL_ATLAS_DATA = [
       correlation_vs_global: 0.0,
       classification: "Neutral",
       return_vector: [0.0, 0.0, 0.0],
+    },
+    adaptation_strategy: {
+      intervention_name: "Genetics Crop Management",
+      intervention_cost_usd: 85000,
+      npv_improvement_usd: 220000,
+      adaptation_roi_pct: 158.8,
+    },
+    adaptation_portfolio: {
+      recommended_strategy: "Genetics",
+      stress_level: 5,
+      analysis_timestamp: "2026-02-16T01:30:00Z",
+      options: [
+        {
+          tier: "Regenerative",
+          cost: 45000,
+          benefit: 130000,
+          roi: 188.9,
+        },
+        {
+          tier: "Genetics",
+          cost: 85000,
+          benefit: 220000,
+          roi: 158.8,
+        },
+        {
+          tier: "Infrastructure",
+          cost: 180000,
+          benefit: 390000,
+          roi: 116.7,
+        },
+      ],
     },
   },
   {
@@ -15262,6 +17835,37 @@ export const GLOBAL_ATLAS_DATA = [
       classification: "Neutral",
       return_vector: [0.0, 0.0, 0.0],
     },
+    adaptation_strategy: {
+      intervention_name: "Genetics Crop Management",
+      intervention_cost_usd: 85000,
+      npv_improvement_usd: 220000,
+      adaptation_roi_pct: 158.8,
+    },
+    adaptation_portfolio: {
+      recommended_strategy: "Genetics",
+      stress_level: 5,
+      analysis_timestamp: "2026-02-16T01:30:00Z",
+      options: [
+        {
+          tier: "Regenerative",
+          cost: 45000,
+          benefit: 130000,
+          roi: 188.9,
+        },
+        {
+          tier: "Genetics",
+          cost: 85000,
+          benefit: 220000,
+          roi: 158.8,
+        },
+        {
+          tier: "Infrastructure",
+          cost: 180000,
+          benefit: 390000,
+          roi: 116.7,
+        },
+      ],
+    },
   },
   {
     project_type: "flood",
@@ -15450,6 +18054,37 @@ export const GLOBAL_ATLAS_DATA = [
       correlation_vs_global: 0.0,
       classification: "Neutral",
       return_vector: [0.0, 0.0, 0.0],
+    },
+    adaptation_strategy: {
+      intervention_name: "Genetics Crop Management",
+      intervention_cost_usd: 85000,
+      npv_improvement_usd: 220000,
+      adaptation_roi_pct: 158.8,
+    },
+    adaptation_portfolio: {
+      recommended_strategy: "Genetics",
+      stress_level: 5,
+      analysis_timestamp: "2026-02-16T01:30:00Z",
+      options: [
+        {
+          tier: "Regenerative",
+          cost: 45000,
+          benefit: 130000,
+          roi: 188.9,
+        },
+        {
+          tier: "Genetics",
+          cost: 85000,
+          benefit: 220000,
+          roi: 158.8,
+        },
+        {
+          tier: "Infrastructure",
+          cost: 180000,
+          benefit: 390000,
+          roi: 116.7,
+        },
+      ],
     },
   },
   {
@@ -15640,6 +18275,37 @@ export const GLOBAL_ATLAS_DATA = [
       classification: "Neutral",
       return_vector: [0.0, 0.0, 0.0],
     },
+    adaptation_strategy: {
+      intervention_name: "Genetics Crop Management",
+      intervention_cost_usd: 85000,
+      npv_improvement_usd: 220000,
+      adaptation_roi_pct: 158.8,
+    },
+    adaptation_portfolio: {
+      recommended_strategy: "Genetics",
+      stress_level: 5,
+      analysis_timestamp: "2026-02-16T01:30:00Z",
+      options: [
+        {
+          tier: "Regenerative",
+          cost: 45000,
+          benefit: 130000,
+          roi: 188.9,
+        },
+        {
+          tier: "Genetics",
+          cost: 85000,
+          benefit: 220000,
+          roi: 158.8,
+        },
+        {
+          tier: "Infrastructure",
+          cost: 180000,
+          benefit: 390000,
+          roi: 116.7,
+        },
+      ],
+    },
   },
   {
     project_type: "flood",
@@ -15828,6 +18494,37 @@ export const GLOBAL_ATLAS_DATA = [
       correlation_vs_global: 0.0,
       classification: "Neutral",
       return_vector: [0.0, 0.0, 0.0],
+    },
+    adaptation_strategy: {
+      intervention_name: "Genetics Crop Management",
+      intervention_cost_usd: 85000,
+      npv_improvement_usd: 220000,
+      adaptation_roi_pct: 158.8,
+    },
+    adaptation_portfolio: {
+      recommended_strategy: "Genetics",
+      stress_level: 5,
+      analysis_timestamp: "2026-02-16T01:30:00Z",
+      options: [
+        {
+          tier: "Regenerative",
+          cost: 45000,
+          benefit: 130000,
+          roi: 188.9,
+        },
+        {
+          tier: "Genetics",
+          cost: 85000,
+          benefit: 220000,
+          roi: 158.8,
+        },
+        {
+          tier: "Infrastructure",
+          cost: 180000,
+          benefit: 390000,
+          roi: 116.7,
+        },
+      ],
     },
   },
   {
@@ -16018,6 +18715,37 @@ export const GLOBAL_ATLAS_DATA = [
       classification: "Neutral",
       return_vector: [0.0, 0.0, 0.0],
     },
+    adaptation_strategy: {
+      intervention_name: "Genetics Crop Management",
+      intervention_cost_usd: 85000,
+      npv_improvement_usd: 220000,
+      adaptation_roi_pct: 158.8,
+    },
+    adaptation_portfolio: {
+      recommended_strategy: "Genetics",
+      stress_level: 5,
+      analysis_timestamp: "2026-02-16T01:30:00Z",
+      options: [
+        {
+          tier: "Regenerative",
+          cost: 45000,
+          benefit: 130000,
+          roi: 188.9,
+        },
+        {
+          tier: "Genetics",
+          cost: 85000,
+          benefit: 220000,
+          roi: 158.8,
+        },
+        {
+          tier: "Infrastructure",
+          cost: 180000,
+          benefit: 390000,
+          roi: 116.7,
+        },
+      ],
+    },
   },
   {
     project_type: "flood",
@@ -16206,6 +18934,37 @@ export const GLOBAL_ATLAS_DATA = [
       correlation_vs_global: 0.0,
       classification: "Neutral",
       return_vector: [0.0, 0.0, 0.0],
+    },
+    adaptation_strategy: {
+      intervention_name: "Genetics Crop Management",
+      intervention_cost_usd: 85000,
+      npv_improvement_usd: 220000,
+      adaptation_roi_pct: 158.8,
+    },
+    adaptation_portfolio: {
+      recommended_strategy: "Genetics",
+      stress_level: 5,
+      analysis_timestamp: "2026-02-16T01:30:00Z",
+      options: [
+        {
+          tier: "Regenerative",
+          cost: 45000,
+          benefit: 130000,
+          roi: 188.9,
+        },
+        {
+          tier: "Genetics",
+          cost: 85000,
+          benefit: 220000,
+          roi: 158.8,
+        },
+        {
+          tier: "Infrastructure",
+          cost: 180000,
+          benefit: 390000,
+          roi: 116.7,
+        },
+      ],
     },
   },
   {
@@ -16396,6 +19155,37 @@ export const GLOBAL_ATLAS_DATA = [
       classification: "Neutral",
       return_vector: [0.0, 0.0, 0.0],
     },
+    adaptation_strategy: {
+      intervention_name: "Genetics Crop Management",
+      intervention_cost_usd: 85000,
+      npv_improvement_usd: 220000,
+      adaptation_roi_pct: 158.8,
+    },
+    adaptation_portfolio: {
+      recommended_strategy: "Genetics",
+      stress_level: 5,
+      analysis_timestamp: "2026-02-16T01:30:00Z",
+      options: [
+        {
+          tier: "Regenerative",
+          cost: 45000,
+          benefit: 130000,
+          roi: 188.9,
+        },
+        {
+          tier: "Genetics",
+          cost: 85000,
+          benefit: 220000,
+          roi: 158.8,
+        },
+        {
+          tier: "Infrastructure",
+          cost: 180000,
+          benefit: 390000,
+          roi: 116.7,
+        },
+      ],
+    },
   },
   {
     project_type: "flood",
@@ -16584,6 +19374,37 @@ export const GLOBAL_ATLAS_DATA = [
       correlation_vs_global: 0.0,
       classification: "Neutral",
       return_vector: [0.0, 0.0, 0.0],
+    },
+    adaptation_strategy: {
+      intervention_name: "Genetics Crop Management",
+      intervention_cost_usd: 85000,
+      npv_improvement_usd: 220000,
+      adaptation_roi_pct: 158.8,
+    },
+    adaptation_portfolio: {
+      recommended_strategy: "Genetics",
+      stress_level: 5,
+      analysis_timestamp: "2026-02-16T01:30:00Z",
+      options: [
+        {
+          tier: "Regenerative",
+          cost: 45000,
+          benefit: 130000,
+          roi: 188.9,
+        },
+        {
+          tier: "Genetics",
+          cost: 85000,
+          benefit: 220000,
+          roi: 158.8,
+        },
+        {
+          tier: "Infrastructure",
+          cost: 180000,
+          benefit: 390000,
+          roi: 116.7,
+        },
+      ],
     },
   },
   {
@@ -16774,6 +19595,37 @@ export const GLOBAL_ATLAS_DATA = [
       classification: "Neutral",
       return_vector: [0.0, 0.0, 0.0],
     },
+    adaptation_strategy: {
+      intervention_name: "Genetics Crop Management",
+      intervention_cost_usd: 85000,
+      npv_improvement_usd: 220000,
+      adaptation_roi_pct: 158.8,
+    },
+    adaptation_portfolio: {
+      recommended_strategy: "Genetics",
+      stress_level: 5,
+      analysis_timestamp: "2026-02-16T01:30:00Z",
+      options: [
+        {
+          tier: "Regenerative",
+          cost: 45000,
+          benefit: 130000,
+          roi: 188.9,
+        },
+        {
+          tier: "Genetics",
+          cost: 85000,
+          benefit: 220000,
+          roi: 158.8,
+        },
+        {
+          tier: "Infrastructure",
+          cost: 180000,
+          benefit: 390000,
+          roi: 116.7,
+        },
+      ],
+    },
   },
   {
     project_type: "flood",
@@ -16962,6 +19814,37 @@ export const GLOBAL_ATLAS_DATA = [
       correlation_vs_global: 0.0,
       classification: "Neutral",
       return_vector: [0.0, 0.0, 0.0],
+    },
+    adaptation_strategy: {
+      intervention_name: "Genetics Crop Management",
+      intervention_cost_usd: 85000,
+      npv_improvement_usd: 220000,
+      adaptation_roi_pct: 158.8,
+    },
+    adaptation_portfolio: {
+      recommended_strategy: "Genetics",
+      stress_level: 5,
+      analysis_timestamp: "2026-02-16T01:30:00Z",
+      options: [
+        {
+          tier: "Regenerative",
+          cost: 45000,
+          benefit: 130000,
+          roi: 188.9,
+        },
+        {
+          tier: "Genetics",
+          cost: 85000,
+          benefit: 220000,
+          roi: 158.8,
+        },
+        {
+          tier: "Infrastructure",
+          cost: 180000,
+          benefit: 390000,
+          roi: 116.7,
+        },
+      ],
     },
   },
   {
@@ -17152,6 +20035,37 @@ export const GLOBAL_ATLAS_DATA = [
       classification: "Neutral",
       return_vector: [0.0, 0.0, 0.0],
     },
+    adaptation_strategy: {
+      intervention_name: "Genetics Crop Management",
+      intervention_cost_usd: 85000,
+      npv_improvement_usd: 220000,
+      adaptation_roi_pct: 158.8,
+    },
+    adaptation_portfolio: {
+      recommended_strategy: "Genetics",
+      stress_level: 5,
+      analysis_timestamp: "2026-02-16T01:30:00Z",
+      options: [
+        {
+          tier: "Regenerative",
+          cost: 45000,
+          benefit: 130000,
+          roi: 188.9,
+        },
+        {
+          tier: "Genetics",
+          cost: 85000,
+          benefit: 220000,
+          roi: 158.8,
+        },
+        {
+          tier: "Infrastructure",
+          cost: 180000,
+          benefit: 390000,
+          roi: 116.7,
+        },
+      ],
+    },
   },
   {
     project_type: "flood",
@@ -17340,6 +20254,37 @@ export const GLOBAL_ATLAS_DATA = [
       correlation_vs_global: 0.0,
       classification: "Neutral",
       return_vector: [0.0, 0.0, 0.0],
+    },
+    adaptation_strategy: {
+      intervention_name: "Genetics Crop Management",
+      intervention_cost_usd: 85000,
+      npv_improvement_usd: 220000,
+      adaptation_roi_pct: 158.8,
+    },
+    adaptation_portfolio: {
+      recommended_strategy: "Genetics",
+      stress_level: 5,
+      analysis_timestamp: "2026-02-16T01:30:00Z",
+      options: [
+        {
+          tier: "Regenerative",
+          cost: 45000,
+          benefit: 130000,
+          roi: 188.9,
+        },
+        {
+          tier: "Genetics",
+          cost: 85000,
+          benefit: 220000,
+          roi: 158.8,
+        },
+        {
+          tier: "Infrastructure",
+          cost: 180000,
+          benefit: 390000,
+          roi: 116.7,
+        },
+      ],
     },
   },
   {
@@ -17530,6 +20475,37 @@ export const GLOBAL_ATLAS_DATA = [
       classification: "Neutral",
       return_vector: [0.0, 0.0, 0.0],
     },
+    adaptation_strategy: {
+      intervention_name: "Genetics Crop Management",
+      intervention_cost_usd: 85000,
+      npv_improvement_usd: 220000,
+      adaptation_roi_pct: 158.8,
+    },
+    adaptation_portfolio: {
+      recommended_strategy: "Genetics",
+      stress_level: 5,
+      analysis_timestamp: "2026-02-16T01:30:00Z",
+      options: [
+        {
+          tier: "Regenerative",
+          cost: 45000,
+          benefit: 130000,
+          roi: 188.9,
+        },
+        {
+          tier: "Genetics",
+          cost: 85000,
+          benefit: 220000,
+          roi: 158.8,
+        },
+        {
+          tier: "Infrastructure",
+          cost: 180000,
+          benefit: 390000,
+          roi: 116.7,
+        },
+      ],
+    },
   },
   {
     project_type: "flood",
@@ -17718,6 +20694,37 @@ export const GLOBAL_ATLAS_DATA = [
       correlation_vs_global: 0.0,
       classification: "Neutral",
       return_vector: [0.0, 0.0, 0.0],
+    },
+    adaptation_strategy: {
+      intervention_name: "Genetics Crop Management",
+      intervention_cost_usd: 85000,
+      npv_improvement_usd: 220000,
+      adaptation_roi_pct: 158.8,
+    },
+    adaptation_portfolio: {
+      recommended_strategy: "Genetics",
+      stress_level: 5,
+      analysis_timestamp: "2026-02-16T01:30:00Z",
+      options: [
+        {
+          tier: "Regenerative",
+          cost: 45000,
+          benefit: 130000,
+          roi: 188.9,
+        },
+        {
+          tier: "Genetics",
+          cost: 85000,
+          benefit: 220000,
+          roi: 158.8,
+        },
+        {
+          tier: "Infrastructure",
+          cost: 180000,
+          benefit: 390000,
+          roi: 116.7,
+        },
+      ],
     },
   },
   {
@@ -17908,6 +20915,37 @@ export const GLOBAL_ATLAS_DATA = [
       classification: "Neutral",
       return_vector: [0.0, 0.0, 0.0],
     },
+    adaptation_strategy: {
+      intervention_name: "Genetics Crop Management",
+      intervention_cost_usd: 85000,
+      npv_improvement_usd: 220000,
+      adaptation_roi_pct: 158.8,
+    },
+    adaptation_portfolio: {
+      recommended_strategy: "Genetics",
+      stress_level: 5,
+      analysis_timestamp: "2026-02-16T01:30:00Z",
+      options: [
+        {
+          tier: "Regenerative",
+          cost: 45000,
+          benefit: 130000,
+          roi: 188.9,
+        },
+        {
+          tier: "Genetics",
+          cost: 85000,
+          benefit: 220000,
+          roi: 158.8,
+        },
+        {
+          tier: "Infrastructure",
+          cost: 180000,
+          benefit: 390000,
+          roi: 116.7,
+        },
+      ],
+    },
   },
   {
     project_type: "flood",
@@ -18097,6 +21135,37 @@ export const GLOBAL_ATLAS_DATA = [
       classification: "Neutral",
       return_vector: [0.0, 0.0, 0.0],
     },
+    adaptation_strategy: {
+      intervention_name: "Genetics Crop Management",
+      intervention_cost_usd: 85000,
+      npv_improvement_usd: 220000,
+      adaptation_roi_pct: 158.8,
+    },
+    adaptation_portfolio: {
+      recommended_strategy: "Genetics",
+      stress_level: 5,
+      analysis_timestamp: "2026-02-16T01:30:00Z",
+      options: [
+        {
+          tier: "Regenerative",
+          cost: 45000,
+          benefit: 130000,
+          roi: 188.9,
+        },
+        {
+          tier: "Genetics",
+          cost: 85000,
+          benefit: 220000,
+          roi: 158.8,
+        },
+        {
+          tier: "Infrastructure",
+          cost: 180000,
+          benefit: 390000,
+          roi: 116.7,
+        },
+      ],
+    },
   },
   {
     project_type: "flood",
@@ -18285,6 +21354,37 @@ export const GLOBAL_ATLAS_DATA = [
       correlation_vs_global: 0.0,
       classification: "Neutral",
       return_vector: [0.0, 0.0, 0.0],
+    },
+    adaptation_strategy: {
+      intervention_name: "Genetics Crop Management",
+      intervention_cost_usd: 85000,
+      npv_improvement_usd: 220000,
+      adaptation_roi_pct: 158.8,
+    },
+    adaptation_portfolio: {
+      recommended_strategy: "Genetics",
+      stress_level: 5,
+      analysis_timestamp: "2026-02-16T01:30:00Z",
+      options: [
+        {
+          tier: "Regenerative",
+          cost: 45000,
+          benefit: 130000,
+          roi: 188.9,
+        },
+        {
+          tier: "Genetics",
+          cost: 85000,
+          benefit: 220000,
+          roi: 158.8,
+        },
+        {
+          tier: "Infrastructure",
+          cost: 180000,
+          benefit: 390000,
+          roi: 116.7,
+        },
+      ],
     },
   },
 ];

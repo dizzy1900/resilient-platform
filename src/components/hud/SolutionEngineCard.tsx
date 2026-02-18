@@ -74,37 +74,53 @@ export const SolutionEngineCard = ({ strategy, portfolio }: SolutionEngineCardPr
         </div>
 
         <div className="flex border-b" style={{ borderColor: 'var(--cb-border)' }}>
-          {portfolio.options.map((opt) => (
-            <button
-              key={opt.tier}
-              onClick={() => setSelectedTier(opt.tier)}
-              className="flex-1 py-2 transition-colors"
-              style={{
-                fontFamily: 'monospace',
-                fontSize: 10,
-                letterSpacing: '0.05em',
-                color: selectedTier === opt.tier ? 'var(--cb-text)' : 'var(--cb-secondary)',
-                borderBottom: selectedTier === opt.tier ? '2px solid var(--cb-text)' : '2px solid transparent',
-                marginBottom: -1,
-                backgroundColor: 'transparent',
-                cursor: 'pointer',
-              }}
-            >
-              {opt.tier.toUpperCase()}
-            </button>
-          ))}
+          {portfolio.options.map((opt) => {
+            const isRec = opt.tier === portfolio.recommended_strategy;
+            const isActive = selectedTier === opt.tier;
+            return (
+              <button
+                key={opt.tier}
+                onClick={() => setSelectedTier(opt.tier)}
+                className="flex-1 py-2 flex items-center justify-center gap-1 transition-colors"
+                style={{
+                  fontFamily: 'monospace',
+                  fontSize: 10,
+                  letterSpacing: '0.05em',
+                  color: isActive ? (isRec ? '#f59e0b' : 'var(--cb-text)') : 'var(--cb-secondary)',
+                  borderBottom: isActive ? `2px solid ${isRec ? '#f59e0b' : 'var(--cb-text)'}` : '2px solid transparent',
+                  marginBottom: -1,
+                  backgroundColor: 'transparent',
+                  cursor: 'pointer',
+                }}
+              >
+                {isRec && <Star style={{ width: 7, height: 7, color: '#f59e0b', flexShrink: 0 }} />}
+                {opt.tier.toUpperCase()}
+              </button>
+            );
+          })}
         </div>
 
         <div className="px-4">
-          <DataRow
-            label="STRATEGY"
-            value={
-              <span className="flex items-center gap-1">
-                {isRecommended && <Star style={{ width: 8, height: 8, color: '#f59e0b' }} />}
-                {selected.tier.toUpperCase()}
-              </span>
-            }
-          />
+          <div className="flex items-center justify-between py-2.5 cb-divider">
+            <span className="cb-label">STRATEGY</span>
+            <span className="flex items-center gap-1.5 cb-value">
+              {isRecommended && (
+                <span
+                  style={{
+                    fontFamily: 'monospace',
+                    fontSize: 9,
+                    letterSpacing: '0.06em',
+                    border: '1px solid #f59e0b',
+                    color: '#f59e0b',
+                    padding: '0px 4px',
+                  }}
+                >
+                  RECOMMENDED
+                </span>
+              )}
+              {selected.tier.toUpperCase()}
+            </span>
+          </div>
 
           <div className="py-2.5 cb-divider">
             <span className="cb-label" style={{ display: 'block', marginBottom: 8 }}>COST / BENEFIT</span>
@@ -139,6 +155,14 @@ export const SolutionEngineCard = ({ strategy, portfolio }: SolutionEngineCardPr
             value={`${selected.roi.toFixed(1)}%`}
             valueColor={selected.roi >= 0 ? '#10b981' : '#f43f5e'}
           />
+
+          {portfolio.stress_level !== undefined && (
+            <DataRow
+              label="STRESS LEVEL"
+              value={`${portfolio.stress_level} / 10`}
+              valueColor={portfolio.stress_level > 7 ? '#f43f5e' : portfolio.stress_level > 4 ? '#f59e0b' : '#10b981'}
+            />
+          )}
         </div>
       </div>
     );
