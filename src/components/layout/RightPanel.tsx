@@ -1,4 +1,4 @@
-import { X, MapPin, AlertTriangle, TrendingDown, TrendingUp, Shield, Droplets, Waves, HeartPulse, Bug, Thermometer, Landmark } from 'lucide-react';
+import { X, MapPin, TriangleAlert as AlertTriangle, TrendingDown, TrendingUp, Shield, Droplets, Waves, HeartPulse, Bug, Thermometer, Landmark } from 'lucide-react';
 import { DashboardMode } from '@/components/dashboard/ModeSelector';
 import { HealthResults } from '@/components/hud/HealthResultsPanel';
 import { FloodFrequencyChart, StormChartDataItem } from '@/components/analytics/FloodFrequencyChart';

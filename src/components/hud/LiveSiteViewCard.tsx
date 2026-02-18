@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Dialog, DialogContent } from '@/components/ui/dialog';
 import { Tooltip as UiTooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
-import { MapPin, TrendingUp, AlertTriangle } from 'lucide-react';
+import { MapPin, TrendingUp, TriangleAlert as AlertTriangle } from 'lucide-react';
 import {
   LineChart,
   Line,
