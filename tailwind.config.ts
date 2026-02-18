@@ -67,6 +67,14 @@ export default {
           coastal: "hsl(var(--mode-coastal))",
           flood: "hsl(var(--mode-flood))",
         },
+        cb: {
+          bg: "var(--cb-bg)",
+          surface: "var(--cb-surface)",
+          border: "var(--cb-border)",
+          text: "var(--cb-text)",
+          secondary: "var(--cb-secondary)",
+          muted: "var(--cb-muted)",
+        },
       },
       borderRadius: {
         lg: "var(--radius)",

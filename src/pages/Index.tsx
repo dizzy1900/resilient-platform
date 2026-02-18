@@ -2,39 +2,24 @@ import { useState, useCallback, useMemo, useEffect } from 'react';
 import { MapView, MapStyle, ViewState, ZoneData, PortfolioMapAsset } from '@/components/dashboard/MapView';
 import { AtlasClickData } from '@/components/dashboard/AtlasMarkers';
 import { DashboardMode } from '@/components/dashboard/ModeSelector';
-import { TimelinePlayer } from '@/components/TimelinePlayer';
-import { FloatingControlPanel } from '@/components/hud/FloatingControlPanel';
+import { HealthResults } from '@/components/hud/HealthResultsPanel';
+import { PortfolioPanel } from '@/components/portfolio/PortfolioPanel';
+import { PortfolioAsset } from '@/components/portfolio/PortfolioCSVUpload';
+import { PortfolioHeader } from '@/components/portfolio/PortfolioHeader';
+import { MobileMenu } from '@/components/hud/MobileMenu';
+import { InterventionWizardModal, ProjectParams } from '@/components/hud/InterventionWizardModal';
+import { DefensiveInfrastructureModal, DefensiveProjectParams } from '@/components/hud/DefensiveInfrastructureModal';
 import { SimulationPanel } from '@/components/hud/SimulationPanel';
 import { FloodSimulationPanel } from '@/components/hud/FloodSimulationPanel';
 import { CoastalSimulationPanel } from '@/components/hud/CoastalSimulationPanel';
 import { HealthSimulationPanel } from '@/components/hud/HealthSimulationPanel';
-import { HealthResultsPanel, HealthResults } from '@/components/hud/HealthResultsPanel';
-import { ResultsPanel } from '@/components/hud/ResultsPanel';
-import { PortfolioPanel } from '@/components/portfolio/PortfolioPanel';
-import { PortfolioAsset } from '@/components/portfolio/PortfolioCSVUpload';
-import { PortfolioHeader } from '@/components/portfolio/PortfolioHeader';
-import { PortfolioResultsPanel } from '@/components/portfolio/PortfolioResultsPanel';
-import { MobileMenu } from '@/components/hud/MobileMenu';
-import { ZoneLegend } from '@/components/dashboard/ZoneLegend';
-import { UrbanInundationCard } from '@/components/dashboard/UrbanInundationCard';
-import { InfrastructureRiskCard } from '@/components/dashboard/InfrastructureRiskCard';
-import { AnalyticsHighlightsCard } from '@/components/hud/AnalyticsHighlightsCard';
-import { UserMenu } from '@/components/auth/UserMenu';
-import { FinancialSettingsModal } from '@/components/hud/FinancialSettingsModal';
-import { InterventionWizardModal, ProjectParams } from '@/components/hud/InterventionWizardModal';
-import { DefensiveInfrastructureModal, DefensiveProjectParams } from '@/components/hud/DefensiveInfrastructureModal';
 import { toast } from '@/hooks/use-toast';
-import { Columns2, X, Landmark, Loader2, Zap } from 'lucide-react';
-import { DealTicketCard } from '@/components/hud/DealTicketCard';
-import { RiskStressTestCard } from '@/components/hud/RiskStressTestCard';
-import { SolutionEngineCard } from '@/components/hud/SolutionEngineCard';
-import { LiveSiteViewCard } from '@/components/hud/LiveSiteViewCard';
-import { GlassCard } from '@/components/hud/GlassCard';
-import { Button } from '@/components/ui/button';
 import { Polygon } from '@/utils/polygonMath';
 import { generateIrregularZone, ZoneMode } from '@/utils/zoneGeneration';
 import { calculateZoneAtTemperature } from '@/utils/zoneMorphing';
 import { supabase } from '@/integrations/supabase/clientSafe';
+import { LeftPanel } from '@/components/layout/LeftPanel';
+import { RightPanel } from '@/components/layout/RightPanel';
 
 const mockMonthlyData = [
   { month: 'Jan', value: 45 },
@@ -131,6 +116,7 @@ const Index = () => {
 
   const [selectedYear, setSelectedYear] = useState(2026);
   const [isTimelinePlaying, setIsTimelinePlaying] = useState(false);
+  const [isPanelOpen, setIsPanelOpen] = useState(false);
 
   const [globalTempTarget, setGlobalTempTarget] = useState(1.4);
   const [rainChange, setRainChange] = useState(0);
@@ -251,6 +237,7 @@ const Index = () => {
     setShowCoastalResults(false);
     setShowFloodResults(false);
     setShowHealthResults(false);
+    setIsPanelOpen(true);
   }, []);
 
   // Finance simulation handler
@@ -700,10 +687,10 @@ const Index = () => {
     setIsTimelinePlaying(false);
     setGlobalTempTarget(1.4);
     setRainChange(0);
-    // Reset flood-specific state
     setFloodSelectedYear(2026);
     setTotalRainIntensity(9);
     setIsFloodUserOverride(false);
+    setIsPanelOpen(false);
   }, []);
 
   const handleAtlasClick = useCallback((data: AtlasClickData) => {
@@ -711,6 +698,7 @@ const Index = () => {
 
     // 1. Set marker position
     setMarkerPosition({ lat: data.lat, lng: data.lng });
+    setIsPanelOpen(true);
 
     // Store financial data for Finance mode
     setAtlasFinancialData(item.financial_analysis ?? null);
@@ -951,9 +939,8 @@ const Index = () => {
     : showFloodResults;
 
   return (
-    <div className="relative h-screen w-full overflow-hidden bg-slate-950">
-      <div className="absolute inset-0 hex-grid-pattern pointer-events-none z-10" />
-
+    <div className="relative h-screen w-full overflow-hidden" style={{ backgroundColor: 'var(--cb-bg)' }}>
+      {/* Map canvas — full bleed background */}
       <div className={`absolute inset-0 ${isSplitMode ? 'grid lg:grid-cols-2 grid-rows-2 lg:grid-rows-1' : ''}`}>
         <MapView
           onLocationSelect={handleLocationSelect}
@@ -981,85 +968,142 @@ const Index = () => {
               isAdaptationScenario={true}
               zoneData={zoneData}
             />
-
             <div className="absolute lg:left-1/2 lg:top-0 lg:bottom-0 top-1/2 left-0 right-0 -translate-y-1/2 lg:translate-y-0 z-20 pointer-events-none">
-              <div className="lg:w-px lg:h-full h-px w-full bg-white/20 backdrop-blur-sm" />
+              <div className="lg:w-px lg:h-full h-px w-full bg-white/20" />
             </div>
           </>
         )}
       </div>
 
-      {/* User Menu - positioned above left panel */}
-      <div className="hidden lg:flex absolute top-4 left-6 z-40 items-center gap-2">
-        <UserMenu />
-        <FinancialSettingsModal />
-      </div>
+      {/* Desktop Left Panel */}
+      <LeftPanel
+        mode={mode}
+        onModeChange={handleModeChange}
+        latitude={markerPosition?.lat ?? null}
+        longitude={markerPosition?.lng ?? null}
+        cropType={cropType}
+        onCropChange={setCropType}
+        mangroveWidth={mangroveWidth}
+        onMangroveWidthChange={handleMangroveWidthChange}
+        onMangroveWidthChangeEnd={handleMangroveWidthChangeEnd}
+        propertyValue={propertyValue}
+        onPropertyValueChange={setPropertyValue}
+        buildingValue={buildingValue}
+        onBuildingValueChange={setBuildingValue}
+        greenRoofsEnabled={greenRoofsEnabled}
+        onGreenRoofsChange={handleGreenRoofsChange}
+        permeablePavementEnabled={permeablePavementEnabled}
+        onPermeablePavementChange={handlePermeablePavementChange}
+        canSimulate={canSimulate}
+        onOpenInterventionWizard={() => setShowWizard(true)}
+        assetLifespan={assetLifespan}
+        onAssetLifespanChange={setAssetLifespan}
+        dailyRevenue={dailyRevenue}
+        onDailyRevenueChange={setDailyRevenue}
+        seaWallEnabled={seaWallEnabled}
+        onSeaWallChange={(enabled) => {
+          setSeaWallEnabled(enabled);
+          if (enabled && !defensiveProjectParams) {
+            setDefensiveProjectParams({ type: 'sea_wall', capex: 500000, opex: 10000, heightIncrease: 1.0 });
+          }
+          if (!enabled && !drainageEnabled) setDefensiveProjectParams(null);
+        }}
+        drainageEnabled={drainageEnabled}
+        onDrainageChange={(enabled) => {
+          setDrainageEnabled(enabled);
+          if (enabled && !defensiveProjectParams) {
+            setDefensiveProjectParams({ type: 'drainage', capex: 500000, opex: 10000, capacityUpgrade: 20 });
+          }
+          if (!enabled && !seaWallEnabled) setDefensiveProjectParams(null);
+        }}
+        onOpenDefensiveWizard={(type) => {
+          setDefensiveProjectType(type);
+          setShowDefensiveWizard(true);
+        }}
+        workforceSize={workforceSize}
+        onWorkforceSizeChange={setWorkforceSize}
+        averageDailyWage={averageDailyWage}
+        onAverageDailyWageChange={setAverageDailyWage}
+        isSplitMode={isSplitMode}
+        onToggleSplitMode={() => setIsSplitMode(!isSplitMode)}
+        selectedYear={selectedYear}
+        onYearChange={setSelectedYear}
+        isPlaying={isTimelinePlaying}
+        onPlayToggle={() => setIsTimelinePlaying((prev) => !prev)}
+        isFinanceSimulating={isFinanceSimulating}
+        onFinanceSimulate={handleFinanceSimulate}
+      />
 
-      {mode !== 'portfolio' && (
-        <div className="hidden lg:block absolute top-16 left-6 z-30">
-          <FloatingControlPanel
-            mode={mode}
-            onModeChange={handleModeChange}
-            latitude={markerPosition?.lat ?? null}
-            longitude={markerPosition?.lng ?? null}
-            cropType={cropType}
-            onCropChange={setCropType}
-            mangroveWidth={mangroveWidth}
-            onMangroveWidthChange={handleMangroveWidthChange}
-            onMangroveWidthChangeEnd={handleMangroveWidthChangeEnd}
-            propertyValue={propertyValue}
-            onPropertyValueChange={setPropertyValue}
-            buildingValue={buildingValue}
-            onBuildingValueChange={setBuildingValue}
-            greenRoofsEnabled={greenRoofsEnabled}
-            onGreenRoofsChange={handleGreenRoofsChange}
-            permeablePavementEnabled={permeablePavementEnabled}
-            onPermeablePavementChange={handlePermeablePavementChange}
-            canSimulate={canSimulate}
-            onOpenInterventionWizard={() => setShowWizard(true)}
-            assetLifespan={assetLifespan}
-            onAssetLifespanChange={setAssetLifespan}
-            dailyRevenue={dailyRevenue}
-            onDailyRevenueChange={setDailyRevenue}
-            seaWallEnabled={seaWallEnabled}
-            onSeaWallChange={(enabled) => {
-              setSeaWallEnabled(enabled);
-              if (enabled && !defensiveProjectParams) {
-                setDefensiveProjectParams({ type: 'sea_wall', capex: 500000, opex: 10000, heightIncrease: 1.0 });
+      {/* Desktop Right Panel — simulation results */}
+      <RightPanel
+        visible={isPanelOpen}
+        onClose={() => setIsPanelOpen(false)}
+        mode={mode}
+        locationName={atlasLocationName}
+        latitude={markerPosition?.lat ?? null}
+        longitude={markerPosition?.lng ?? null}
+        isLoading={isCurrentlySimulating || (mode === 'finance' && isFinanceSimulating)}
+        showResults={showCurrentResults || showHealthResults}
+        agricultureResults={
+          mode === 'agriculture'
+            ? {
+                avoidedLoss: results.avoidedLoss,
+                riskReduction: results.riskReduction,
+                yieldPotential: results.yieldPotential,
+                monthlyData: results.monthlyData,
               }
-              if (!enabled && !drainageEnabled) {
-                setDefensiveProjectParams(null);
-              }
-            }}
-            drainageEnabled={drainageEnabled}
-            onDrainageChange={(enabled) => {
-              setDrainageEnabled(enabled);
-              if (enabled && !defensiveProjectParams) {
-                setDefensiveProjectParams({ type: 'drainage', capex: 500000, opex: 10000, capacityUpgrade: 20 });
-              }
-              if (!enabled && !seaWallEnabled) {
-                setDefensiveProjectParams(null);
-              }
-            }}
-            onOpenDefensiveWizard={(type) => {
-              setDefensiveProjectType(type);
-              setShowDefensiveWizard(true);
-            }}
-            workforceSize={workforceSize}
-            onWorkforceSizeChange={setWorkforceSize}
-            averageDailyWage={averageDailyWage}
-            onAverageDailyWageChange={setAverageDailyWage}
-          />
-        </div>
-      )}
+            : undefined
+        }
+        coastalResults={mode === 'coastal' ? coastalResults : undefined}
+        floodResults={mode === 'flood' ? floodResults : undefined}
+        healthResults={healthResults}
+        mangroveWidth={mangroveWidth}
+        greenRoofsEnabled={greenRoofsEnabled}
+        permeablePavementEnabled={permeablePavementEnabled}
+        tempIncrease={globalTempTarget - 1.4}
+        rainChange={rainChange}
+        baselineZone={baselineZone}
+        currentZone={currentZone}
+        globalTempTarget={globalTempTarget}
+        spatialAnalysis={mode === 'agriculture' ? spatialAnalysis : null}
+        isSpatialLoading={mode === 'agriculture' && isSpatialLoading}
+        cropType={cropType}
+        portfolioAssets={portfolioAssets}
+        atlasFinancialData={atlasFinancialData}
+        atlasMonteCarloData={atlasMonteCarloData}
+        atlasExecutiveSummary={atlasExecutiveSummary}
+        atlasSensitivityData={atlasSensitivityData}
+        atlasAdaptationStrategy={atlasAdaptationStrategy}
+        atlasSatellitePreview={atlasSatellitePreview}
+        atlasMarketIntelligence={atlasMarketIntelligence}
+        atlasTemporalAnalysis={atlasTemporalAnalysis}
+        atlasAdaptationPortfolio={atlasAdaptationPortfolio}
+        isFinanceSimulating={isFinanceSimulating}
+        chartData={mode === 'agriculture' ? chartData : null}
+        projectParams={mode === 'agriculture' ? projectParams : null}
+        defensiveProjectParams={(mode === 'coastal' || mode === 'flood') ? defensiveProjectParams : null}
+        assetLifespan={assetLifespan}
+        dailyRevenue={dailyRevenue}
+        propertyValue={mode === 'coastal' ? propertyValue : buildingValue}
+      />
 
-      {mode === 'portfolio' ? (
-        <div className="hidden lg:block absolute top-16 left-6 bottom-20 z-30 w-80 overflow-y-auto">
+      {/* Portfolio left panel content (desktop) */}
+      {mode === 'portfolio' && (
+        <div
+          className="hidden lg:flex absolute top-0 left-[360px] h-full flex-col z-20 border-r overflow-y-auto"
+          style={{ width: 280, backgroundColor: 'var(--cb-bg)', borderColor: 'var(--cb-border)' }}
+        >
           <PortfolioHeader onModeChange={handleModeChange} />
           <PortfolioPanel onAssetsChange={setPortfolioAssets} />
         </div>
-      ) : mode === 'coastal' ? (
-        <div className="hidden lg:block absolute bottom-32 left-6 z-30">
+      )}
+
+      {/* Simulation panels — shown in left panel area below main controls (desktop) */}
+      {mode === 'coastal' && (
+        <div
+          className="hidden lg:block absolute z-20"
+          style={{ left: 360, bottom: 0, width: 280 }}
+        >
           <CoastalSimulationPanel
             onSimulate={handleCoastalSimulate}
             isSimulating={isCoastalSimulating}
@@ -1078,8 +1122,13 @@ const Index = () => {
             onAssetLifespanChange={setAssetLifespan}
           />
         </div>
-      ) : mode === 'flood' ? (
-        <div className="hidden lg:block absolute bottom-32 left-6 z-30">
+      )}
+
+      {mode === 'flood' && (
+        <div
+          className="hidden lg:block absolute z-20"
+          style={{ left: 360, bottom: 0, width: 280 }}
+        >
           <FloodSimulationPanel
             onSimulate={handleFloodSimulate}
             isSimulating={isFloodSimulating}
@@ -1092,8 +1141,13 @@ const Index = () => {
             onUserOverrideChange={setIsFloodUserOverride}
           />
         </div>
-      ) : mode === 'health' ? (
-        <div className="hidden lg:block absolute bottom-32 left-6 z-30">
+      )}
+
+      {mode === 'health' && (
+        <div
+          className="hidden lg:block absolute z-20"
+          style={{ left: 360, bottom: 0, width: 280 }}
+        >
           <HealthSimulationPanel
             onSimulate={handleHealthSimulate}
             isSimulating={isHealthSimulating}
@@ -1104,41 +1158,13 @@ const Index = () => {
             onSelectedYearChange={setHealthSelectedYear}
           />
         </div>
-      ) : mode === 'finance' ? (
-        <div className="hidden lg:block absolute bottom-32 left-6 z-30">
-          <GlassCard className="w-80 p-4">
-            <div className="flex items-center gap-2 mb-3 text-xs font-medium text-white/70">
-              <Landmark className="w-4 h-4 text-amber-400" />
-              <span>Finance Simulation</span>
-            </div>
-            <p className="text-[10px] text-white/50 mb-3">
-              Run a live simulation to generate a Green Bond Term Sheet for the selected location.
-            </p>
-            <Button
-              variant="ghost"
-              onClick={handleFinanceSimulate}
-              disabled={!canSimulate || isFinanceSimulating}
-              className="w-full h-11 text-sm font-semibold text-white transition-all duration-200 rounded-xl hover:scale-[1.02] active:scale-[0.98] bg-gradient-to-r from-amber-600 to-yellow-600 shadow-[inset_0_1px_0_rgba(255,255,255,0.3),0_0_20px_rgba(245,158,11,0.4)] hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.4),0_0_30px_rgba(245,158,11,0.6)] disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
-            >
-              {isFinanceSimulating ? (
-                <>
-                  <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-                  Calculating...
-                </>
-              ) : (
-                <>
-                  <Zap className="w-4 h-4 mr-2" />
-                  Run Simulation
-                </>
-              )}
-            </Button>
-            {!canSimulate && (
-              <p className="text-[10px] text-white/40 text-center mt-2">Select a location on the map first</p>
-            )}
-          </GlassCard>
-        </div>
-      ) : (
-        <div className="hidden lg:block absolute bottom-32 left-6 z-30">
+      )}
+
+      {mode === 'agriculture' && (
+        <div
+          className="hidden lg:block absolute z-20"
+          style={{ left: 360, bottom: 0, width: 280 }}
+        >
           <SimulationPanel
             mode={mode}
             onSimulate={getCurrentSimulateHandler()}
@@ -1155,36 +1181,7 @@ const Index = () => {
         </div>
       )}
 
-      {mode !== 'portfolio' && mode !== 'finance' && (
-        <div className="hidden lg:block absolute bottom-32 left-[344px] xl:left-[360px] z-30 max-w-[200px]">
-          {mode === 'coastal' ? (
-            <UrbanInundationCard
-              visible={showCoastalResults}
-              isLoading={isCoastalSimulating}
-              floodedUrbanKm2={coastalResults.floodedUrbanKm2 ?? null}
-              urbanImpactPct={coastalResults.urbanImpactPct ?? null}
-            />
-          ) : mode === 'flood' ? (
-            <InfrastructureRiskCard
-              visible={showFloodResults}
-              isLoading={isFloodSimulating}
-              floodedKm2={floodResults.futureFloodAreaKm2}
-              riskPct={floodResults.riskIncreasePct}
-            />
-          ) : (
-            <ZoneLegend
-              baselineZone={baselineZone}
-              currentZone={currentZone}
-              mode={mode as ZoneMode}
-              temperature={globalTempTarget - 1.4}
-              visible={!!baselineZone && !!currentZone}
-              spatialAnalysis={mode === 'agriculture' ? spatialAnalysis : null}
-              isSpatialLoading={mode === 'agriculture' && isSpatialLoading}
-            />
-          )}
-        </div>
-      )}
-
+      {/* Mobile menu */}
       <MobileMenu
         mode={mode}
         onModeChange={handleModeChange}
@@ -1215,124 +1212,30 @@ const Index = () => {
         yieldPotential={showResults ? results.yieldPotential : null}
       />
 
-      <div className={`absolute top-4 z-40 flex items-center gap-2 ${
-        isSplitMode 
-          ? 'right-4 sm:right-16 lg:right-16' 
-          : 'right-16 lg:right-20'
-      }`}>
-        {/* Mobile UserMenu - hidden on desktop since it's in the left panel area */}
-        <div className="lg:hidden">
-          <UserMenu />
+      {/* Mobile timeline */}
+      <div className="lg:hidden">
+        <div className="fixed bottom-4 z-40 left-1/2 -translate-x-1/2 w-[92%] max-w-lg">
+          <div className="bg-gradient-to-br from-black/50 to-black/30 backdrop-blur-xl rounded-xl border border-white/15 shadow-lg px-3 py-2.5">
+            <div className="flex items-center gap-2">
+              <button
+                onClick={() => setIsTimelinePlaying((p) => !p)}
+                className="h-8 w-8 rounded-lg bg-white/10 border border-white/15 flex items-center justify-center text-white"
+              >
+                {isTimelinePlaying ? '⏸' : '▶'}
+              </button>
+              <span className="text-white/70 tabular-nums text-[11px] shrink-0">{selectedYear}</span>
+              <input
+                type="range"
+                min={2026}
+                max={2050}
+                value={selectedYear}
+                onChange={(e) => setSelectedYear(Number(e.target.value))}
+                className="flex-1 accent-emerald-500"
+              />
+            </div>
+          </div>
         </div>
-        <Button
-          className="bg-black/30 backdrop-blur-xl border border-white/10 hover:bg-white/10 text-white gap-1.5 sm:gap-2 rounded-xl px-2.5 sm:px-3 py-2 lg:px-4 h-auto shadow-lg text-[11px] sm:text-xs lg:text-sm"
-          onClick={() => setIsSplitMode(!isSplitMode)}
-        >
-          {isSplitMode ? (
-            <>
-              <X className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
-              <span className="hidden xl:inline">Exit Comparison</span>
-              <span className="xl:hidden">Exit</span>
-            </>
-          ) : (
-            <>
-              <Columns2 className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
-              <span className="hidden xl:inline">Compare Scenarios</span>
-              <span className="xl:hidden">Compare</span>
-            </>
-          )}
-        </Button>
       </div>
-
-      {mode === 'portfolio' ? (
-        <div className="absolute top-16 right-4 sm:right-6 lg:right-20 z-30 flex flex-col gap-2 sm:gap-3 sm:w-80 lg:w-80 max-h-[calc(100vh-120px)] overflow-y-auto">
-          <PortfolioResultsPanel
-            assets={portfolioAssets}
-            visible={portfolioAssets.some(a => 'score' in a)}
-          />
-        </div>
-      ) : mode === 'finance' ? (
-        <div className="absolute top-16 right-4 sm:right-6 lg:right-20 z-30 sm:w-80 lg:w-96 space-y-3 max-h-[calc(100vh-6rem)] overflow-y-auto">
-          <LiveSiteViewCard satellitePreview={atlasSatellitePreview} marketIntelligence={atlasMarketIntelligence} temporalAnalysis={atlasTemporalAnalysis} />
-          {atlasExecutiveSummary && (
-            <GlassCard className="p-4">
-              <h3 className="text-xs font-semibold text-white/60 uppercase tracking-wider mb-2">Executive Summary</h3>
-              <p className={`text-sm italic leading-relaxed ${atlasExecutiveSummary.includes('CRITICAL WARNING') ? 'text-red-400' : 'text-white/50'}`}>
-                {atlasExecutiveSummary}
-              </p>
-            </GlassCard>
-          )}
-          <DealTicketCard
-            financialData={atlasFinancialData}
-            locationName={atlasLocationName}
-            isLoading={isFinanceSimulating}
-            monteCarloData={atlasMonteCarloData}
-          />
-          <RiskStressTestCard monteCarloData={atlasMonteCarloData} sensitivityData={atlasSensitivityData} />
-          <SolutionEngineCard strategy={atlasAdaptationStrategy} portfolio={atlasAdaptationPortfolio} />
-        </div>
-      ) : (
-        <div className="absolute bottom-28 sm:bottom-24 lg:bottom-32 right-4 sm:right-6 lg:right-20 left-4 sm:left-auto z-30 flex flex-col gap-2 sm:gap-3 max-w-full sm:max-w-none sm:w-80 lg:w-80">
-          {mode === 'health' ? (
-            <HealthResultsPanel
-              visible={showHealthResults}
-              isLoading={isHealthSimulating}
-              results={healthResults ?? undefined}
-            />
-          ) : (
-            <ResultsPanel
-              mode={mode}
-              visible={showCurrentResults}
-              isLoading={isCurrentlySimulating}
-              agricultureResults={
-                mode === 'agriculture'
-                  ? {
-                      avoidedLoss: results.avoidedLoss,
-                      riskReduction: results.riskReduction,
-                      yieldPotential: results.yieldPotential,
-                      monthlyData: results.monthlyData,
-                    }
-                  : undefined
-              }
-              coastalResults={mode === 'coastal' ? coastalResults : undefined}
-              floodResults={mode === 'flood' ? floodResults : undefined}
-              mangroveWidth={mangroveWidth}
-              greenRoofsEnabled={greenRoofsEnabled}
-              permeablePavementEnabled={permeablePavementEnabled}
-              tempIncrease={globalTempTarget - 1.4}
-              rainChange={rainChange}
-            />
-          )}
-
-          <AnalyticsHighlightsCard
-            visible={showCurrentResults && !isCurrentlySimulating}
-            mode={mode}
-            latitude={markerPosition?.lat ?? null}
-            longitude={markerPosition?.lng ?? null}
-            temperature={globalTempTarget - 1.4}
-            cropType={cropType}
-            mangroveWidth={mangroveWidth}
-            greenRoofsEnabled={greenRoofsEnabled}
-            permeablePavementEnabled={permeablePavementEnabled}
-            agricultureResults={
-              mode === 'agriculture'
-                ? { avoidedLoss: results.avoidedLoss, riskReduction: results.riskReduction }
-                : undefined
-            }
-            portfolioVolatilityPct={mode === 'agriculture' ? results.portfolioVolatilityPct : null}
-            adaptationActive={mode === 'agriculture' && projectParams !== null}
-            coastalResults={mode === 'coastal' ? coastalResults : undefined}
-            floodResults={mode === 'flood' ? floodResults : undefined}
-            chartData={mode === 'agriculture' ? chartData : null}
-            rainChange={rainChange}
-            projectParams={mode === 'agriculture' ? projectParams : null}
-            defensiveProjectParams={(mode === 'coastal' || mode === 'flood') ? defensiveProjectParams : null}
-            assetLifespan={assetLifespan}
-            dailyRevenue={dailyRevenue}
-            propertyValue={mode === 'coastal' ? propertyValue : buildingValue}
-          />
-        </div>
-      )}
 
       <InterventionWizardModal
         open={showWizard}
@@ -1349,24 +1252,12 @@ const Index = () => {
         onDefineProject={(params) => {
           setDefensiveProjectParams(params);
           setShowDefensiveWizard(false);
-          // Trigger re-simulation
           if (markerPosition) {
-            if (mode === 'coastal') {
-              setTimeout(() => handleCoastalSimulate(), 100);
-            } else if (mode === 'flood') {
-              setTimeout(() => handleFloodSimulate(), 100);
-            }
+            if (mode === 'coastal') setTimeout(() => handleCoastalSimulate(), 100);
+            else if (mode === 'flood') setTimeout(() => handleFloodSimulate(), 100);
           }
         }}
         isSimulating={isCoastalSimulating || isFloodSimulating}
-      />
-
-      <TimelinePlayer
-        selectedYear={selectedYear}
-        onYearChange={setSelectedYear}
-        isPlaying={isTimelinePlaying}
-        onPlayToggle={() => setIsTimelinePlaying((prev) => !prev)}
-        isSplitMode={isSplitMode}
       />
     </div>
   );

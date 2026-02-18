@@ -55,50 +55,33 @@ export function TimelinePlayer({
   const sliderHeightClasses = '[&_[data-radix-slider-track]]:h-2';
 
   return (
-    <div
-      className="fixed bottom-4 sm:bottom-6 lg:bottom-8 z-40 transition-all duration-300 ease-out left-1/2 -translate-x-1/2 w-[92%] sm:w-[85%] lg:w-[85%] max-w-lg"
-    >
+    <>
+      {/* Desktop: flat panel footer — rendered inside LeftPanel, so no wrapper needed */}
       <div
-        className="bg-gradient-to-br from-black/50 to-black/30 backdrop-blur-xl rounded-xl lg:rounded-2xl border border-white/15 shadow-[0_8px_32px_0_rgba(0,0,0,0.4)] transition-all duration-300 hover:shadow-[0_12px_48px_0_rgba(0,0,0,0.5)] px-2.5 sm:px-3 lg:px-5 py-2.5 sm:py-3 lg:py-3.5"
+        className="hidden lg:block w-full px-4 py-3"
+        style={{ backgroundColor: 'var(--cb-bg)' }}
       >
-        <div className="flex items-center gap-2 lg:gap-3">
+        <div className="cb-label mb-2">Climate Projection Timeline</div>
+        <div className="flex items-center gap-3">
           <Button
             variant="ghost"
             size="icon"
             onClick={onPlayToggle}
-            className={`rounded-lg lg:rounded-xl bg-white/10 hover:bg-white/20 active:scale-95 text-white shrink-0 border border-white/15 transition-all duration-300 hover:shadow-lg h-8 w-8 lg:h-9 lg:w-9 ${
-              isPlaying
-                ? 'bg-emerald-500/25 border-emerald-400/40 hover:bg-emerald-500/30 shadow-emerald-500/20'
-                : 'hover:border-white/25'
-            }`}
+            className="shrink-0 h-7 w-7 p-0 rounded-none border"
+            style={{
+              backgroundColor: isPlaying ? 'var(--cb-surface)' : 'transparent',
+              borderColor: 'var(--cb-border)',
+              color: isPlaying ? '#10b981' : 'var(--cb-secondary)',
+            }}
           >
-            <div className="relative">
-              {isPlaying ? (
-                <Pause
-                  className="h-3.5 w-3.5 lg:h-4 lg:w-4 transition-all duration-200 animate-in fade-in-0 zoom-in-50"
-                />
-              ) : (
-                <Play
-                  className="ml-0.5 h-3.5 w-3.5 lg:h-4 lg:w-4 transition-all duration-200 animate-in fade-in-0 zoom-in-50"
-                />
-              )}
-            </div>
+            {isPlaying ? (
+              <Pause style={{ width: 11, height: 11 }} />
+            ) : (
+              <Play style={{ width: 11, height: 11 }} />
+            )}
           </Button>
 
-          <div
-            className="flex items-center gap-1 shrink-0"
-          >
-            <Calendar
-              className="text-emerald-400 shrink-0 drop-shadow-[0_0_8px_rgba(52,211,153,0.4)] w-3 h-3 lg:w-3.5 lg:h-3.5"
-            />
-            <span
-              className="text-white/70 font-medium tabular-nums tracking-tight transition-all duration-200 text-[11px] lg:text-xs"
-            >
-              {selectedYear}
-            </span>
-          </div>
-
-          <div className="flex-1 flex flex-col gap-2">
+          <div className="flex-1 flex flex-col gap-1.5">
             <Slider
               value={[selectedYear]}
               onValueChange={handleSliderChange}
@@ -107,18 +90,59 @@ export function TimelinePlayer({
               step={1}
               className={`${sliderBaseClasses} ${sliderHeightClasses} ${sliderTrackClasses} ${sliderRangeClasses} ${sliderThumbClasses}`}
             />
-            <div
-              className="flex justify-between items-center text-white/50 font-medium transition-colors duration-200 text-[10px] lg:text-xs"
-            >
-              <span className="transition-colors duration-200 hover:text-white/70">{MIN_YEAR}</span>
-              <span className="text-white/35 transition-colors duration-200 hover:text-white/50 hidden sm:inline">
-                Climate Projection Timeline
-              </span>
-              <span className="transition-colors duration-200 hover:text-white/70">{MAX_YEAR}</span>
+            <div className="flex justify-between items-center" style={{ fontSize: 10, color: 'var(--cb-secondary)' }}>
+              <span>{MIN_YEAR}</span>
+              <span className="font-medium tabular-nums" style={{ color: 'var(--cb-text)' }}>{selectedYear}</span>
+              <span>{MAX_YEAR}</span>
             </div>
           </div>
         </div>
       </div>
-    </div>
+
+      {/* Mobile: floating centered bar */}
+      <div
+        className="lg:hidden fixed bottom-4 sm:bottom-6 z-40 transition-all duration-300 ease-out left-1/2 -translate-x-1/2 w-[92%] sm:w-[85%] max-w-lg"
+      >
+        <div
+          className="bg-gradient-to-br from-black/50 to-black/30 backdrop-blur-xl rounded-xl border border-white/15 shadow-[0_8px_32px_0_rgba(0,0,0,0.4)] px-2.5 sm:px-3 py-2.5 sm:py-3"
+        >
+          <div className="flex items-center gap-2">
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={onPlayToggle}
+              className={`rounded-lg bg-white/10 hover:bg-white/20 active:scale-95 text-white shrink-0 border border-white/15 h-8 w-8 ${
+                isPlaying ? 'bg-emerald-500/25 border-emerald-400/40' : ''
+              }`}
+            >
+              {isPlaying ? (
+                <Pause className="h-3.5 w-3.5" />
+              ) : (
+                <Play className="ml-0.5 h-3.5 w-3.5" />
+              )}
+            </Button>
+            <div className="flex items-center gap-1 shrink-0">
+              <Calendar className="text-emerald-400 w-3 h-3" />
+              <span className="text-white/70 font-medium tabular-nums text-[11px]">{selectedYear}</span>
+            </div>
+            <div className="flex-1 flex flex-col gap-2">
+              <Slider
+                value={[selectedYear]}
+                onValueChange={handleSliderChange}
+                min={MIN_YEAR}
+                max={MAX_YEAR}
+                step={1}
+                className={`${sliderBaseClasses} ${sliderHeightClasses} ${sliderTrackClasses} ${sliderRangeClasses} ${sliderThumbClasses}`}
+              />
+              <div className="flex justify-between text-white/50 text-[10px]">
+                <span>{MIN_YEAR}</span>
+                <span className="hidden sm:inline text-white/35">Climate Timeline</span>
+                <span>{MAX_YEAR}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </>
   );
 }

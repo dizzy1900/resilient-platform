@@ -1,0 +1,827 @@
+import { X, MapPin, AlertTriangle, TrendingDown, TrendingUp, Shield, Droplets, Waves, HeartPulse, Bug, Thermometer, Landmark } from 'lucide-react';
+import { DashboardMode } from '@/components/dashboard/ModeSelector';
+import { HealthResults } from '@/components/hud/HealthResultsPanel';
+import { FloodFrequencyChart, StormChartDataItem } from '@/components/analytics/FloodFrequencyChart';
+import { RainfallComparisonChart, RainfallChartData } from '@/components/analytics/RainfallComparisonChart';
+import { DealTicketCard } from '@/components/hud/DealTicketCard';
+import { RiskStressTestCard } from '@/components/hud/RiskStressTestCard';
+import { SolutionEngineCard } from '@/components/hud/SolutionEngineCard';
+import { LiveSiteViewCard } from '@/components/hud/LiveSiteViewCard';
+import { ZoneLegend } from '@/components/dashboard/ZoneLegend';
+import { UrbanInundationCard } from '@/components/dashboard/UrbanInundationCard';
+import { InfrastructureRiskCard } from '@/components/dashboard/InfrastructureRiskCard';
+import { PortfolioResultsPanel } from '@/components/portfolio/PortfolioResultsPanel';
+import { PortfolioAsset } from '@/components/portfolio/PortfolioCSVUpload';
+import { Polygon } from '@/utils/polygonMath';
+import { ZoneMode } from '@/utils/zoneGeneration';
+import { Skeleton } from '@/components/ui/skeleton';
+import { AnalyticsHighlightsCard } from '@/components/hud/AnalyticsHighlightsCard';
+import { ProjectParams } from '@/components/hud/InterventionWizardModal';
+import { DefensiveProjectParams } from '@/components/hud/DefensiveInfrastructureModal';
+
+interface AgricultureResults {
+  avoidedLoss: number;
+  riskReduction: number;
+  yieldPotential?: number | null;
+  monthlyData: { month: string; value: number }[];
+}
+
+interface CoastalResults {
+  avoidedLoss: number;
+  slope: number | null;
+  stormWave: number | null;
+  isUnderwater?: boolean;
+  floodDepth?: number | null;
+  seaLevelRise?: number;
+  includeStormSurge?: boolean;
+  stormChartData?: StormChartDataItem[];
+  floodedUrbanKm2?: number | null;
+  urbanImpactPct?: number | null;
+}
+
+interface FloodResults {
+  floodDepthReduction: number;
+  valueProtected: number;
+  riskIncreasePct?: number | null;
+  futureFloodAreaKm2?: number | null;
+  rainChartData?: RainfallChartData[] | null;
+  future100yr?: number | null;
+  baseline100yr?: number | null;
+}
+
+interface SpatialAnalysis {
+  baseline_sq_km: number;
+  future_sq_km: number;
+  loss_pct: number;
+}
+
+interface RightPanelProps {
+  visible: boolean;
+  onClose: () => void;
+  mode: DashboardMode;
+  locationName: string | null;
+  latitude: number | null;
+  longitude: number | null;
+  isLoading: boolean;
+  showResults: boolean;
+  agricultureResults?: AgricultureResults;
+  coastalResults?: CoastalResults;
+  floodResults?: FloodResults;
+  healthResults?: HealthResults | null;
+  mangroveWidth?: number;
+  greenRoofsEnabled?: boolean;
+  permeablePavementEnabled?: boolean;
+  tempIncrease?: number;
+  rainChange?: number;
+  baselineZone: Polygon | null;
+  currentZone: Polygon | null;
+  globalTempTarget: number;
+  spatialAnalysis?: SpatialAnalysis | null;
+  isSpatialLoading?: boolean;
+  cropType: string;
+  portfolioAssets?: PortfolioAsset[];
+  atlasFinancialData?: any;
+  atlasMonteCarloData?: any;
+  atlasExecutiveSummary?: string | null;
+  atlasSensitivityData?: { primary_driver: string; driver_impact_pct: number } | null;
+  atlasAdaptationStrategy?: any;
+  atlasSatellitePreview?: any;
+  atlasMarketIntelligence?: any;
+  atlasTemporalAnalysis?: any;
+  atlasAdaptationPortfolio?: any;
+  isFinanceSimulating?: boolean;
+  chartData?: { rainfall: Array<{ month: string; historical: number; projected: number }>; soilMoisture: Array<{ month: string; moisture: number }> } | null;
+  projectParams?: ProjectParams | null;
+  defensiveProjectParams?: DefensiveProjectParams | null;
+  assetLifespan?: number;
+  dailyRevenue?: number;
+  propertyValue?: number;
+}
+
+const MODE_ACCENT: Record<DashboardMode, string> = {
+  agriculture: '#10b981',
+  coastal: '#14b8a6',
+  flood: '#3b82f6',
+  health: '#f43f5e',
+  finance: '#f59e0b',
+  portfolio: '#64748b',
+};
+
+function formatCurrency(value: number) {
+  if (value >= 1000000) return `$${(value / 1000000).toFixed(1)}M`;
+  if (value >= 1000) return `$${(value / 1000).toFixed(0)}K`;
+  return `$${value.toFixed(0)}`;
+}
+
+function MetricRow({ label, value, accent }: { label: string; value: React.ReactNode; accent?: string }) {
+  return (
+    <div className="flex items-center justify-between py-2.5 cb-divider">
+      <span className="cb-label">{label}</span>
+      <span className="cb-value" style={accent ? { color: accent } : {}}>
+        {value}
+      </span>
+    </div>
+  );
+}
+
+function SectionHeader({ title }: { title: string }) {
+  return (
+    <div
+      className="px-4 pt-4 pb-2"
+      style={{ borderBottom: '1px solid var(--cb-border)' }}
+    >
+      <span className="cb-section-heading">{title}</span>
+    </div>
+  );
+}
+
+export function RightPanel({
+  visible,
+  onClose,
+  mode,
+  locationName,
+  latitude,
+  longitude,
+  isLoading,
+  showResults,
+  agricultureResults,
+  coastalResults,
+  floodResults,
+  healthResults,
+  mangroveWidth,
+  greenRoofsEnabled,
+  permeablePavementEnabled,
+  tempIncrease,
+  rainChange,
+  baselineZone,
+  currentZone,
+  globalTempTarget,
+  spatialAnalysis,
+  isSpatialLoading,
+  cropType,
+  portfolioAssets,
+  atlasFinancialData,
+  atlasMonteCarloData,
+  atlasExecutiveSummary,
+  atlasSensitivityData,
+  atlasAdaptationStrategy,
+  atlasSatellitePreview,
+  atlasMarketIntelligence,
+  atlasTemporalAnalysis,
+  atlasAdaptationPortfolio,
+  isFinanceSimulating,
+  chartData,
+  projectParams,
+  defensiveProjectParams,
+  assetLifespan,
+  dailyRevenue,
+  propertyValue,
+}: RightPanelProps) {
+  if (!visible) return null;
+
+  const accent = MODE_ACCENT[mode];
+  const displayName = locationName ?? (latitude && longitude ? `${latitude.toFixed(4)}, ${longitude.toFixed(4)}` : 'Selected Location');
+
+  return (
+    <div
+      className="hidden lg:flex absolute top-0 right-0 h-full z-30 flex-col border-l"
+      style={{
+        width: 360,
+        backgroundColor: 'var(--cb-bg)',
+        borderColor: 'var(--cb-border)',
+      }}
+    >
+      {/* Header */}
+      <div
+        className="shrink-0 flex items-center justify-between px-4 border-b"
+        style={{ height: 48, borderColor: 'var(--cb-border)' }}
+      >
+        <div className="flex items-center gap-2 min-w-0">
+          <MapPin style={{ width: 10, height: 10, color: accent, flexShrink: 0 }} />
+          <span
+            className="truncate"
+            style={{ fontSize: 11, color: 'var(--cb-text)', letterSpacing: '0.02em' }}
+          >
+            {displayName}
+          </span>
+        </div>
+        <div className="flex items-center gap-2 shrink-0">
+          <span
+            className="cb-label px-1.5 py-0.5"
+            style={{ border: `1px solid ${accent}`, color: accent }}
+          >
+            {mode}
+          </span>
+          <button
+            onClick={onClose}
+            className="cb-icon-btn"
+            style={{ width: 24, height: 24 }}
+            title="Close"
+          >
+            <X style={{ width: 12, height: 12 }} />
+          </button>
+        </div>
+      </div>
+
+      {/* Scrollable content */}
+      <div className="flex-1 overflow-y-auto min-h-0">
+        {isLoading ? (
+          <LoadingState />
+        ) : (
+          <>
+            {mode === 'portfolio' && (
+              <PortfolioContent assets={portfolioAssets ?? []} />
+            )}
+
+            {mode === 'finance' && (
+              <FinanceContent
+                atlasFinancialData={atlasFinancialData}
+                atlasMonteCarloData={atlasMonteCarloData}
+                atlasExecutiveSummary={atlasExecutiveSummary}
+                atlasSensitivityData={atlasSensitivityData}
+                atlasAdaptationStrategy={atlasAdaptationStrategy}
+                atlasAdaptationPortfolio={atlasAdaptationPortfolio}
+                atlasSatellitePreview={atlasSatellitePreview}
+                atlasMarketIntelligence={atlasMarketIntelligence}
+                atlasTemporalAnalysis={atlasTemporalAnalysis}
+                locationName={locationName}
+                isLoading={isFinanceSimulating ?? false}
+              />
+            )}
+
+            {mode === 'health' && (
+              <HealthContent results={healthResults ?? null} visible={showResults} />
+            )}
+
+            {mode === 'agriculture' && showResults && agricultureResults && (
+              <AgricultureContent
+                results={agricultureResults}
+                tempIncrease={tempIncrease}
+                baselineZone={baselineZone}
+                currentZone={currentZone}
+                globalTempTarget={globalTempTarget}
+                spatialAnalysis={spatialAnalysis}
+                isSpatialLoading={isSpatialLoading}
+                mode={mode}
+                latitude={latitude}
+                longitude={longitude}
+                cropType={cropType}
+                chartData={chartData}
+                projectParams={projectParams}
+                assetLifespan={assetLifespan}
+                dailyRevenue={dailyRevenue}
+                propertyValue={propertyValue}
+              />
+            )}
+
+            {mode === 'coastal' && showResults && coastalResults && (
+              <CoastalContent
+                results={coastalResults}
+                mangroveWidth={mangroveWidth ?? 100}
+                baselineZone={baselineZone}
+                currentZone={currentZone}
+                globalTempTarget={globalTempTarget}
+                mode={mode}
+                latitude={latitude}
+                longitude={longitude}
+                defensiveProjectParams={defensiveProjectParams}
+                assetLifespan={assetLifespan}
+                dailyRevenue={dailyRevenue}
+                propertyValue={propertyValue}
+              />
+            )}
+
+            {mode === 'flood' && showResults && floodResults && (
+              <FloodContent
+                results={floodResults}
+                greenRoofsEnabled={greenRoofsEnabled ?? false}
+                permeablePavementEnabled={permeablePavementEnabled ?? false}
+                rainChange={rainChange ?? 0}
+                baselineZone={baselineZone}
+                currentZone={currentZone}
+                globalTempTarget={globalTempTarget}
+                mode={mode}
+                latitude={latitude}
+                longitude={longitude}
+                defensiveProjectParams={defensiveProjectParams}
+                assetLifespan={assetLifespan}
+                dailyRevenue={dailyRevenue}
+                propertyValue={propertyValue}
+              />
+            )}
+
+            {!showResults && mode !== 'finance' && mode !== 'portfolio' && (
+              <div className="px-4 py-8 text-center">
+                <p style={{ fontSize: 11, color: 'var(--cb-secondary)', lineHeight: 1.6 }}>
+                  Run a simulation to see results for this location.
+                </p>
+              </div>
+            )}
+          </>
+        )}
+      </div>
+    </div>
+  );
+}
+
+function LoadingState() {
+  return (
+    <div className="px-4 py-4 space-y-3">
+      <Skeleton className="h-3 w-24" style={{ backgroundColor: 'var(--cb-surface)' }} />
+      <Skeleton className="h-8 w-32" style={{ backgroundColor: 'var(--cb-surface)' }} />
+      <Skeleton className="h-3 w-full" style={{ backgroundColor: 'var(--cb-surface)' }} />
+      <Skeleton className="h-3 w-4/5" style={{ backgroundColor: 'var(--cb-surface)' }} />
+      <Skeleton className="h-24 w-full" style={{ backgroundColor: 'var(--cb-surface)' }} />
+    </div>
+  );
+}
+
+function AgricultureContent({
+  results,
+  tempIncrease,
+  baselineZone,
+  currentZone,
+  globalTempTarget,
+  spatialAnalysis,
+  isSpatialLoading,
+  mode,
+  latitude,
+  longitude,
+  cropType,
+  chartData,
+  projectParams,
+  assetLifespan,
+  dailyRevenue,
+  propertyValue,
+}: {
+  results: AgricultureResults;
+  tempIncrease?: number;
+  baselineZone: Polygon | null;
+  currentZone: Polygon | null;
+  globalTempTarget: number;
+  spatialAnalysis?: { baseline_sq_km: number; future_sq_km: number; loss_pct: number } | null;
+  isSpatialLoading?: boolean;
+  mode: DashboardMode;
+  latitude: number | null;
+  longitude: number | null;
+  cropType: string;
+  chartData?: any;
+  projectParams?: ProjectParams | null;
+  assetLifespan?: number;
+  dailyRevenue?: number;
+  propertyValue?: number;
+}) {
+  const yp = results.yieldPotential ?? 0;
+  const yieldColor = yp >= 70 ? '#10b981' : yp >= 40 ? '#f59e0b' : '#f43f5e';
+
+  return (
+    <div>
+      <SectionHeader title="Simulation Results" />
+      <div className="px-4">
+        <MetricRow
+          label="Yield Potential"
+          value={`${yp.toFixed(0)}%`}
+          accent={yieldColor}
+        />
+        <MetricRow
+          label="Avoided Loss"
+          value={formatCurrency(results.avoidedLoss)}
+          accent="#10b981"
+        />
+        <MetricRow
+          label="Risk Reduction"
+          value={`${results.riskReduction}%`}
+          accent="#10b981"
+        />
+        {tempIncrease !== undefined && (
+          <MetricRow
+            label="Temp. Increase"
+            value={`+${tempIncrease.toFixed(1)}°C`}
+            accent="#f59e0b"
+          />
+        )}
+      </div>
+
+      {(baselineZone || currentZone) && (
+        <>
+          <SectionHeader title="Zone Analysis" />
+          <div className="px-4 pb-2">
+            <ZoneLegend
+              baselineZone={baselineZone}
+              currentZone={currentZone}
+              mode={mode as ZoneMode}
+              temperature={globalTempTarget - 1.4}
+              visible={!!baselineZone && !!currentZone}
+              spatialAnalysis={spatialAnalysis ?? null}
+              isSpatialLoading={isSpatialLoading}
+            />
+          </div>
+        </>
+      )}
+
+      <SectionHeader title="Analytics" />
+      <div className="px-4 pb-4">
+        <AnalyticsHighlightsCard
+          visible={true}
+          mode={mode}
+          latitude={latitude}
+          longitude={longitude}
+          temperature={globalTempTarget - 1.4}
+          cropType={cropType}
+          mangroveWidth={100}
+          greenRoofsEnabled={false}
+          permeablePavementEnabled={false}
+          agricultureResults={{ avoidedLoss: results.avoidedLoss, riskReduction: results.riskReduction }}
+          chartData={chartData ?? null}
+          projectParams={projectParams ?? null}
+          assetLifespan={assetLifespan}
+          dailyRevenue={dailyRevenue}
+          propertyValue={propertyValue}
+        />
+      </div>
+    </div>
+  );
+}
+
+function CoastalContent({
+  results,
+  mangroveWidth,
+  baselineZone,
+  currentZone,
+  globalTempTarget,
+  mode,
+  latitude,
+  longitude,
+  defensiveProjectParams,
+  assetLifespan,
+  dailyRevenue,
+  propertyValue,
+}: {
+  results: CoastalResults;
+  mangroveWidth: number;
+  baselineZone: Polygon | null;
+  currentZone: Polygon | null;
+  globalTempTarget: number;
+  mode: DashboardMode;
+  latitude: number | null;
+  longitude: number | null;
+  defensiveProjectParams?: DefensiveProjectParams | null;
+  assetLifespan?: number;
+  dailyRevenue?: number;
+  propertyValue?: number;
+}) {
+  return (
+    <div>
+      <SectionHeader title="Simulation Results" />
+      <div className="px-4">
+        <MetricRow
+          label="Status"
+          value={results.isUnderwater ? 'Inundated' : 'Above Water'}
+          accent={results.isUnderwater ? '#f43f5e' : '#10b981'}
+        />
+        {results.floodDepth != null && results.floodDepth > 0 && (
+          <MetricRow label="Flood Depth" value={`${results.floodDepth.toFixed(2)} m`} accent="#f43f5e" />
+        )}
+        <MetricRow
+          label="Sea Level Rise"
+          value={`${(results.seaLevelRise ?? 0).toFixed(2)} m`}
+          accent="#f59e0b"
+        />
+        {results.stormWave != null && (
+          <MetricRow label="Storm Wave Height" value={`${results.stormWave.toFixed(1)} m`} />
+        )}
+        {results.slope != null && (
+          <MetricRow label="Coastal Slope" value={`${results.slope.toFixed(1)}°`} />
+        )}
+        <MetricRow
+          label="Avoided Loss"
+          value={formatCurrency(results.avoidedLoss)}
+          accent="#10b981"
+        />
+        <MetricRow label="Mangrove Belt" value={`${mangroveWidth} m`} />
+      </div>
+
+      {results.stormChartData && results.stormChartData.length > 0 && (
+        <>
+          <SectionHeader title="Storm Surge Frequency" />
+          <div className="px-4 pb-4 pt-2">
+            <FloodFrequencyChart data={results.stormChartData} />
+          </div>
+        </>
+      )}
+
+      {results.floodedUrbanKm2 != null && (
+        <>
+          <SectionHeader title="Urban Inundation" />
+          <div className="px-4 pb-2">
+            <UrbanInundationCard
+              visible={true}
+              isLoading={false}
+              floodedUrbanKm2={results.floodedUrbanKm2}
+              urbanImpactPct={results.urbanImpactPct ?? null}
+            />
+          </div>
+        </>
+      )}
+
+      <SectionHeader title="Analytics" />
+      <div className="px-4 pb-4">
+        <AnalyticsHighlightsCard
+          visible={true}
+          mode={mode}
+          latitude={latitude}
+          longitude={longitude}
+          temperature={globalTempTarget - 1.4}
+          cropType=""
+          mangroveWidth={mangroveWidth}
+          greenRoofsEnabled={false}
+          permeablePavementEnabled={false}
+          coastalResults={results}
+          defensiveProjectParams={defensiveProjectParams ?? null}
+          assetLifespan={assetLifespan}
+          dailyRevenue={dailyRevenue}
+          propertyValue={propertyValue}
+        />
+      </div>
+    </div>
+  );
+}
+
+function FloodContent({
+  results,
+  greenRoofsEnabled,
+  permeablePavementEnabled,
+  rainChange,
+  baselineZone,
+  currentZone,
+  globalTempTarget,
+  mode,
+  latitude,
+  longitude,
+  defensiveProjectParams,
+  assetLifespan,
+  dailyRevenue,
+  propertyValue,
+}: {
+  results: FloodResults;
+  greenRoofsEnabled: boolean;
+  permeablePavementEnabled: boolean;
+  rainChange: number;
+  baselineZone: Polygon | null;
+  currentZone: Polygon | null;
+  globalTempTarget: number;
+  mode: DashboardMode;
+  latitude: number | null;
+  longitude: number | null;
+  defensiveProjectParams?: DefensiveProjectParams | null;
+  assetLifespan?: number;
+  dailyRevenue?: number;
+  propertyValue?: number;
+}) {
+  return (
+    <div>
+      <SectionHeader title="Simulation Results" />
+      <div className="px-4">
+        {results.riskIncreasePct != null && (
+          <MetricRow
+            label="Climate Risk Increase"
+            value={`+${results.riskIncreasePct.toFixed(1)}%`}
+            accent={results.riskIncreasePct > 20 ? '#f43f5e' : '#f59e0b'}
+          />
+        )}
+        <MetricRow
+          label="Depth Reduction"
+          value={`${results.floodDepthReduction.toFixed(1)} cm`}
+          accent="#10b981"
+        />
+        <MetricRow
+          label="Value Protected"
+          value={formatCurrency(results.valueProtected)}
+          accent="#10b981"
+        />
+        {results.futureFloodAreaKm2 != null && (
+          <MetricRow label="Future Flood Area" value={`${results.futureFloodAreaKm2.toFixed(2)} km²`} accent="#3b82f6" />
+        )}
+        {results.baseline100yr != null && (
+          <MetricRow label="Baseline 100yr Event" value={`${results.baseline100yr} mm`} />
+        )}
+        {results.future100yr != null && (
+          <MetricRow label="Future 100yr Event" value={`${results.future100yr} mm`} accent="#f43f5e" />
+        )}
+      </div>
+
+      {results.rainChartData && results.rainChartData.length > 0 && (
+        <>
+          <SectionHeader title="Rainfall Shift" />
+          <div className="px-4 pb-4 pt-2">
+            <RainfallComparisonChart data={results.rainChartData} />
+          </div>
+        </>
+      )}
+
+      {(baselineZone || currentZone) && (
+        <>
+          <SectionHeader title="Zone Analysis" />
+          <div className="px-4 pb-2">
+            <ZoneLegend
+              baselineZone={baselineZone}
+              currentZone={currentZone}
+              mode={mode as ZoneMode}
+              temperature={globalTempTarget - 1.4}
+              visible={!!baselineZone && !!currentZone}
+            />
+          </div>
+        </>
+      )}
+
+      {results.futureFloodAreaKm2 != null && (
+        <>
+          <SectionHeader title="Infrastructure Risk" />
+          <div className="px-4 pb-2">
+            <InfrastructureRiskCard
+              visible={true}
+              isLoading={false}
+              floodedKm2={results.futureFloodAreaKm2}
+              riskPct={results.riskIncreasePct ?? null}
+            />
+          </div>
+        </>
+      )}
+
+      <SectionHeader title="Analytics" />
+      <div className="px-4 pb-4">
+        <AnalyticsHighlightsCard
+          visible={true}
+          mode={mode}
+          latitude={latitude}
+          longitude={longitude}
+          temperature={globalTempTarget - 1.4}
+          cropType=""
+          mangroveWidth={100}
+          greenRoofsEnabled={greenRoofsEnabled}
+          permeablePavementEnabled={permeablePavementEnabled}
+          floodResults={results}
+          rainChange={rainChange}
+          defensiveProjectParams={defensiveProjectParams ?? null}
+          assetLifespan={assetLifespan}
+          dailyRevenue={dailyRevenue}
+          propertyValue={propertyValue}
+        />
+      </div>
+    </div>
+  );
+}
+
+function HealthContent({ results, visible }: { results: HealthResults | null; visible: boolean }) {
+  if (!visible || !results) {
+    return (
+      <div className="px-4 py-6 text-center">
+        <p style={{ fontSize: 11, color: 'var(--cb-secondary)' }}>Run simulation to see health results.</p>
+      </div>
+    );
+  }
+
+  const { productivity_loss_pct, economic_loss_daily, wbgt, projected_temp, malaria_risk, dengue_risk } = results;
+  const lossColor = productivity_loss_pct >= 30 ? '#f43f5e' : productivity_loss_pct >= 15 ? '#f59e0b' : '#10b981';
+
+  return (
+    <div>
+      <SectionHeader title="Heat Stress Results" />
+      <div className="px-4">
+        <MetricRow
+          label="Productivity Loss"
+          value={`${productivity_loss_pct.toFixed(1)}%`}
+          accent={lossColor}
+        />
+        <MetricRow
+          label="Daily Economic Loss"
+          value={formatCurrency(economic_loss_daily)}
+          accent={lossColor}
+        />
+        <MetricRow label="WBGT" value={`${wbgt.toFixed(1)}°C`} accent={wbgt >= 33 ? '#f43f5e' : '#f59e0b'} />
+        <MetricRow label="Projected Temp" value={`${projected_temp.toFixed(1)}°C`} />
+      </div>
+
+      <SectionHeader title="Disease Risk" />
+      <div className="px-4">
+        <MetricRow
+          label="Malaria Risk"
+          value={malaria_risk}
+          accent={malaria_risk === 'High' ? '#f43f5e' : malaria_risk === 'Medium' ? '#f59e0b' : '#10b981'}
+        />
+        <MetricRow
+          label="Dengue Risk"
+          value={dengue_risk}
+          accent={dengue_risk === 'High' ? '#f43f5e' : dengue_risk === 'Medium' ? '#f59e0b' : '#10b981'}
+        />
+      </div>
+    </div>
+  );
+}
+
+function FinanceContent({
+  atlasFinancialData,
+  atlasMonteCarloData,
+  atlasExecutiveSummary,
+  atlasSensitivityData,
+  atlasAdaptationStrategy,
+  atlasAdaptationPortfolio,
+  atlasSatellitePreview,
+  atlasMarketIntelligence,
+  atlasTemporalAnalysis,
+  locationName,
+  isLoading,
+}: {
+  atlasFinancialData: any;
+  atlasMonteCarloData: any;
+  atlasExecutiveSummary?: string | null;
+  atlasSensitivityData?: { primary_driver: string; driver_impact_pct: number } | null;
+  atlasAdaptationStrategy?: any;
+  atlasAdaptationPortfolio?: any;
+  atlasSatellitePreview?: any;
+  atlasMarketIntelligence?: any;
+  atlasTemporalAnalysis?: any;
+  locationName: string | null;
+  isLoading: boolean;
+}) {
+  if (!atlasFinancialData && !isLoading) {
+    return (
+      <div className="px-4 py-6 text-center">
+        <Landmark style={{ width: 20, height: 20, color: 'var(--cb-secondary)', margin: '0 auto 8px' }} />
+        <p style={{ fontSize: 11, color: 'var(--cb-secondary)', lineHeight: 1.6 }}>
+          Select an atlas location or run a simulation to generate a Green Bond Term Sheet.
+        </p>
+      </div>
+    );
+  }
+
+  return (
+    <div className="space-y-0">
+      {atlasSatellitePreview && (
+        <div className="border-b" style={{ borderColor: 'var(--cb-border)' }}>
+          <LiveSiteViewCard
+            satellitePreview={atlasSatellitePreview}
+            marketIntelligence={atlasMarketIntelligence}
+            temporalAnalysis={atlasTemporalAnalysis}
+          />
+        </div>
+      )}
+
+      {atlasExecutiveSummary && (
+        <>
+          <SectionHeader title="Executive Summary" />
+          <div className="px-4 pb-3">
+            <p
+              style={{
+                fontSize: 11,
+                lineHeight: 1.6,
+                color: atlasExecutiveSummary.includes('CRITICAL WARNING')
+                  ? '#f43f5e'
+                  : 'var(--cb-secondary)',
+                fontStyle: 'italic',
+              }}
+            >
+              {atlasExecutiveSummary}
+            </p>
+          </div>
+        </>
+      )}
+
+      <div className="border-b" style={{ borderColor: 'var(--cb-border)' }}>
+        <DealTicketCard
+          financialData={atlasFinancialData}
+          locationName={locationName}
+          isLoading={isLoading}
+          monteCarloData={atlasMonteCarloData}
+        />
+      </div>
+
+      <div className="border-b" style={{ borderColor: 'var(--cb-border)' }}>
+        <RiskStressTestCard monteCarloData={atlasMonteCarloData} sensitivityData={atlasSensitivityData} />
+      </div>
+
+      <div>
+        <SolutionEngineCard strategy={atlasAdaptationStrategy} portfolio={atlasAdaptationPortfolio} />
+      </div>
+    </div>
+  );
+}
+
+function PortfolioContent({ assets }: { assets: PortfolioAsset[] }) {
+  const hasScores = assets.some((a) => 'score' in a);
+  if (!hasScores) {
+    return (
+      <div className="px-4 py-6 text-center">
+        <p style={{ fontSize: 11, color: 'var(--cb-secondary)', lineHeight: 1.6 }}>
+          Upload a portfolio CSV to view risk screening results.
+        </p>
+      </div>
+    );
+  }
+
+  return (
+    <div>
+      <PortfolioResultsPanel assets={assets} visible={hasScores} />
+    </div>
+  );
+}
