@@ -1,5 +1,4 @@
 import { useMemo } from 'react';
-import { Droplets, AlertTriangle, Lightbulb, TrendingDown, CheckCircle2 } from 'lucide-react';
 import { FloodCapacityChart } from './FloodCapacityChart';
 import { RiskBreakdownChart } from './RiskBreakdownChart';
 import { RecommendationCard } from './RecommendationCard';
@@ -54,74 +53,59 @@ export const FloodAnalytics = ({
   const content = (
     <div className="space-y-6">
       <div className="space-y-3">
-          <div className="flex items-center gap-2">
-            <Droplets className="w-4 h-4 text-blue-400" />
-            <h3 className="text-sm font-medium text-white">Drainage Capacity Analysis</h3>
-          </div>
-          <p className="text-xs text-white/50">
-            Current capacity vs demand during heavy rainfall events
-          </p>
-          <div className="bg-white/5 rounded-xl p-3 border border-white/10">
-            <FloodCapacityChart data={capacityData} />
-          </div>
+        <span className="font-mono text-[10px] uppercase tracking-widest text-white/40 block">Drainage Capacity Analysis</span>
+        <p className="text-[10px] text-white/40">
+          Current capacity vs demand during heavy rainfall events
+        </p>
+        <div className="border border-white/10 p-3">
+          <FloodCapacityChart data={capacityData} />
         </div>
+      </div>
 
-        <div className="grid grid-cols-2 gap-3">
-          <div className="bg-blue-500/10 rounded-xl p-4 border border-blue-500/20">
-            <div className="flex items-center gap-2 mb-2">
-              <TrendingDown className="w-4 h-4 text-blue-400" />
-              <span className="text-xs text-white/60">Depth Reduction</span>
-            </div>
-            <span className="text-2xl font-bold text-blue-400">
-              {floodDepthReduction > 0 ? `-${floodDepthReduction}` : floodDepthReduction}cm
-            </span>
-            <p className="text-[10px] text-white/40 mt-1">
-              Peak flood depth reduction
-            </p>
-          </div>
-          <div className="bg-emerald-500/10 rounded-xl p-4 border border-emerald-500/20">
-            <div className="flex items-center gap-2 mb-2">
-              <CheckCircle2 className="w-4 h-4 text-emerald-400" />
-              <span className="text-xs text-white/60">Active Measures</span>
-            </div>
-            <span className="text-2xl font-bold text-emerald-400">
-              {activeInterventions.length}
-            </span>
-            <p className="text-[10px] text-white/40 mt-1">
-              {activeInterventions.length > 0
-                ? activeInterventions.join(', ')
-                : 'No interventions active'}
-            </p>
-          </div>
-        </div>
-
-        <div className="space-y-3">
-          <div className="flex items-center gap-2">
-            <AlertTriangle className="w-4 h-4 text-amber-400" />
-            <h3 className="text-sm font-medium text-white">Risk Factor Breakdown</h3>
-          </div>
-          <p className="text-xs text-white/50">
-            Primary factors contributing to flood risk
+      <div className="grid grid-cols-2 gap-3">
+        <div className="border border-blue-500/20 p-4">
+          <span className="font-mono text-[10px] uppercase tracking-widest text-white/40 block mb-2">Depth Reduction</span>
+          <span className="text-4xl font-light tracking-tighter text-blue-400">
+            {floodDepthReduction > 0 ? `-${floodDepthReduction}` : floodDepthReduction}cm
+          </span>
+          <p className="text-[10px] text-white/40 mt-1">
+            Peak flood depth reduction
           </p>
-          <div className="bg-white/5 rounded-xl p-4 border border-white/10">
-            <RiskBreakdownChart data={riskFactors} />
-          </div>
         </div>
-
-        <div className="space-y-3">
-          <div className="flex items-center gap-2">
-            <Lightbulb className="w-4 h-4 text-amber-400" />
-            <h3 className="text-sm font-medium text-white">Recommendations</h3>
-          </div>
-          <p className="text-xs text-white/50">
-            Actions to improve flood resilience
+        <div className="border border-emerald-500/20 p-4">
+          <span className="font-mono text-[10px] uppercase tracking-widest text-white/40 block mb-2">Active Measures</span>
+          <span className="text-4xl font-light tracking-tighter text-emerald-400">
+            {activeInterventions.length}
+          </span>
+          <p className="text-[10px] text-white/40 mt-1">
+            {activeInterventions.length > 0
+              ? activeInterventions.join(', ')
+              : 'No interventions active'}
           </p>
-          <div className="space-y-2">
-            {recommendations.map((rec) => (
-              <RecommendationCard key={rec.id} recommendation={rec} />
-            ))}
-          </div>
         </div>
+      </div>
+
+      <div className="space-y-3">
+        <span className="font-mono text-[10px] uppercase tracking-widest text-white/40 block">Risk Factor Breakdown</span>
+        <p className="text-[10px] text-white/40">
+          Primary factors contributing to flood risk
+        </p>
+        <div className="border border-white/10 p-4">
+          <RiskBreakdownChart data={riskFactors} />
+        </div>
+      </div>
+
+      <div className="space-y-3">
+        <span className="font-mono text-[10px] uppercase tracking-widest text-white/40 block">Recommendations</span>
+        <p className="text-[10px] text-white/40">
+          Actions to improve flood resilience
+        </p>
+        <div className="space-y-2">
+          {recommendations.map((rec) => (
+            <RecommendationCard key={rec.id} recommendation={rec} />
+          ))}
+        </div>
+      </div>
     </div>
   );
 

@@ -74,7 +74,7 @@ export const SoilMoistureChart = ({
               contentStyle={{
                 backgroundColor: 'rgba(15, 23, 42, 0.95)',
                 border: '1px solid rgba(255,255,255,0.1)',
-                borderRadius: '8px',
+                borderRadius: '0px',
                 fontSize: '12px',
               }}
               labelStyle={{ color: 'rgba(255,255,255,0.7)' }}
@@ -108,7 +108,7 @@ export const SoilMoistureChart = ({
       
       {/* Warning message for summer depletion */}
       {hasSummerDepletion && (
-        <div className="mt-2 flex items-center gap-2 p-2 rounded-lg bg-red-500/10 border border-red-500/20">
+        <div className="mt-2 flex items-center gap-2 p-2 border border-red-500/20">
           <AlertTriangle className="w-4 h-4 text-red-400 flex-shrink-0" />
           <span className="text-xs text-red-400 font-medium">
             ⚠️ Critical moisture depletion in growing season.

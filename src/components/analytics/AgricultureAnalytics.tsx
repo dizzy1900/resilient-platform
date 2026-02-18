@@ -1,5 +1,4 @@
 import { useMemo } from 'react';
-import { CloudRain, Droplets, AlertTriangle, Lightbulb } from 'lucide-react';
 import { RainfallComparisonChart, RainfallChartData } from './RainfallComparisonChart';
 import { SoilMoistureChart, SoilMoistureChartData } from './SoilMoistureChart';
 import { RiskBreakdownChart } from './RiskBreakdownChart';
@@ -41,7 +40,6 @@ export const AgricultureAnalytics = ({
   adaptationActive = false,
   adaptedVolatilityPct = null,
 }: AgricultureAnalyticsProps) => {
-  // Use API data if available, otherwise generate mock data
   const rainfallData = useMemo(() => {
     if (chartData?.rainfall && chartData.rainfall.length > 0) {
       return chartData.rainfall;
@@ -51,10 +49,9 @@ export const AgricultureAnalytics = ({
 
   const soilMoistureData = useMemo(() => {
     if (chartData?.soilMoisture && chartData.soilMoisture.length > 0) {
-      // Convert to the format expected by generateAgricultureRiskFactors
       return chartData.soilMoisture.map(d => ({
         ...d,
-        stressThreshold: 30, // Default stress threshold for mock compatibility
+        stressThreshold: 30,
       }));
     }
     return generateSoilMoistureData(latitude, temperatureIncrease);
@@ -79,72 +76,60 @@ export const AgricultureAnalytics = ({
   const content = (
     <div className="space-y-6">
       <div className="space-y-3">
-          <div className="flex items-center gap-2">
-            <CloudRain className="w-4 h-4 text-blue-400" />
-            <h3 className="text-sm font-medium text-white">Rainfall Projection</h3>
-          </div>
-          <p className="text-xs text-white/50">
-            Historical vs projected monthly rainfall at +{temperatureIncrease.toFixed(1)}°C warming
-          </p>
-          <div className="bg-white/5 rounded-xl p-3 border border-white/10">
-            <RainfallComparisonChart 
-              data={rainfallData} 
-              animateProjected={rainChange !== 0}
-            />
-          </div>
-        </div>
-
-        <div className="space-y-3">
-          <div className="flex items-center gap-2">
-            <Droplets className="w-4 h-4 text-emerald-400" />
-            <h3 className="text-sm font-medium text-white">Soil Moisture Trend</h3>
-          </div>
-          <p className="text-xs text-white/50">
-            Projected soil moisture levels throughout the year
-          </p>
-          <div className="bg-white/5 rounded-xl p-3 border border-white/10">
-            <SoilMoistureChart 
-              data={soilMoistureData.map(d => ({ month: d.month, moisture: d.moisture }))} 
-              wiltingPoint={0.20}
-            />
-          </div>
-        </div>
-
-        <div className="space-y-3">
-          <div className="flex items-center gap-2">
-            <AlertTriangle className="w-4 h-4 text-amber-400" />
-            <h3 className="text-sm font-medium text-white">Risk Factor Breakdown</h3>
-          </div>
-          <p className="text-xs text-white/50">
-            Primary factors contributing to agricultural risk
-          </p>
-          <div className="bg-white/5 rounded-xl p-4 border border-white/10">
-            <RiskBreakdownChart data={riskFactors} />
-          </div>
-        </div>
-
-        <div className="space-y-3">
-          <div className="flex items-center gap-2">
-            <Lightbulb className="w-4 h-4 text-amber-400" />
-            <h3 className="text-sm font-medium text-white">Recommendations</h3>
-          </div>
-          <p className="text-xs text-white/50">
-            Actions to improve resilience based on your risk profile
-          </p>
-          <div className="space-y-2">
-            {recommendations.map((rec) => (
-              <RecommendationCard key={rec.id} recommendation={rec} />
-            ))}
-          </div>
-        </div>
-        {/* Supply Chain Risk */}
-        {portfolioVolatilityPct !== null && portfolioVolatilityPct !== undefined && (
-          <SupplyChainRiskSection
-            portfolioVolatilityPct={portfolioVolatilityPct}
-            adaptationActive={adaptationActive}
-            adaptedVolatilityPct={adaptedVolatilityPct ?? undefined}
+        <span className="font-mono text-[10px] uppercase tracking-widest text-white/40 block">Rainfall Projection</span>
+        <p className="text-[10px] text-white/40">
+          Historical vs projected monthly rainfall at +{temperatureIncrease.toFixed(1)}°C warming
+        </p>
+        <div className="border border-white/10 p-3">
+          <RainfallComparisonChart
+            data={rainfallData}
+            animateProjected={rainChange !== 0}
           />
-        )}
+        </div>
+      </div>
+
+      <div className="space-y-3">
+        <span className="font-mono text-[10px] uppercase tracking-widest text-white/40 block">Soil Moisture Trend</span>
+        <p className="text-[10px] text-white/40">
+          Projected soil moisture levels throughout the year
+        </p>
+        <div className="border border-white/10 p-3">
+          <SoilMoistureChart
+            data={soilMoistureData.map(d => ({ month: d.month, moisture: d.moisture }))}
+            wiltingPoint={0.20}
+          />
+        </div>
+      </div>
+
+      <div className="space-y-3">
+        <span className="font-mono text-[10px] uppercase tracking-widest text-white/40 block">Risk Factor Breakdown</span>
+        <p className="text-[10px] text-white/40">
+          Primary factors contributing to agricultural risk
+        </p>
+        <div className="border border-white/10 p-4">
+          <RiskBreakdownChart data={riskFactors} />
+        </div>
+      </div>
+
+      <div className="space-y-3">
+        <span className="font-mono text-[10px] uppercase tracking-widest text-white/40 block">Recommendations</span>
+        <p className="text-[10px] text-white/40">
+          Actions to improve resilience based on your risk profile
+        </p>
+        <div className="space-y-2">
+          {recommendations.map((rec) => (
+            <RecommendationCard key={rec.id} recommendation={rec} />
+          ))}
+        </div>
+      </div>
+
+      {portfolioVolatilityPct !== null && portfolioVolatilityPct !== undefined && (
+        <SupplyChainRiskSection
+          portfolioVolatilityPct={portfolioVolatilityPct}
+          adaptationActive={adaptationActive}
+          adaptedVolatilityPct={adaptedVolatilityPct ?? undefined}
+        />
+      )}
     </div>
   );
 

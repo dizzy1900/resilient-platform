@@ -29,7 +29,7 @@ export const UrbanInundationCard = ({
   return (
     <div
       className={cn(
-        'bg-black/60 backdrop-blur-xl rounded-xl border p-3 shadow-2xl',
+        'bg-transparent rounded-none border p-3 shadow-none',
         'transition-all duration-300',
         visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2 pointer-events-none',
         isHighRisk ? 'border-red-500/50' : 'border-white/10'

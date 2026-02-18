@@ -1,6 +1,5 @@
 import { useMemo } from 'react';
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, ReferenceLine, Area, ComposedChart } from 'recharts';
-import { TrendingUp, DollarSign } from 'lucide-react';
+import { Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, ReferenceLine, Area, ComposedChart } from 'recharts';
 
 interface CumulativeCashFlowChartProps {
   capex: number;
@@ -23,7 +22,6 @@ export const CumulativeCashFlowChart = ({
   discountRate = 15,
 }: CumulativeCashFlowChartProps) => {
   const { data, npv, roi, paybackYear } = useMemo(() => {
-    // Assume ~1 tonne/ha baseline yield for cocoa
     const baselineYieldTonnes = 1.0;
     const additionalYield = baselineYieldTonnes * (yieldBenefit / 100);
     const annualRevenueBenefit = additionalYield * cropPrice;
@@ -43,7 +41,6 @@ export const CumulativeCashFlowChart = ({
       points.push({ year: y, cumulative: Math.round(cumulative) });
 
       if (payback === null && cumulative >= 0) {
-        // Interpolate payback year
         const prevCum = points[y - 1].cumulative;
         payback = y - 1 + Math.abs(prevCum) / annualNetBenefit;
       }
@@ -67,30 +64,28 @@ export const CumulativeCashFlowChart = ({
 
   return (
     <div className="space-y-3">
-      {/* NPV & ROI Metrics */}
       <div className="grid grid-cols-3 gap-2">
-        <div className="p-2.5 rounded-xl bg-white/5 border border-white/10 text-center">
-          <p className="text-[9px] text-white/40 uppercase tracking-wider mb-0.5">NPV</p>
+        <div className="p-2.5 border border-white/10 text-center">
+          <p className="font-mono text-[9px] uppercase tracking-widest text-white/40 mb-0.5">NPV</p>
           <p className={`text-sm font-bold tabular-nums ${npv >= 0 ? 'text-emerald-400' : 'text-red-400'}`}>
             ${npv.toLocaleString()}
           </p>
         </div>
-        <div className="p-2.5 rounded-xl bg-white/5 border border-white/10 text-center">
-          <p className="text-[9px] text-white/40 uppercase tracking-wider mb-0.5">ROI</p>
+        <div className="p-2.5 border border-white/10 text-center">
+          <p className="font-mono text-[9px] uppercase tracking-widest text-white/40 mb-0.5">ROI</p>
           <p className={`text-sm font-bold tabular-nums ${roi >= 0 ? 'text-emerald-400' : 'text-red-400'}`}>
             {roi}%
           </p>
         </div>
-        <div className="p-2.5 rounded-xl bg-white/5 border border-white/10 text-center">
-          <p className="text-[9px] text-white/40 uppercase tracking-wider mb-0.5">Payback</p>
+        <div className="p-2.5 border border-white/10 text-center">
+          <p className="font-mono text-[9px] uppercase tracking-widest text-white/40 mb-0.5">Payback</p>
           <p className="text-sm font-bold tabular-nums text-amber-400">
             {paybackYear !== null ? `${paybackYear}yr` : 'N/A'}
           </p>
         </div>
       </div>
 
-      {/* Chart */}
-      <div className="bg-white/5 rounded-xl p-3 border border-white/10">
+      <div className="border border-white/10 p-3">
         <ResponsiveContainer width="100%" height={180}>
           <ComposedChart data={data} margin={{ top: 5, right: 5, left: -10, bottom: 0 }}>
             <defs>
@@ -120,7 +115,7 @@ export const CumulativeCashFlowChart = ({
               contentStyle={{
                 backgroundColor: 'rgba(15, 23, 42, 0.95)',
                 border: '1px solid rgba(255,255,255,0.1)',
-                borderRadius: '12px',
+                borderRadius: '0px',
                 padding: '8px 12px',
               }}
               labelStyle={{ color: 'rgba(255,255,255,0.5)', fontSize: 11 }}

@@ -1,5 +1,4 @@
 import { useMemo } from 'react';
-import { Waves, AlertTriangle, Lightbulb, TrendingUp } from 'lucide-react';
 import { StormSurgeChart } from './StormSurgeChart';
 import { RiskBreakdownChart } from './RiskBreakdownChart';
 import { RecommendationCard } from './RecommendationCard';
@@ -56,68 +55,53 @@ export const CoastalAnalytics = ({
   const content = (
     <div className="space-y-6">
       <div className="space-y-3">
-          <div className="flex items-center gap-2">
-            <Waves className="w-4 h-4 text-teal-400" />
-            <h3 className="text-sm font-medium text-white">Storm Surge Projection</h3>
-          </div>
-          <p className="text-xs text-white/50">
-            Projected storm surge heights with and without mangrove protection
-          </p>
-          <div className="bg-white/5 rounded-xl p-3 border border-white/10">
-            <StormSurgeChart data={stormSurgeData} />
-          </div>
+        <span className="font-mono text-[10px] uppercase tracking-widest text-white/40 block">Storm Surge Projection</span>
+        <p className="text-[10px] text-white/40">
+          Projected storm surge heights with and without mangrove protection
+        </p>
+        <div className="border border-white/10 p-3">
+          <StormSurgeChart data={stormSurgeData} />
         </div>
+      </div>
 
-        <div className="grid grid-cols-2 gap-3">
-          <div className="bg-teal-500/10 rounded-xl p-4 border border-teal-500/20">
-            <div className="flex items-center gap-2 mb-2">
-              <TrendingUp className="w-4 h-4 text-teal-400" />
-              <span className="text-xs text-white/60">Protection Rate</span>
-            </div>
-            <span className="text-2xl font-bold text-teal-400">{protectionEfficiency}%</span>
-            <p className="text-[10px] text-white/40 mt-1">
-              Storm surge reduction by 2050
-            </p>
-          </div>
-          <div className="bg-white/5 rounded-xl p-4 border border-white/10">
-            <div className="flex items-center gap-2 mb-2">
-              <Waves className="w-4 h-4 text-white/60" />
-              <span className="text-xs text-white/60">Mangrove Buffer</span>
-            </div>
-            <span className="text-2xl font-bold text-white">{mangroveWidth}m</span>
-            <p className="text-[10px] text-white/40 mt-1">
-              Current protection width
-            </p>
-          </div>
-        </div>
-
-        <div className="space-y-3">
-          <div className="flex items-center gap-2">
-            <AlertTriangle className="w-4 h-4 text-amber-400" />
-            <h3 className="text-sm font-medium text-white">Risk Factor Breakdown</h3>
-          </div>
-          <p className="text-xs text-white/50">
-            Primary factors contributing to coastal vulnerability
+      <div className="grid grid-cols-2 gap-3">
+        <div className="border border-teal-500/20 p-4">
+          <span className="font-mono text-[10px] uppercase tracking-widest text-white/40 block mb-2">Protection Rate</span>
+          <span className="text-4xl font-light tracking-tighter text-teal-400">{protectionEfficiency}%</span>
+          <p className="text-[10px] text-white/40 mt-1">
+            Storm surge reduction by 2050
           </p>
-          <div className="bg-white/5 rounded-xl p-4 border border-white/10">
-            <RiskBreakdownChart data={riskFactors} />
-          </div>
         </div>
-
-        <div className="space-y-3">
-          <div className="flex items-center gap-2">
-            <Lightbulb className="w-4 h-4 text-amber-400" />
-            <h3 className="text-sm font-medium text-white">Recommendations</h3>
-          </div>
-          <p className="text-xs text-white/50">
-            Actions to enhance coastal protection
+        <div className="border border-white/10 p-4">
+          <span className="font-mono text-[10px] uppercase tracking-widest text-white/40 block mb-2">Mangrove Buffer</span>
+          <span className="text-4xl font-light tracking-tighter text-white">{mangroveWidth}m</span>
+          <p className="text-[10px] text-white/40 mt-1">
+            Current protection width
           </p>
-          <div className="space-y-2">
-            {recommendations.map((rec) => (
-              <RecommendationCard key={rec.id} recommendation={rec} />
-            ))}
-          </div>
         </div>
+      </div>
+
+      <div className="space-y-3">
+        <span className="font-mono text-[10px] uppercase tracking-widest text-white/40 block">Risk Factor Breakdown</span>
+        <p className="text-[10px] text-white/40">
+          Primary factors contributing to coastal vulnerability
+        </p>
+        <div className="border border-white/10 p-4">
+          <RiskBreakdownChart data={riskFactors} />
+        </div>
+      </div>
+
+      <div className="space-y-3">
+        <span className="font-mono text-[10px] uppercase tracking-widest text-white/40 block">Recommendations</span>
+        <p className="text-[10px] text-white/40">
+          Actions to enhance coastal protection
+        </p>
+        <div className="space-y-2">
+          {recommendations.map((rec) => (
+            <RecommendationCard key={rec.id} recommendation={rec} />
+          ))}
+        </div>
+      </div>
     </div>
   );
 

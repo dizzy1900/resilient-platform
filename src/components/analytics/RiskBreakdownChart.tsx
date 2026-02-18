@@ -13,9 +13,9 @@ export const RiskBreakdownChart = ({ data }: RiskBreakdownChartProps) => {
             <span className="text-xs text-white/70">{factor.name}</span>
             <span className="text-xs font-medium text-white/90">{factor.percentage}%</span>
           </div>
-          <div className="h-2 bg-white/10 rounded-full overflow-hidden">
+          <div className="h-1.5 bg-white/10 overflow-hidden">
             <div
-              className="h-full rounded-full transition-all duration-500"
+              className="h-full transition-all duration-500"
               style={{
                 width: `${factor.percentage}%`,
                 backgroundColor: factor.color,

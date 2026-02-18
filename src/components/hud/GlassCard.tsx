@@ -11,7 +11,7 @@ export const GlassCard = ({ children, className, animate = true }: GlassCardProp
   return (
     <div
       className={cn(
-        'bg-black/30 backdrop-blur-xl border border-white/10 rounded-2xl shadow-2xl',
+        'bg-transparent border border-white/10 rounded-none shadow-none',
         animate && 'animate-slide-up',
         className
       )}

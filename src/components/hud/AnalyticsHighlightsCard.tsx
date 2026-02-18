@@ -25,7 +25,7 @@ import {
   generateFloodRecommendations,
   Recommendation,
 } from '@/utils/generateRecommendations';
-import { Lightbulb, TrendingUp } from 'lucide-react';
+
 import { SocialImpactCard } from '@/components/analytics/SocialImpactCard';
 import { NaturePositiveCard } from '@/components/analytics/NaturePositiveCard';
 
@@ -190,24 +190,22 @@ export const AnalyticsHighlightsCard = ({
 
   return (
     <div className="space-y-0">
-      <div className="flex items-center justify-between py-2.5 cb-divider">
-        <span className="cb-label">Resilience Score</span>
-        <div className="flex items-center gap-2">
+      <div className="py-4">
+        <span className="font-mono text-[10px] uppercase tracking-widest text-white/40 block mb-3">Resilience Score</span>
+        <div className="flex items-baseline gap-3">
           <span
-            className="cb-value"
+            className="text-4xl font-light tracking-tighter"
             style={{ color: scoreColor }}
           >
-            {resilienceScore}/100
+            {resilienceScore}
           </span>
+          <span className="text-white/30 text-lg font-light">/100</span>
           <span
+            className="font-mono text-[9px] uppercase tracking-widest ml-auto"
             style={{
-              fontFamily: 'monospace',
-              fontSize: 9,
-              letterSpacing: '0.06em',
-              textTransform: 'uppercase',
               border: `1px solid ${scoreColor}`,
               color: scoreColor,
-              padding: '0px 5px',
+              padding: '1px 6px',
             }}
           >
             {getScoreLabel(resilienceScore)}
@@ -215,21 +213,13 @@ export const AnalyticsHighlightsCard = ({
         </div>
       </div>
 
-      <div className="py-2">
-        <div
-          style={{
-            height: 2,
-            backgroundColor: 'var(--cb-surface)',
-            position: 'relative',
-            overflow: 'hidden',
-          }}
-        >
+      <div className="pb-3">
+        <div className="h-[2px] bg-white/10 relative overflow-hidden">
           <div
+            className="h-full transition-all duration-500 ease-out"
             style={{
-              height: '100%',
               width: `${resilienceScore}%`,
               backgroundColor: scoreColor,
-              transition: 'width 0.5s ease',
             }}
           />
         </div>
@@ -237,7 +227,7 @@ export const AnalyticsHighlightsCard = ({
 
       {miniChartData && (
         <div className="py-3">
-          <span className="cb-label mb-2 block">
+          <span className="font-mono text-[10px] uppercase tracking-widest text-white/40 block mb-2">
             {mode === 'agriculture' && 'Soil Moisture Trend'}
             {mode === 'coastal' && 'Storm Surge Projection'}
             {mode === 'flood' && 'Infrastructure Capacity'}
@@ -263,10 +253,7 @@ export const AnalyticsHighlightsCard = ({
 
       {topRecommendations.length > 0 && (
         <div className="py-3">
-          <div className="flex items-center gap-1.5 mb-2">
-            <Lightbulb style={{ width: 10, height: 10, color: 'var(--cb-secondary)' }} />
-            <span className="cb-label">Recommendations</span>
-          </div>
+          <span className="font-mono text-[10px] uppercase tracking-widest text-white/40 block mb-2">Recommendations</span>
           <div className="space-y-1.5">
             {topRecommendations.map((rec) => (
               <div
@@ -311,10 +298,7 @@ export const AnalyticsHighlightsCard = ({
           />
           {projectParams && (
             <div className="border-t border-[var(--cb-border)] pt-4 mt-4">
-              <div className="flex items-center gap-2 mb-2">
-                <TrendingUp style={{ width: 10, height: 10, color: '#10b981' }} />
-                <span className="cb-label">Cumulative Cash Flow</span>
-              </div>
+              <span className="font-mono text-[10px] uppercase tracking-widest text-white/40 block mb-2">Cumulative Cash Flow</span>
               <CumulativeCashFlowChart
                 capex={projectParams.capex}
                 opex={projectParams.opex}
