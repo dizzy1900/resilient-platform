@@ -62,6 +62,11 @@ interface SidebarProps {
   driverImpactPct?: number | null;
   temporalHistory?: { year: number; npv: number; default_prob?: number }[] | null;
   strandedAssetYear?: number | null;
+  adaptationPortfolio?: {
+    options: { tier: string; cost: number; roi: number; benefit: number }[];
+    recommended_strategy: string;
+    stress_level?: number;
+  } | null;
 }
 
 export const Sidebar = ({
@@ -109,6 +114,7 @@ export const Sidebar = ({
   driverImpactPct,
   temporalHistory,
   strandedAssetYear,
+  adaptationPortfolio,
 }: SidebarProps) => {
   const [activeTab, setActiveTab] = useState<SidebarTab>('overview');
 
@@ -174,7 +180,7 @@ export const Sidebar = ({
           />
         )}
 
-        {activeTab === 'adaptation' && <AdaptationTab />}
+        {activeTab === 'adaptation' && <AdaptationTab portfolio={adaptationPortfolio} />}
       </div>
 
       <div className="p-4 border-t border-sidebar-border">
