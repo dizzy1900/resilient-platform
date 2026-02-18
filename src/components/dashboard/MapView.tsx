@@ -3,7 +3,7 @@ import { MapPin, Map as MapIcon, CircleAlert as AlertCircle } from 'lucide-react
 import { Polygon, polygonToGeoJSON, createRingDifferenceGeoJSON, calculatePolygonArea } from '@/utils/polygonMath';
 import { ZoneMode } from '@/utils/zoneGeneration';
 import { getZoneColors } from '@/utils/zoneMorphing';
-import { AtlasMarkers, AtlasClickData, SectorFilter, MapOverlay } from './AtlasMarkers';
+import { AtlasMarkers, AtlasClickData } from './AtlasMarkers';
 
 const MAPBOX_TOKEN = 'pk.eyJ1IjoiZGF2aWRpemkiLCJhIjoiY21rd2dzeHN6MDFoYzNkcXYxOHZ0YXRuNCJ9.P_g5wstTHNzglNEQfHIoBg';
 
@@ -50,8 +50,6 @@ interface MapViewProps {
   zoneData?: ZoneData;
   portfolioAssets?: PortfolioMapAsset[];
   onAtlasClick?: (data: AtlasClickData) => void;
-  sectorFilter?: SectorFilter;
-  mapOverlay?: MapOverlay;
 }
 
 const DEFAULT_VIEW_STATE: ViewState = {
@@ -83,8 +81,6 @@ const LazyMap = ({
   zoneData,
   portfolioAssets,
   onAtlasClick,
-  sectorFilter,
-  mapOverlay,
 }: MapViewProps) => {
   const [MapComponents, setMapComponents] = useState<any>(null);
   const [error, setError] = useState<string | null>(null);
@@ -407,7 +403,7 @@ const LazyMap = ({
         </Marker>
       )}
 
-      {onAtlasClick && <AtlasMarkers Marker={Marker} onAtlasClick={onAtlasClick} sectorFilter={sectorFilter} mapOverlay={mapOverlay} />}
+      {onAtlasClick && <AtlasMarkers Marker={Marker} onAtlasClick={onAtlasClick} />}
     </Map>
   );
 };
@@ -424,8 +420,6 @@ export const MapView = ({
   zoneData,
   portfolioAssets,
   onAtlasClick,
-  sectorFilter,
-  mapOverlay,
 }: MapViewProps) => {
   return (
     <div className="relative w-full h-full">
@@ -441,8 +435,6 @@ export const MapView = ({
         zoneData={zoneData}
         portfolioAssets={portfolioAssets}
         onAtlasClick={onAtlasClick}
-        sectorFilter={sectorFilter}
-        mapOverlay={mapOverlay}
       />
 
       <div className="absolute inset-0 pointer-events-none">
