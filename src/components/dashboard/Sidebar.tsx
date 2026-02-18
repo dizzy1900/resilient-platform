@@ -1,17 +1,10 @@
-import { Logo } from './Logo';
-import { ModeSelector, DashboardMode } from './ModeSelector';
-import { CropSelector } from './CropSelector';
-import { MangroveSlider } from './MangroveSlider';
-import { PropertyValueInput } from './PropertyValueInput';
-import { SpongeCityToolkit } from './SpongeCityToolkit';
-import { SimulateButton } from './SimulateButton';
-import { CoordinatesDisplay } from './CoordinatesDisplay';
-import { ResultsCard } from './ResultsCard';
-import { CoastalResultsCard } from './CoastalResultsCard';
-import { FloodResultsCard } from './FloodResultsCard';
-import { Separator } from '@/components/ui/separator';
-import { Button } from '@/components/ui/button';
-import { X } from 'lucide-react';
+import { useState } from 'react';
+import { DashboardMode } from './ModeSelector';
+import { LocationHeader } from './sidebar/LocationHeader';
+import { SidebarTabs, SidebarTab } from './sidebar/SidebarTabs';
+import { OverviewTab } from './sidebar/OverviewTab';
+import { RiskFinanceTab } from './sidebar/RiskFinanceTab';
+import { AdaptationTab } from './sidebar/AdaptationTab';
 
 interface SidebarProps {
   mode: DashboardMode;
@@ -23,7 +16,6 @@ interface SidebarProps {
   onMangroveWidthChangeEnd: (value: number) => void;
   propertyValue: number;
   onPropertyValueChange: (value: number) => void;
-  // Flood mode props
   buildingValue: number;
   onBuildingValueChange: (value: number) => void;
   greenRoofsEnabled: boolean;
@@ -37,7 +29,6 @@ interface SidebarProps {
     floodDepthReduction: number;
     valueProtected: number;
   };
-  // Common props
   latitude: number | null;
   longitude: number | null;
   onSimulate: () => void;
@@ -91,117 +82,53 @@ export const Sidebar = ({
   onClose,
   isMobile,
 }: SidebarProps) => {
-  const canSimulate = latitude !== null && longitude !== null;
+  const [activeTab, setActiveTab] = useState<SidebarTab>('overview');
 
   return (
     <aside className="sidebar-width h-screen bg-sidebar flex flex-col border-r border-sidebar-border">
-      {/* Header */}
-      <div className="p-6 pb-4 flex items-center justify-between">
-        <Logo />
-        {isMobile && (
-          <Button
-            variant="ghost"
-            size="icon"
-            className="md:hidden text-muted-foreground hover:text-foreground"
-            onClick={onClose}
-          >
-            <X className="h-5 w-5" />
-          </Button>
+      <LocationHeader isMobile={isMobile} onClose={onClose} />
+
+      <SidebarTabs activeTab={activeTab} onTabChange={setActiveTab} />
+
+      <div className="flex-1 overflow-y-auto p-5 pt-4">
+        {activeTab === 'overview' && (
+          <OverviewTab
+            mode={mode}
+            onModeChange={onModeChange}
+            latitude={latitude}
+            longitude={longitude}
+            cropType={cropType}
+            onCropChange={onCropChange}
+            mangroveWidth={mangroveWidth}
+            onMangroveWidthChange={onMangroveWidthChange}
+            onMangroveWidthChangeEnd={onMangroveWidthChangeEnd}
+            propertyValue={propertyValue}
+            onPropertyValueChange={onPropertyValueChange}
+            buildingValue={buildingValue}
+            onBuildingValueChange={onBuildingValueChange}
+            greenRoofsEnabled={greenRoofsEnabled}
+            onGreenRoofsChange={onGreenRoofsChange}
+            permeablePavementEnabled={permeablePavementEnabled}
+            onPermeablePavementChange={onPermeablePavementChange}
+            onFloodSimulate={onFloodSimulate}
+            isFloodSimulating={isFloodSimulating}
+            showFloodResults={showFloodResults}
+            floodResults={floodResults}
+            onSimulate={onSimulate}
+            isSimulating={isSimulating}
+            showResults={showResults}
+            results={results}
+            coastalResults={coastalResults}
+            showCoastalResults={showCoastalResults}
+            isCoastalSimulating={isCoastalSimulating}
+          />
         )}
+
+        {activeTab === 'risk-finance' && <RiskFinanceTab />}
+
+        {activeTab === 'adaptation' && <AdaptationTab />}
       </div>
-      
-      <Separator className="bg-sidebar-border" />
-      
-      {/* Controls */}
-      <div className="flex-1 overflow-y-auto p-6 space-y-6">
-        <ModeSelector value={mode} onChange={onModeChange} />
-        
-        <CoordinatesDisplay latitude={latitude} longitude={longitude} />
-        
-        {mode === 'agriculture' ? (
-          <>
-            <CropSelector value={cropType} onChange={onCropChange} />
-            
-            <SimulateButton 
-              onClick={onSimulate} 
-              isLoading={isSimulating}
-              disabled={!canSimulate}
-              mode="agriculture"
-            />
-            
-            <ResultsCard 
-              visible={showResults}
-              isLoading={isSimulating}
-              avoidedLoss={results.avoidedLoss}
-              riskReduction={results.riskReduction}
-              monthlyData={results.monthlyData}
-            />
-          </>
-        ) : mode === 'coastal' ? (
-          <>
-            <MangroveSlider
-              value={mangroveWidth}
-              onChange={onMangroveWidthChange}
-              onChangeEnd={() => {}}
-              disabled={!canSimulate}
-            />
-            
-            <PropertyValueInput
-              value={propertyValue}
-              onChange={onPropertyValueChange}
-              disabled={!canSimulate}
-            />
-            
-            <SimulateButton 
-              onClick={() => onMangroveWidthChangeEnd(mangroveWidth)} 
-              isLoading={isCoastalSimulating}
-              disabled={!canSimulate}
-              label="Simulate Protection"
-              mode="coastal"
-            />
-            
-            <CoastalResultsCard
-              visible={showCoastalResults}
-              isLoading={isCoastalSimulating}
-              avoidedLoss={coastalResults.avoidedLoss}
-              slope={coastalResults.slope}
-              stormWave={coastalResults.stormWave}
-              mangroveWidth={mangroveWidth}
-            />
-          </>
-        ) : (
-          <>
-            <SpongeCityToolkit
-              buildingValue={buildingValue}
-              onBuildingValueChange={onBuildingValueChange}
-              greenRoofsEnabled={greenRoofsEnabled}
-              onGreenRoofsChange={onGreenRoofsChange}
-              permeablePavementEnabled={permeablePavementEnabled}
-              onPermeablePavementChange={onPermeablePavementChange}
-              disabled={!canSimulate}
-            />
-            
-            <SimulateButton 
-              onClick={onFloodSimulate} 
-              isLoading={isFloodSimulating}
-              disabled={!canSimulate}
-              label="Simulate Flood Risk"
-              mode="flood"
-            />
-            
-            <FloodResultsCard
-              visible={showFloodResults}
-              isLoading={isFloodSimulating}
-              floodDepthReduction={floodResults.floodDepthReduction}
-              valueProtected={floodResults.valueProtected}
-              greenRoofsEnabled={greenRoofsEnabled}
-              permeablePavementEnabled={permeablePavementEnabled}
-            />
-          </>
-        )}
-      </div>
-      
-      {/* Footer */}
+
       <div className="p-4 border-t border-sidebar-border">
         <p className="text-xs text-muted-foreground text-center">
           Climate Risk Analysis Platform v1.0
