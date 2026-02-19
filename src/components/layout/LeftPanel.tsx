@@ -306,7 +306,7 @@ export function LeftPanel({
   const hasCoordinates = latitude !== null && longitude !== null;
 
   return (
-    <div className="hidden lg:flex absolute top-0 left-0 h-full z-30 pointer-events-none">
+    <div className="hidden md:flex absolute top-0 left-0 h-full z-30 pointer-events-none">
       <div
         className="flex flex-col h-full pointer-events-auto border-r"
         style={{
@@ -524,7 +524,7 @@ export function LeftPanel({
   );
 }
 
-interface ModeContentProps {
+export interface ModeContentProps {
   mode: DashboardMode;
   cropType: string;
   onCropChange: (v: string) => void;
@@ -605,7 +605,7 @@ function SimDivider() {
   );
 }
 
-function ModeContent(props: ModeContentProps) {
+export function ModeContent(props: ModeContentProps) {
   const {
     mode,
     cropType,

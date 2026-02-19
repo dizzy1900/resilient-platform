@@ -184,7 +184,7 @@ export function RightPanel({
 
   return (
     <div
-      className="hidden lg:flex fixed top-0 right-0 h-full z-10 flex-col border-l"
+      className="hidden md:flex fixed top-0 right-0 h-full z-10 flex-col border-l"
       style={{
         width: 400,
         backgroundColor: 'color-mix(in srgb, var(--cb-bg) 95%, transparent)',
@@ -225,102 +225,225 @@ export function RightPanel({
       </div>
 
       <div className="flex-1 overflow-y-auto min-h-0">
-        {isLoading ? (
-          <LoadingState />
-        ) : (
-          <>
-            {mode === 'portfolio' && (
-              <PortfolioContent assets={portfolioAssets ?? []} />
-            )}
-
-            {mode === 'finance' && (
-              <FinanceContent
-                atlasFinancialData={atlasFinancialData}
-                atlasMonteCarloData={atlasMonteCarloData}
-                atlasExecutiveSummary={atlasExecutiveSummary}
-                atlasSensitivityData={atlasSensitivityData}
-                atlasAdaptationStrategy={atlasAdaptationStrategy}
-                atlasAdaptationPortfolio={atlasAdaptationPortfolio}
-                atlasSatellitePreview={atlasSatellitePreview}
-                atlasMarketIntelligence={atlasMarketIntelligence}
-                atlasTemporalAnalysis={atlasTemporalAnalysis}
-                locationName={locationName}
-                isLoading={isFinanceSimulating ?? false}
-              />
-            )}
-
-            {mode === 'health' && (
-              <HealthContent results={healthResults ?? null} visible={showResults} />
-            )}
-
-            {mode === 'agriculture' && showResults && agricultureResults && (
-              <AgricultureContent
-                results={agricultureResults}
-                tempIncrease={tempIncrease}
-                baselineZone={baselineZone}
-                currentZone={currentZone}
-                globalTempTarget={globalTempTarget}
-                spatialAnalysis={spatialAnalysis}
-                isSpatialLoading={isSpatialLoading}
-                mode={mode}
-                latitude={latitude}
-                longitude={longitude}
-                cropType={cropType}
-                chartData={chartData}
-                projectParams={projectParams}
-                assetLifespan={assetLifespan}
-                dailyRevenue={dailyRevenue}
-                propertyValue={propertyValue}
-              />
-            )}
-
-            {mode === 'coastal' && showResults && coastalResults && (
-              <CoastalContent
-                results={coastalResults}
-                mangroveWidth={mangroveWidth ?? 100}
-                baselineZone={baselineZone}
-                currentZone={currentZone}
-                globalTempTarget={globalTempTarget}
-                mode={mode}
-                latitude={latitude}
-                longitude={longitude}
-                defensiveProjectParams={defensiveProjectParams}
-                assetLifespan={assetLifespan}
-                dailyRevenue={dailyRevenue}
-                propertyValue={propertyValue}
-              />
-            )}
-
-            {mode === 'flood' && showResults && floodResults && (
-              <FloodContent
-                results={floodResults}
-                greenRoofsEnabled={greenRoofsEnabled ?? false}
-                permeablePavementEnabled={permeablePavementEnabled ?? false}
-                rainChange={rainChange ?? 0}
-                baselineZone={baselineZone}
-                currentZone={currentZone}
-                globalTempTarget={globalTempTarget}
-                mode={mode}
-                latitude={latitude}
-                longitude={longitude}
-                defensiveProjectParams={defensiveProjectParams}
-                assetLifespan={assetLifespan}
-                dailyRevenue={dailyRevenue}
-                propertyValue={propertyValue}
-              />
-            )}
-
-            {!showResults && mode !== 'finance' && mode !== 'portfolio' && (
-              <div className="px-4 py-8 text-center">
-                <p style={{ fontSize: 11, color: 'var(--cb-secondary)', lineHeight: 1.6 }}>
-                  Run a simulation to see results for this location.
-                </p>
-              </div>
-            )}
-          </>
-        )}
+        <RightPanelContent
+          mode={mode}
+          locationName={locationName}
+          isLoading={isLoading}
+          showResults={showResults}
+          agricultureResults={agricultureResults}
+          coastalResults={coastalResults}
+          floodResults={floodResults}
+          healthResults={healthResults}
+          mangroveWidth={mangroveWidth}
+          greenRoofsEnabled={greenRoofsEnabled}
+          permeablePavementEnabled={permeablePavementEnabled}
+          tempIncrease={tempIncrease}
+          rainChange={rainChange}
+          baselineZone={baselineZone}
+          currentZone={currentZone}
+          globalTempTarget={globalTempTarget}
+          spatialAnalysis={spatialAnalysis}
+          isSpatialLoading={isSpatialLoading}
+          cropType={cropType}
+          portfolioAssets={portfolioAssets}
+          atlasFinancialData={atlasFinancialData}
+          atlasMonteCarloData={atlasMonteCarloData}
+          atlasExecutiveSummary={atlasExecutiveSummary}
+          atlasSensitivityData={atlasSensitivityData}
+          atlasAdaptationStrategy={atlasAdaptationStrategy}
+          atlasSatellitePreview={atlasSatellitePreview}
+          atlasMarketIntelligence={atlasMarketIntelligence}
+          atlasTemporalAnalysis={atlasTemporalAnalysis}
+          atlasAdaptationPortfolio={atlasAdaptationPortfolio}
+          isFinanceSimulating={isFinanceSimulating}
+          chartData={chartData}
+          projectParams={projectParams}
+          defensiveProjectParams={defensiveProjectParams}
+          assetLifespan={assetLifespan}
+          dailyRevenue={dailyRevenue}
+          propertyValue={propertyValue}
+          latitude={latitude}
+          longitude={longitude}
+        />
       </div>
     </div>
+  );
+}
+
+export interface RightPanelContentProps {
+  mode: DashboardMode;
+  locationName?: string | null;
+  latitude?: number | null;
+  longitude?: number | null;
+  isLoading: boolean;
+  showResults: boolean;
+  agricultureResults?: AgricultureResults;
+  coastalResults?: CoastalResults;
+  floodResults?: FloodResults;
+  healthResults?: HealthResults | null;
+  mangroveWidth?: number;
+  greenRoofsEnabled?: boolean;
+  permeablePavementEnabled?: boolean;
+  tempIncrease?: number;
+  rainChange?: number;
+  baselineZone: Polygon | null;
+  currentZone: Polygon | null;
+  globalTempTarget: number;
+  spatialAnalysis?: SpatialAnalysis | null;
+  isSpatialLoading?: boolean;
+  cropType: string;
+  portfolioAssets?: PortfolioAsset[];
+  atlasFinancialData?: any;
+  atlasMonteCarloData?: any;
+  atlasExecutiveSummary?: string | null;
+  atlasSensitivityData?: { primary_driver: string; driver_impact_pct: number; baseline_npv?: number; sensitivity_ranking?: { driver: string; shocked_npv: number; impact_pct: number }[] } | null;
+  atlasAdaptationStrategy?: any;
+  atlasSatellitePreview?: any;
+  atlasMarketIntelligence?: any;
+  atlasTemporalAnalysis?: any;
+  atlasAdaptationPortfolio?: any;
+  isFinanceSimulating?: boolean;
+  chartData?: { rainfall: Array<{ month: string; historical: number; projected: number }>; soilMoisture: Array<{ month: string; moisture: number }> } | null;
+  projectParams?: ProjectParams | null;
+  defensiveProjectParams?: DefensiveProjectParams | null;
+  assetLifespan?: number;
+  dailyRevenue?: number;
+  propertyValue?: number;
+}
+
+export function RightPanelContent({
+  mode,
+  locationName,
+  latitude,
+  longitude,
+  isLoading,
+  showResults,
+  agricultureResults,
+  coastalResults,
+  floodResults,
+  healthResults,
+  mangroveWidth,
+  greenRoofsEnabled,
+  permeablePavementEnabled,
+  tempIncrease,
+  rainChange,
+  baselineZone,
+  currentZone,
+  globalTempTarget,
+  spatialAnalysis,
+  isSpatialLoading,
+  cropType,
+  portfolioAssets,
+  atlasFinancialData,
+  atlasMonteCarloData,
+  atlasExecutiveSummary,
+  atlasSensitivityData,
+  atlasAdaptationStrategy,
+  atlasSatellitePreview,
+  atlasMarketIntelligence,
+  atlasTemporalAnalysis,
+  atlasAdaptationPortfolio,
+  isFinanceSimulating,
+  chartData,
+  projectParams,
+  defensiveProjectParams,
+  assetLifespan,
+  dailyRevenue,
+  propertyValue,
+}: RightPanelContentProps) {
+  if (isLoading) return <LoadingState />;
+
+  return (
+    <>
+      {mode === 'portfolio' && (
+        <PortfolioContent assets={portfolioAssets ?? []} />
+      )}
+
+      {mode === 'finance' && (
+        <FinanceContent
+          atlasFinancialData={atlasFinancialData}
+          atlasMonteCarloData={atlasMonteCarloData}
+          atlasExecutiveSummary={atlasExecutiveSummary}
+          atlasSensitivityData={atlasSensitivityData}
+          atlasAdaptationStrategy={atlasAdaptationStrategy}
+          atlasAdaptationPortfolio={atlasAdaptationPortfolio}
+          atlasSatellitePreview={atlasSatellitePreview}
+          atlasMarketIntelligence={atlasMarketIntelligence}
+          atlasTemporalAnalysis={atlasTemporalAnalysis}
+          locationName={locationName}
+          isLoading={isFinanceSimulating ?? false}
+        />
+      )}
+
+      {mode === 'health' && (
+        <HealthContent results={healthResults ?? null} visible={showResults} />
+      )}
+
+      {mode === 'agriculture' && showResults && agricultureResults && (
+        <AgricultureContent
+          results={agricultureResults}
+          tempIncrease={tempIncrease}
+          baselineZone={baselineZone}
+          currentZone={currentZone}
+          globalTempTarget={globalTempTarget}
+          spatialAnalysis={spatialAnalysis}
+          isSpatialLoading={isSpatialLoading}
+          mode={mode}
+          latitude={latitude}
+          longitude={longitude}
+          cropType={cropType}
+          chartData={chartData}
+          projectParams={projectParams}
+          assetLifespan={assetLifespan}
+          dailyRevenue={dailyRevenue}
+          propertyValue={propertyValue}
+        />
+      )}
+
+      {mode === 'coastal' && showResults && coastalResults && (
+        <CoastalContent
+          results={coastalResults}
+          mangroveWidth={mangroveWidth ?? 100}
+          baselineZone={baselineZone}
+          currentZone={currentZone}
+          globalTempTarget={globalTempTarget}
+          mode={mode}
+          latitude={latitude}
+          longitude={longitude}
+          defensiveProjectParams={defensiveProjectParams}
+          assetLifespan={assetLifespan}
+          dailyRevenue={dailyRevenue}
+          propertyValue={propertyValue}
+        />
+      )}
+
+      {mode === 'flood' && showResults && floodResults && (
+        <FloodContent
+          results={floodResults}
+          greenRoofsEnabled={greenRoofsEnabled ?? false}
+          permeablePavementEnabled={permeablePavementEnabled ?? false}
+          rainChange={rainChange ?? 0}
+          baselineZone={baselineZone}
+          currentZone={currentZone}
+          globalTempTarget={globalTempTarget}
+          mode={mode}
+          latitude={latitude}
+          longitude={longitude}
+          defensiveProjectParams={defensiveProjectParams}
+          assetLifespan={assetLifespan}
+          dailyRevenue={dailyRevenue}
+          propertyValue={propertyValue}
+        />
+      )}
+
+      {!showResults && mode !== 'finance' && mode !== 'portfolio' && (
+        <div className="px-4 py-8 text-center">
+          <p style={{ fontSize: 11, color: 'var(--cb-secondary)', lineHeight: 1.6 }}>
+            Run a simulation to see results for this location.
+          </p>
+        </div>
+      )}
+    </>
   );
 }
 

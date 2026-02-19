@@ -5,7 +5,7 @@ interface DigitalTwinToggleProps {
 
 export function DigitalTwinToggle({ isSplitMode, onToggle }: DigitalTwinToggleProps) {
   return (
-    <div className="hidden lg:flex absolute top-4 left-1/2 -translate-x-1/2 z-30">
+    <div className="hidden md:flex absolute top-4 left-1/2 -translate-x-1/2 z-30">
       <button
         onClick={onToggle}
         className="flex items-stretch overflow-hidden select-none"

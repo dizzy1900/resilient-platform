@@ -6,7 +6,7 @@ import { HealthResults } from '@/components/hud/HealthResultsPanel';
 import { PortfolioPanel } from '@/components/portfolio/PortfolioPanel';
 import { PortfolioAsset } from '@/components/portfolio/PortfolioCSVUpload';
 import { PortfolioHeader } from '@/components/portfolio/PortfolioHeader';
-import { MobileMenu } from '@/components/hud/MobileMenu';
+import { MobileBottomSheet } from '@/components/mobile/MobileBottomSheet';
 import { InterventionWizardModal, ProjectParams } from '@/components/hud/InterventionWizardModal';
 import { DefensiveInfrastructureModal, DefensiveProjectParams } from '@/components/hud/DefensiveInfrastructureModal';
 import { toast } from '@/hooks/use-toast';
@@ -94,6 +94,8 @@ const Index = () => {
   const [healthTempTarget, setHealthTempTarget] = useState(1.4);
   const [healthResults, setHealthResults] = useState<HealthResults | null>(null);
   const [isSplitMode, setIsSplitMode] = useState(false);
+  const [mobileSheetOpen, setMobileSheetOpen] = useState(false);
+  const [mobileTab, setMobileTab] = useState<'controls' | 'data'>('controls');
   // Finance mode: track current atlas item's financial data
   const [atlasFinancialData, setAtlasFinancialData] = useState<any>(null);
   const [atlasLocationName, setAtlasLocationName] = useState<string | null>(null);
@@ -243,6 +245,8 @@ const Index = () => {
     setShowFloodResults(false);
     setShowHealthResults(false);
     setIsPanelOpen(true);
+    setMobileSheetOpen(true);
+    setMobileTab('data');
   }, []);
 
   // Finance simulation handler
@@ -1195,7 +1199,7 @@ const Index = () => {
       {/* Portfolio left panel content (desktop) */}
       {mode === 'portfolio' && (
         <div
-          className="hidden lg:flex absolute top-0 left-[360px] h-full flex-col z-20 border-r overflow-y-auto"
+          className="hidden md:flex absolute top-0 left-[360px] h-full flex-col z-20 border-r overflow-y-auto"
           style={{ width: 280, backgroundColor: 'var(--cb-bg)', borderColor: 'var(--cb-border)' }}
         >
           <PortfolioHeader onModeChange={handleModeChange} />
@@ -1203,61 +1207,139 @@ const Index = () => {
         </div>
       )}
 
-      {/* Mobile menu */}
-      <MobileMenu
+      <MobileBottomSheet
+        isOpen={mobileSheetOpen}
+        onOpenChange={setMobileSheetOpen}
+        activeTab={mobileTab}
+        onTabChange={setMobileTab}
         mode={mode}
         onModeChange={handleModeChange}
-        latitude={markerPosition?.lat ?? null}
-        longitude={markerPosition?.lng ?? null}
-        cropType={cropType}
-        onCropChange={setCropType}
-        mangroveWidth={mangroveWidth}
-        onMangroveWidthChange={handleMangroveWidthChange}
-        onMangroveWidthChangeEnd={handleMangroveWidthChangeEnd}
-        propertyValue={propertyValue}
-        onPropertyValueChange={setPropertyValue}
-        buildingValue={buildingValue}
-        onBuildingValueChange={setBuildingValue}
-        greenRoofsEnabled={greenRoofsEnabled}
-        onGreenRoofsChange={handleGreenRoofsChange}
-        permeablePavementEnabled={permeablePavementEnabled}
-        onPermeablePavementChange={handlePermeablePavementChange}
-        canSimulate={canSimulate}
-        onSimulate={getCurrentSimulateHandler()}
-        isSimulating={isCurrentlySimulating}
-        globalTempTarget={globalTempTarget}
-        onGlobalTempTargetChange={handleGlobalTempTargetChange}
-        rainChange={rainChange}
-        onRainChangeChange={handleRainChangeChange}
         selectedYear={selectedYear}
-        onSelectedYearChange={handleSelectedYearChange}
-        yieldPotential={showResults ? results.yieldPotential : null}
+        onYearChange={setSelectedYear}
+        isPlaying={isTimelinePlaying}
+        onPlayToggle={() => setIsTimelinePlaying((p) => !p)}
+        isSplitMode={isSplitMode}
+        modeContentProps={{
+          cropType,
+          onCropChange: setCropType,
+          localMangroveWidth: mangroveWidth,
+          handleMangroveChange: (v: number[]) => handleMangroveWidthChange(v[0]),
+          canSimulate,
+          seaWallEnabled,
+          onSeaWallChange: (enabled) => {
+            setSeaWallEnabled(enabled);
+            if (enabled && !defensiveProjectParams) {
+              setDefensiveProjectParams({ type: 'sea_wall', capex: 500000, opex: 10000, heightIncrease: 1.0 });
+            }
+            if (!enabled && !drainageEnabled) setDefensiveProjectParams(null);
+          },
+          drainageEnabled,
+          onDrainageChange: (enabled) => {
+            setDrainageEnabled(enabled);
+            if (enabled && !defensiveProjectParams) {
+              setDefensiveProjectParams({ type: 'drainage', capex: 500000, opex: 10000, capacityUpgrade: 20 });
+            }
+            if (!enabled && !seaWallEnabled) setDefensiveProjectParams(null);
+          },
+          onOpenDefensiveWizard: (type) => {
+            setDefensiveProjectType(type);
+            setShowDefensiveWizard(true);
+          },
+          buildingValue,
+          onBuildingValueChange: setBuildingValue,
+          dailyRevenue,
+          onDailyRevenueChange: setDailyRevenue,
+          assetLifespan,
+          onAssetLifespanChange: setAssetLifespan,
+          greenRoofsEnabled,
+          onGreenRoofsChange: handleGreenRoofsChange,
+          permeablePavementEnabled,
+          onPermeablePavementChange: handlePermeablePavementChange,
+          workforceSize,
+          onWorkforceSizeChange: setWorkforceSize,
+          averageDailyWage,
+          onAverageDailyWageChange: setAverageDailyWage,
+          onOpenInterventionWizard: () => setShowWizard(true),
+          isFinanceSimulating,
+          onFinanceSimulate: handleFinanceSimulate,
+          globalTempTarget,
+          onGlobalTempTargetChange: handleGlobalTempTargetChange,
+          rainChange,
+          onRainChangeChange: handleRainChangeChange,
+          onAgricultureSimulate: getCurrentSimulateHandler(),
+          isAgricultureSimulating: isCurrentlySimulating,
+          yieldPotential: showResults ? results.yieldPotential : null,
+          totalRainIntensity,
+          onTotalRainIntensityChange: setTotalRainIntensity,
+          floodSelectedYear,
+          onFloodSelectedYearChange: setFloodSelectedYear,
+          isFloodUserOverride,
+          onFloodUserOverrideChange: setIsFloodUserOverride,
+          onFloodSimulate: handleFloodSimulate,
+          isFloodSimulating,
+          totalSLR,
+          onTotalSLRChange: setTotalSLR,
+          includeStormSurge,
+          onIncludeStormSurgeChange: setIncludeStormSurge,
+          coastalSelectedYear,
+          onCoastalSelectedYearChange: setCoastalSelectedYear,
+          onCoastalSimulate: handleCoastalSimulate,
+          isCoastalSimulating,
+          healthTempTarget,
+          onHealthTempTargetChange: setHealthTempTarget,
+          healthSelectedYear,
+          onHealthSelectedYearChange: setHealthSelectedYear,
+          onHealthSimulate: handleHealthSimulate,
+          isHealthSimulating,
+          propertyValue,
+          onPropertyValueChange: setPropertyValue,
+          selectedYear,
+        }}
+        rightPanelContentProps={{
+          locationName: atlasLocationName,
+          latitude: markerPosition?.lat ?? null,
+          longitude: markerPosition?.lng ?? null,
+          isLoading: isCurrentlySimulating || (mode === 'finance' && isFinanceSimulating),
+          showResults: showCurrentResults || showHealthResults,
+          agricultureResults: mode === 'agriculture' ? {
+            avoidedLoss: results.avoidedLoss,
+            riskReduction: results.riskReduction,
+            yieldPotential: results.yieldPotential,
+            monthlyData: results.monthlyData,
+          } : undefined,
+          coastalResults: mode === 'coastal' ? coastalResults : undefined,
+          floodResults: mode === 'flood' ? floodResults : undefined,
+          healthResults,
+          mangroveWidth,
+          greenRoofsEnabled,
+          permeablePavementEnabled,
+          tempIncrease: globalTempTarget - 1.4,
+          rainChange,
+          baselineZone,
+          currentZone,
+          globalTempTarget,
+          spatialAnalysis: mode === 'agriculture' ? spatialAnalysis : null,
+          isSpatialLoading: mode === 'agriculture' && isSpatialLoading,
+          cropType,
+          portfolioAssets,
+          atlasFinancialData,
+          atlasMonteCarloData,
+          atlasExecutiveSummary,
+          atlasSensitivityData,
+          atlasAdaptationStrategy,
+          atlasSatellitePreview,
+          atlasMarketIntelligence,
+          atlasTemporalAnalysis,
+          atlasAdaptationPortfolio,
+          isFinanceSimulating,
+          chartData: mode === 'agriculture' ? chartData : null,
+          projectParams: mode === 'agriculture' ? projectParams : null,
+          defensiveProjectParams: (mode === 'coastal' || mode === 'flood') ? defensiveProjectParams : null,
+          assetLifespan,
+          dailyRevenue,
+          propertyValue: mode === 'coastal' ? propertyValue : buildingValue,
+        }}
       />
-
-      {/* Mobile timeline */}
-      <div className="lg:hidden">
-        <div className="fixed bottom-4 z-40 left-1/2 -translate-x-1/2 w-[92%] max-w-lg">
-          <div className="bg-gradient-to-br from-black/50 to-black/30 backdrop-blur-xl rounded-xl border border-white/15 shadow-lg px-3 py-2.5">
-            <div className="flex items-center gap-2">
-              <button
-                onClick={() => setIsTimelinePlaying((p) => !p)}
-                className="h-8 w-8 rounded-lg bg-white/10 border border-white/15 flex items-center justify-center text-white"
-              >
-                {isTimelinePlaying ? '⏸' : '▶'}
-              </button>
-              <span className="text-white/70 tabular-nums text-[11px] shrink-0">{selectedYear}</span>
-              <input
-                type="range"
-                min={2026}
-                max={2050}
-                value={selectedYear}
-                onChange={(e) => setSelectedYear(Number(e.target.value))}
-                className="flex-1 accent-emerald-500"
-              />
-            </div>
-          </div>
-        </div>
-      </div>
 
       <InterventionWizardModal
         open={showWizard}
